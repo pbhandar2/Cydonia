@@ -34,7 +34,6 @@ class Runner:
             usage_handle : int 
                 the handle of the file where memory and CPU usage are logged 
         """
-
         mem_stats = psutil.virtual_memory()
 
         column_list, value_list = [], []
@@ -68,7 +67,6 @@ class Runner:
             return_code : int 
                 the status of experiment process on termination 
         """
-
         return_code = -1 
         start_time = time.time()
         with experiment_output_path.open("w+") as output_handle, \
