@@ -1,6 +1,6 @@
 # Cydonia
 
-Cydonia is a python package with tools for analyzing workloads and experiment outputs 
+Cydonia is a python package for analyzing workloads and experiment outputs 
 from block storage trace replay using the block storage system stressor implemented
 in our fork of [CacheLib](https://github.com/pbhandar2/CacheLib).
 
