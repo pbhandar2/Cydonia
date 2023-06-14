@@ -6,16 +6,12 @@ in our fork of [CacheLib](https://github.com/pbhandar2/CacheLib).
 
 ## Sampling
 
-Cydonia uses SHARDS (Spatially Hashed Approximate Reuse Distance
-Sampling), presented in the FAST 15 paper ["Efficient MRC Construction with SHARDS"](https://www.usenix.org/system/files/conference/fast15/fast15-paper-waldspurger.pdf), to spatially sample block storage traces[1]. It has generated highly accurate miss ratio curves (MRCs) with low sampling rates. However, when replaying a block storage 
-trace to evaluate system performance, we need both spatial and temporal components of the trace. 
-One simple approach is to use the timestamps of the sampled block requests but this approach 
-inflates the inter-arrival times (IATs) of block requests in the sample compared to the original. Cydonia uses the IATs of sampled block requests to generate timestamps. This approach generates samples with IATs that 
-are more representative of the original compared to using timestamps of the sampled block requests. 
+Cydonia uses randomized spatial sampling used in the FAST 15 paper ["Efficient MRC Construction with SHARDS"](https://www.usenix.org/system/files/conference/fast15/fast15-paper-waldspurger.pdf) to sample block addresses. Miss ratio curves (MRCs) generated from block addresses sampled using randomized spatial sampling have shown to have an average miss ratio error of less than 0.01 when using sampling rates lower than 1%[1]. This sampling approach uses fixed sized blocks. However, we can break a multi-block storage request into individual blocks during sampling. Cydonia augments the spatial sampling with different functions to generate the timestamps of sampled requests to generate sample block traces that not only contain the sampled block addresses but resemble the original block trace in format. 
 
 
 # Usage
-### Install 
+
+## Install 
 ```
 git clone https://github.com/pbhandar2/phdthesis
 cd phdthesis/cydonia
@@ -27,6 +23,8 @@ pip3 install . --user
 See [LICENSE](LICENSE) for details.
 
 ---
+
+
 
 # References
 ```
