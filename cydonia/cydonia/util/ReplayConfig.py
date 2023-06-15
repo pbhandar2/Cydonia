@@ -1,4 +1,5 @@
-""" The class manages the configuration of block trace replay. """
+""" This class represents a configuration file needed to run block trace replay in CacheBench. """
+
 
 import json 
 import socket 
