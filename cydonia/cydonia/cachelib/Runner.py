@@ -59,8 +59,14 @@ class Runner:
 
             Parameters
             ----------
+            cachebench_binary_path : pathlib.Path
+                path to the cachebench binary 
             cachebench_config_file_path : pathlib.Path
                 path to JSON file containing CacheBench configuration 
+            experiment_output_path : pathlib.Path 
+                path to the directory where stdout is dumped 
+            resource_usage_output_path : pathlib.Path 
+                path to the directory where the resource usage file is stored 
             
             Return 
             ------
