@@ -79,7 +79,7 @@ class Runner:
                 resource_usage_output_path.open("w+") as usage_handle:
 
             # run the cachelib experiment 
-            with subprocess.Popen([self.run_cachebench_str, 
+            with subprocess.Popen([cachebench_binary_path, 
                                     "--json_test_config", 
                                     str(cachebench_config_file_path)], 
                                     stdout=subprocess.PIPE, 

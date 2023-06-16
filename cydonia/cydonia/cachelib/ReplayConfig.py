@@ -88,8 +88,8 @@ class ReplayConfig:
                 path to the configuration file 
         """
         config = {
-            'cache_config': cache_config,
-            'test_config': test_config
+            'cache_config': self.cache_config,
+            'test_config': self.test_config
         }
         with config_file_path.open('w+') as f:
             f.write(json.dumps(config, indent=4))
