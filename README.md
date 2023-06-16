@@ -21,29 +21,31 @@ seed = 42
 sampler = Sampler(block_trace_path)
 
 """
-	"sample_df" is a pandas DataFrame of the sample trace. It has the same format as the 
-    original trace. 
-   
-	"sampling_split_percentage" is the percentage of block requests that were sampled 
-	that broke into multiple block requests in the sample. It can be used as a measure 
-    of sample quality. 
-    
-	For example, a multi-block request reads blocks 0-20, but only fraction of the blocks
-	in the block request were sampled: (2,3,4), (8), (11,12). Now the 3 groups of block 
-	requests that were sampled will be 3 different block requests in the sample although 
-	it originated from a single block request in the original trace. 
+- "sample_df" is a pandas DataFrame of the sample trace. It has the same format as the 
+original trace. 
+
+- "sampling_split_percentage" is the percentage of block requests that were sampled 
+that broke into multiple block requests in the sample. It can be used as a measure 
+of sample quality. 
+
+- For example, a multi-block request reads blocks 0-20, but only fraction of the blocks
+in the block request were sampled: (2,3,4), (8), (11,12). Now the 3 groups of block 
+requests that were sampled will be 3 different block requests in the sample although 
+it originated from a single block request in the original trace. 
 """
+
 sample_df, sampling_split_percentage = sampler.sample(rate, seed)
 
 """
-	Now we  remap addresses to ignore bits at index 0, 1 and 2. This way we 
-    sample a group of addresses rather than individual addresses which should
-    reduce fragmentation measued by "sampling_split_percentage ".
+- Now we  remap addresses to ignore bits at index 0, 1 and 2. This way we 
+sample a group of addresses rather than individual addresses which should
+reduce fragmentation measued by "sampling_split_percentage ".
 
-	For example, we ignore the bits at index 0,1 and 2. Now address 8 (1000),
-	9 (1001), 10 (1010) all map to 8. If 8 is sampled, this means 9 and 10 
-	will be sampled as well.
+- For example, we ignore the bits at index 0,1 and 2. Now address 8 (1000),
+9 (1001), 10 (1010) all map to 8. If 8 is sampled, this means 9 and 10 
+will be sampled as well.
 """
+
 bits = [0, 1, 2]
 bits_sampler = Sampler(block_trace_path, bits=bits)
 bits_sample_df, bits_sampling_split_percentage = sampler.sample(rate, seed)
