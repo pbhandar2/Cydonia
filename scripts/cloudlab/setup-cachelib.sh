@@ -4,7 +4,7 @@ cd ${HOME}
 if [ ! -d "${HOME}/disk/CacheLib" ]; then
     git clone https://github.com/pbhandar2/CacheLib
 fi
-cd CacheLib 
+cd ${HOME}/disk/CacheLib
 if [ ! -d "${HOME}/disk/CacheLib/phdthesis" ]; then
     git clone https://github.com/pbhandar2/phdthesis
 fi
