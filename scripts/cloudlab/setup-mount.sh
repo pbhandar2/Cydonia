@@ -61,7 +61,7 @@ fi
 
 if (( create_file_flag > 0 )); then
     echo "Creating backing file of size ${backing_file_size_gb} GB"
-    dd if=/dev/urandom of=${backing_file_path} bs=1mb count=$((${backing_file_size_gb}*1024)) oflag=direct 
+    dd if=/dev/urandom of=${backing_file_path} bs=1MB count=$((${backing_file_size_gb}*1024)) oflag=direct 
     chmod a+rwx ${BACKING_DIR}/disk.file
 fi 
 
@@ -89,6 +89,6 @@ fi
 
 if (( create_file_flag > 0 )); then
     echo "Creating file ${nvm_file_path} of size ${nvm_file_size_gb} GB"
-    dd if=/dev/urandom of=${nvm_file_path} bs=1mb count=$((${nvm_file_size_gb}*1024)) oflag=direct 
+    dd if=/dev/urandom of=${nvm_file_path} bs=1MB count=$((${nvm_file_size_gb}*1024)) oflag=direct 
     chmod a+rwx ${nvm_file_path}
 fi 
