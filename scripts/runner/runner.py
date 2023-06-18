@@ -35,9 +35,5 @@ if __name__ == "__main__":
     config = ReplayConfig([str(args.trace_path.resolve())], [str(args.backing_file_path.resolve())], args.t1_size_mb, **kwargs)
     config.generate_config_file(config_path)
 
-
-
-    print(config)
-
-    #runner = Runner()
-    #runner.run(cachebench_binary_path, config_path, experiment_output_dir, usage_output_dir)
+    runner = Runner()
+    runner.run(cachebench_binary_path, config_path, experiment_output_dir, usage_output_dir)
