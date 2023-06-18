@@ -71,7 +71,7 @@ class ReplayConfig:
         if 'minOffset' in kwargs:
             self.test_config['blockReplayConfig']['minOffset'] = kwargs['minOffset']
 
-        self.test_config['blockReplayConfig']['replayRate'] = 0
+        self.test_config['blockReplayConfig']['replayRate'] = 1
         if 'replayRate' in kwargs:
             self.test_config['blockReplayConfig']['replayRate'] = kwargs['replayRate']
 

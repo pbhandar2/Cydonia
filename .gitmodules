@@ -1,0 +1,3 @@
+[submodule "scripts/stack-distance"]
+	path = scripts/stack-distance
+	url = https://github.com/jcipar/stack-distance

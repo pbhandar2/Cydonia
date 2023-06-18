@@ -2,7 +2,7 @@
 
 To setup the system with 1TB disk file in /dev/sdb, 420GB NVM file in /dev/sdc and S3 buckets to upload output. 
 
-``` sudo ./setup.sh /dev/sdb /dev/sdc 1000000 420000 AWS_ACCESS_KEY AWS_SECRET_KEY```
+``` sudo ./setup.sh /dev/sdb /dev/sdc 1000000 420000 $AWS_KEY $AWS_SECRET ```
 
 # Examples 
 
@@ -17,7 +17,7 @@ TODO: update the run comman for each machine
     - Disk: Two 1.2 TB 10K RPM 6G SAS SFF HDDs
     - Disk: One Intel DC S3500 480 GB 6G SATA SSDs
 
-``` sudo ./setup.sh /dev/sdb /dev/sdc 1100000 470000 $AWS_ACCESS_KEY $AWS_SECRET_KEY```
+``` sudo ./setup.sh /dev/sdb /dev/sdc 950000 450000 $AWS_KEY $AWS_SECRET ```
 
 - c220g5 
     - CPU: Two Intel Xeon Silver 4114 10-core CPUs at 2.20 GHz
@@ -25,7 +25,7 @@ TODO: update the run comman for each machine
     - Disk: One 1 TB 7200 RPM 6G SAS HDs
     - Disk: One Intel DC S3500 480 GB 6G SATA SSD
 
-``` sudo ./setup.sh /dev/sdb /dev/sdc 9900000 470000 $AWS_ACCESS_KEY $AWS_SECRET_KEY```
+``` sudo ./setup.sh /dev/sdb /dev/sdc 9900000 470000 $AWS_KEY $AWS_SECRET ```
 
 - r6525 
     - CPU: Two 32-core AMD 7543 at 2.8GHz
@@ -33,6 +33,6 @@ TODO: update the run comman for each machine
     - Disk: One 480GB SATA SSD
     - Disk: One 1.6TB NVMe SSD (PCIe v4.0)
 
-``` sudo ./setup.sh /dev/sdb /dev/sdc 4700000 1500000 $AWS_ACCESS_KEY $AWS_SECRET_KEY```
+``` sudo ./setup.sh /dev/sdb /dev/sdc 4700000 1500000 $AWS_KEY $AWS_SECRET ```
 
 
