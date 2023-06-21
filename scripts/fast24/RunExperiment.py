@@ -94,7 +94,7 @@ class RunExperiment:
                 print("Running-> Experiment {},{}", config.get_config(), cur_iteration)
                 live_s3_key_prefix = self.get_s3_key("live", workload, config.get_config(), cur_iteration)
                 self.s3.upload_s3_obj("{}/{}".format(live_s3_key_prefix, self.config_file_path.name), str(self.config_file_path.absolute()))
-                self.s3_download_s3_obj(experiment_entry["trace_s3_key"], str(local_trace_path.absolute()))
+                self.s3.download_s3_obj(experiment_entry["trace_s3_key"], str(local_trace_path.absolute()))
 
                 runner = Runner()
                 runner.run(self.cachebench_binary_path, 
