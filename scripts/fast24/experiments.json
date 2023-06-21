@@ -1,0 +1,26 @@
+[
+    {
+        "trace_s3_key": "workloads/cp-iat/w20_1_42_0-1-2.csv",
+        "t1_size_mb": 1100,
+        "kwargs": {}
+    },
+    {
+        "trace_s3_key": "workloads/cp-iat/w20_1_42_0-1-2.csv",
+        "t1_size_mb": 1100,
+        "kwargs": {
+            "nvmCacheSizeMB": 4200 
+        }
+    },
+    {
+        "trace_s3_key": "workloads/cp-iat/w20_1_42_0-1-2.csv",
+        "t1_size_mb": 100,
+        "kwargs": {}
+    },
+    {
+        "trace_s3_key": "workloads/cp-iat/w20_1_42_0-1-2.csv",
+        "t1_size_mb": 100,
+        "kwargs": {
+            "nvmCacheSizeMB": 150
+        }
+    }
+]
