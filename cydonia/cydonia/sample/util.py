@@ -3,23 +3,8 @@
     Carl Waldspurger on (Sat, 19 Jun 2021 12:49:49 -0700) with 
     subject "non-contiguous locality sampling". 
 """
-def mask_equiv_bit(addr, bit):
-    """ Return address equivalent to addr while ignoring specified bit.
-        
-        Parameters
-        ----------
-        addr (int) : the address (could be Logical Block Address)
-        bit (int) : the bit to ignore 
-
-        Return 
-        ------
-        new_addr (int) : the address equivalent to "addr" while ignoring specified bit 
-    """
-    mask = 1 << bit;
-    if addr & mask:
-        return addr & ~mask
-    else:
-        return addr | mask 
+def clear_bit(value, bit):
+    return value & ~(1<<bit)
 
 
 def mask_equiv_bits(addr, bits):
@@ -39,5 +24,5 @@ def mask_equiv_bits(addr, bits):
     else:
         new_addr = addr
         for b in bits:
-            new_addr = mask_equiv_bit(new_addr, b)
+            new_addr = clear_bit(new_addr, b)
         return new_addr

@@ -29,11 +29,10 @@ if __name__ == "__main__":
     parser.add_argument('-b','--bits', nargs='*', type=int, help='Bits to ignore')
     args = parser.parse_args()
 
-    sampler = Sampler(args.trace_path, bits=args.bits)
+    sampler = Sampler(args.trace_path)
     for rate in args.rate:
-        sample_df, sampled_block_req_count = sampler.sample(rate, args.seed, args.ts_method)
-        split_block_req_count = len(sample_df) - sampled_block_req_count
-        split_block_req_percent = getPercent(split_block_req_count, len(sample_df))
+        sample_df, sampled_block_req_count, sample_split_count = sampler.sample(rate, args.seed, args.bits, args.ts_method)
+        split_block_req_percent = getPercent(sample_split_count, sampled_block_req_count)
         
         workload_name = args.trace_path.stem 
         out_sub_dir = args.out_dir.joinpath(workload_name)
