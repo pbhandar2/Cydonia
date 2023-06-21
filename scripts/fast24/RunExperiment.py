@@ -78,8 +78,8 @@ class RunExperiment:
             t1_size_mb, trace_s3_key = experiment_entry['t1_size_mb'], experiment_entry['trace_s3_key']
 
             kwargs = {}
-            if "nvmCacheSizeMB" in experiment_entry["cache_config"]:
-                kwargs["nvmCacheSizeMB"] = experiment_entry["cache_config"]["nvmCacheSizeMB"]
+            if "nvmCacheSizeMB" in experiment_entry["kwargs"]:
+                kwargs["nvmCacheSizeMB"] = experiment_entry["kawrgs"]["nvmCacheSizeMB"]
                 kwargs["nvmCachePaths"] = [str(self.nvm_file_path.absolute())]
             
             workload = pathlib.Path(experiment_entry["trace_s3_key"]).stem 
