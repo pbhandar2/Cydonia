@@ -51,7 +51,7 @@ class RunExperiment:
     def experiment_running(self, config, workload, cur_iteration):
        live_s3_key = self.get_s3_key("live", workload, config, cur_iteration)
        done_s3_key = self.get_s3_key("done", workload, config, cur_iteration)
-       return check_s3_key_exist(live_s3_key) or check_s3_key_exist(done_s3_key)
+       return self.check_s3_key_exist(live_s3_key) or self.check_s3_key_exist(done_s3_key)
 
 
     def get_s3_key(self, status, workload, config, cur_iteration):
