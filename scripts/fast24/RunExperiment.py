@@ -5,6 +5,7 @@ import argparse
 import pathlib 
 import socket 
 
+from cydonia.util.S3Client import S3Client
 from cydonia.cachelib.ReplayConfig import ReplayConfig
 from cydonia.cachelib.Runner import Runner 
 
