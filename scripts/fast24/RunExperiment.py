@@ -1,4 +1,5 @@
 """ Run all the experiments in the file "experiments.json". """
+import os 
 import json 
 import argparse
 import pathlib 
