@@ -58,9 +58,9 @@ class RunExperiment:
         t2_size_mb = 0 
         if "nvmCacheSizeMB" in config["cache_config"]:
             t2_size_mb = config["cache_config"]["nvmCacheSizeMB"]
-        queue_size = config['blockReplayConfig']['maxPendingBlockRequestCount']
-        block_threads = config['blockReplayConfig']['blockRequestProcesserThreads']
-        async_threads = config['blockReplayConfig']['asyncIOReturnTrackerThreads']
+        queue_size = config["test_config"]['blockReplayConfig']['maxPendingBlockRequestCount']
+        block_threads = config["test_config"]['blockReplayConfig']['blockRequestProcesserThreads']
+        async_threads = config["test_config"]['blockReplayConfig']['asyncIOReturnTrackerThreads']
         t1_size_mb = config['cache_config']["cacheSizeMB"]
         return "replay/{}/{}/{}/q={}_bt={}_at={}_t1={}_t2={}_it={}/".format(status,
                                                                             self.machine_type,
