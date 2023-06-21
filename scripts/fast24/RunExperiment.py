@@ -92,7 +92,7 @@ class RunExperiment:
             config.generate_config_file(self.config_file_path)
 
             for cur_iteration in range(self.iteration_count):
-                if experiment_running(config.get_config(), workload, cur_iteration):
+                if self.experiment_running(config.get_config(), workload, cur_iteration):
                     print("Done-> Experiment {},{} already done", config.get_config(), cur_iteration)
                     continue 
                 
