@@ -76,6 +76,20 @@ class ReplayConfig:
             self.test_config['blockReplayConfig']['replayRate'] = kwargs['replayRate']
 
         self.test_config['tag'] = socket.gethostname()
+    
+
+    def get_config(self):
+        """ Get the config JSON. 
+
+            Parameters
+            ----------
+            config : dict
+                the cachebench config 
+        """
+        return {
+            'cache_config': self.cache_config,
+            'test_config': self.test_config
+        }
         
     
     def generate_config_file(self, config_file_path):
@@ -87,9 +101,5 @@ class ReplayConfig:
             config_file_path : pathlib.Path/str 
                 path to the configuration file 
         """
-        config = {
-            'cache_config': self.cache_config,
-            'test_config': self.test_config
-        }
         with config_file_path.open('w+') as f:
-            f.write(json.dumps(config, indent=4))
+            f.write(json.dumps(self.get_config(), indent=4))
