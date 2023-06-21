@@ -70,6 +70,13 @@ class S3Client:
             return int(list_api_return['Contents'][0]['Size'])
     
 
+    def check_prefix_exist(self, prefix):
+        """ Check if any key with given prefix exists. """
+        
+        self.s3.list_objects_v2(Bucket=self.bucket_name, Prefix=prefix, MaxKeys=1)
+        return 'Contents' in res
+    
+
     def get_all_s3_content(self, prefix):
         """ Get all the keys from a given bucket. 
 
