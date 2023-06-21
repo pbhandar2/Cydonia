@@ -72,8 +72,8 @@ class S3Client:
 
     def check_prefix_exist(self, prefix):
         """ Check if any key with given prefix exists. """
-        
-        self.s3.list_objects_v2(Bucket=self.bucket_name, Prefix=prefix, MaxKeys=1)
+
+        res = self.s3.list_objects_v2(Bucket=self.bucket_name, Prefix=prefix, MaxKeys=1)
         return 'Contents' in res
     
 
