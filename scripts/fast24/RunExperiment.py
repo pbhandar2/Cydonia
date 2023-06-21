@@ -43,15 +43,10 @@ class RunExperiment:
         self.s3 = S3Client(self.aws_key, self.aws_secret)
 
 
-    def check_s3_key_exist(self, prefix):
-        res = self.s3.list_objects_v2(Bucket=self.aws_bucket, Prefix=prefix, MaxKeys=1)
-        return 'Contents' in res
-
-
     def experiment_running(self, config, workload, cur_iteration):
        live_s3_key = self.get_s3_key("live", workload, config, cur_iteration)
        done_s3_key = self.get_s3_key("done", workload, config, cur_iteration)
-       return self.check_s3_key_exist(live_s3_key) or self.check_s3_key_exist(done_s3_key)
+       return self.s3.check_prefix_exist(live_s3_key) or self.s3.check_prefix_exist(done_s3_key)
 
 
     def get_s3_key(self, status, workload, config, cur_iteration):
