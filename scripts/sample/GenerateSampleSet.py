@@ -150,7 +150,8 @@ if __name__ == "__main__":
                             help="Directory to output the sample trace")
     
     parser.add_argument("--rate",
-                            nargs="?",
+                            nargs="*",
+                            type=float,
                             default=None,
                             help="The sample rates to generate")
 
