@@ -12,12 +12,132 @@
         }
     },
     {
+        "trace_s3_key": "workloads/cp-iat/w105_5_42_0-1-2-3-4-5-6-7-8.csv",
+        "t1_size_mb": 100,
+        "kwargs": {}
+    },
+    {
+        "trace_s3_key": "workloads/cp-iat/w105_5_42_0-1-2-3-4-5-6-7-8.csv",
+        "t1_size_mb": 100,
+        "kwargs": {
+            "nvmCacheSizeMB": 150
+        }
+    },
+    {
+        "trace_s3_key": "workloads/cp-iat/w105_10_42_0-1-2-3-4-5-6-7-8.csv",
+        "t1_size_mb": 100,
+        "kwargs": {}
+    },
+    {
+        "trace_s3_key": "workloads/cp-iat/w105_10_42_0-1-2-3-4-5-6-7-8.csv",
+        "t1_size_mb": 100,
+        "kwargs": {
+            "nvmCacheSizeMB": 150
+        }
+    },
+    {
         "trace_s3_key": "workloads/cp-iat/w105_1_42_na.csv",
         "t1_size_mb": 100,
         "kwargs": {}
     },
     {
         "trace_s3_key": "workloads/cp-iat/w105_1_42_na.csv",
+        "t1_size_mb": 100,
+        "kwargs": {
+            "nvmCacheSizeMB": 150
+        }
+    },
+    {
+        "trace_s3_key": "workloads/cp-iat/w105_5_42_na.csv",
+        "t1_size_mb": 100,
+        "kwargs": {}
+    },
+    {
+        "trace_s3_key": "workloads/cp-iat/w105_5_42_na.csv",
+        "t1_size_mb": 100,
+        "kwargs": {
+            "nvmCacheSizeMB": 150
+        }
+    },
+    {
+        "trace_s3_key": "workloads/cp-iat/w105_10_42_na.csv",
+        "t1_size_mb": 100,
+        "kwargs": {}
+    },
+    {
+        "trace_s3_key": "workloads/cp-iat/w105_10_42_na.csv",
+        "t1_size_mb": 100,
+        "kwargs": {
+            "nvmCacheSizeMB": 150
+        }
+    },
+    {
+        "trace_s3_key": "workloads/cp-iat/w82_10_42_0-1-2-3-4-5-6-7-8-9-10-11.csv",
+        "t1_size_mb": 100,
+        "kwargs": {}
+    },
+    {
+        "trace_s3_key": "workloads/cp-iat/w82_10_42_0-1-2-3-4-5-6-7-8-9-10-11.csv",
+        "t1_size_mb": 100,
+        "kwargs": {
+            "nvmCacheSizeMB": 150
+        }
+    },
+    {
+        "trace_s3_key": "workloads/cp-iat/w82_5_42_0-1-2-3-4-5-6-7-8-9-10-11.csv",
+        "t1_size_mb": 100,
+        "kwargs": {}
+    },
+    {
+        "trace_s3_key": "workloads/cp-iat/w82_5_42_0-1-2-3-4-5-6-7-8-9-10-11.csv",
+        "t1_size_mb": 100,
+        "kwargs": {
+            "nvmCacheSizeMB": 150
+        }
+    },
+    {
+        "trace_s3_key": "workloads/cp-iat/w82_1_42_0-1-2-3-4-5-6-7-8-9-10-11.csv",
+        "t1_size_mb": 100,
+        "kwargs": {}
+    },
+    {
+        "trace_s3_key": "workloads/cp-iat/w82_1_42_0-1-2-3-4-5-6-7-8-9-10-11.csv",
+        "t1_size_mb": 100,
+        "kwargs": {
+            "nvmCacheSizeMB": 150
+        }
+    },
+    {
+        "trace_s3_key": "workloads/cp-iat/w82_5_42_na.csv",
+        "t1_size_mb": 100,
+        "kwargs": {}
+    },
+    {
+        "trace_s3_key": "workloads/cp-iat/w82_5_42_na.csv",
+        "t1_size_mb": 100,
+        "kwargs": {
+            "nvmCacheSizeMB": 150
+        }
+    },
+    {
+        "trace_s3_key": "workloads/cp-iat/w82_10_42_na.csv",
+        "t1_size_mb": 100,
+        "kwargs": {}
+    },
+    {
+        "trace_s3_key": "workloads/cp-iat/w82_10_42_na.csv",
+        "t1_size_mb": 100,
+        "kwargs": {
+            "nvmCacheSizeMB": 150
+        }
+    },
+    {
+        "trace_s3_key": "workloads/cp-iat/w82_1_42_na.csv",
+        "t1_size_mb": 100,
+        "kwargs": {}
+    },
+    {
+        "trace_s3_key": "workloads/cp-iat/w82_1_42_na.csv",
         "t1_size_mb": 100,
         "kwargs": {
             "nvmCacheSizeMB": 150
