@@ -33,7 +33,7 @@ class RunExperiment:
         self.stat_file_path = self.output_dir.joinpath("stat_0.out")
         self.tsstat_file_path = self.output_dir.joinpath("tsstat_0.out")
         self.hostname = socket.gethostname()
-        self.machine_type = self.hostname.split(".")[1]
+        self.machine_type = self.hostname.split(".")[1].split("-")[0]
         self.machine_name = self.hostname.split(".")[0]
         self.iteration_count = 3 
 
@@ -53,19 +53,20 @@ class RunExperiment:
         t2_size_mb = 0 
         if "nvmCacheSizeMB" in config["cache_config"]:
             t2_size_mb = config["cache_config"]["nvmCacheSizeMB"]
+        
         queue_size = config["test_config"]['blockReplayConfig']['maxPendingBlockRequestCount']
         block_threads = config["test_config"]['blockReplayConfig']['blockRequestProcesserThreads']
         async_threads = config["test_config"]['blockReplayConfig']['asyncIOReturnTrackerThreads']
         t1_size_mb = config['cache_config']["cacheSizeMB"]
-        return "replay/{}/{}/{}/q={}_bt={}_at={}_t1={}_t2={}_it={}/".format(status,
-                                                                            self.machine_type,
-                                                                            workload,
-                                                                            queue_size, 
-                                                                            block_threads,
-                                                                            async_threads,
-                                                                            t1_size_mb, 
-                                                                            t2_size_mb,
-                                                                            cur_iteration)
+        return "replay/{}/{}/{}/q={}_bt={}_at={}_t1={}_t2={}_it={}".format(status,
+                                                                                self.machine_type,
+                                                                                workload,
+                                                                                queue_size, 
+                                                                                block_threads,
+                                                                                async_threads,
+                                                                                t1_size_mb, 
+                                                                                t2_size_mb,
+                                                                                cur_iteration)
     
 
     def run(self):

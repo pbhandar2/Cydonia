@@ -10,6 +10,10 @@ import pandas as pd
 from cydonia.sample.Sampler import Sampler 
 
 
+BLOCK_TRACE_DIR = pathlib.Path("/research2/mtc/cp_traces/csv_traces")
+SAMPLE_TRACE_DIR = pathlib.Path("/research2/mtc/cp_traces/sample/block")
+
+
 class SampleSet:
     def __init__(self, workload_name, ts_method="iat"):
         self.trace_dir = pathlib.Path("/research2/mtc/cp_traces/csv_traces")
@@ -96,6 +100,13 @@ class SampleSet:
         for seed, sample_rate, bits in itertools.product(*param_list):   
             bit_str = self.get_bit_str(bits)
 
+            sample_file_name = "{}_{}_{}_{}.csv".format(self.ts_method, int(sample_rate*100), seed, bit_str)
+            sample_path = self.sample_dir.joinpath(sample_file_name)
+
+            if sample_path.exists():
+                print("Sample already exists! {}".format(sample_path))
+                continue 
+
             print("Sampling->rate={},seed={},bits={},workload={}".format(sample_rate, seed, bit_str, self.workload_name))
             sample_df, split_count_dict = self.sampler.sample(sample_rate, 
                                                                 seed, 
@@ -107,9 +118,6 @@ class SampleSet:
             split_stats['seed'] = seed 
             split_stats['bits'] = bit_str 
             sample_output_data.append(split_stats)
-
-            sample_file_name = "{}_{}_{}_{}.csv".format(self.ts_method, int(sample_rate*100), seed, bit_str)
-            sample_path = self.sample_dir.joinpath(sample_file_name)
 
             sample_df = sample_df.astype({"ts": int, "lba": int, "op": str, "size": int})
             sample_df.to_csv(sample_path, index=False, header=False)
