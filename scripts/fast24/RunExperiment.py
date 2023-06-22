@@ -26,7 +26,8 @@ class RunExperiment:
         self.backing_file_path = backing_file_path
         self.nvm_file_path = nvm_file_path
         self.cachebench_binary_path = cachebench_binary_path
-        self.output_dir = output_dir
+        self.output_dir = output_dir.joinpath("cachebench")
+        self.output_dir.mkdir(exist_ok=True)
         self.config_file_path = self.output_dir.joinpath("config.json")
         self.exp_output_path = self.output_dir.joinpath("stdout.dump")
         self.usage_output_path = self.output_dir.joinpath("usage.csv")
