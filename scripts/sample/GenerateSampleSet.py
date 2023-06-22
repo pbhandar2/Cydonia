@@ -15,8 +15,8 @@ SAMPLE_TRACE_DIR = pathlib.Path("/research2/mtc/cp_traces/sample/block")
 
 
 class SampleSet:
-    def __init__(self, workload_name, ts_method):
-        self.trace_dir = pathlib.Path("/research2/mtc/cp_traces/csv_traces")
+    def __init__(self, workload_name, ts_method, trace_dir, sample_dir):
+        self.trace_dir = trace_dir
         self.bits_list = [None, 
                             range(3), # ignore bits 0,1 and 2 
                             range(0,3,2),
@@ -40,7 +40,7 @@ class SampleSet:
         self.workload_name = workload_name 
         self.trace_path = self.trace_dir.joinpath("{}.csv".format(self.workload_name))
         self.sampler = Sampler(self.trace_path)
-        self.sample_dir = pathlib.Path("/research2/mtc/cp_traces/sample/block/{}".format(self.workload_name))
+        self.sample_dir = sample_dir.joinpath(self.workload_name)
         self.sample_dir.mkdir(exist_ok=True)
         self.sample_output_data_path = pathlib.Path("./data/sample_split/{}.csv".format(self.workload_name))
     
@@ -131,9 +131,22 @@ class SampleSet:
                 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate a set of samples for a given workload")
+    
     parser.add_argument("workload_name", help="Name of the workload")
+
     parser.add_argument("--ts", default="iat", help="Method to generate timestamps 'iat' or 'ts'")
+
+    parser.add_argument("--block_trace_dir", 
+                            default=BLOCK_TRACE_DIR, 
+                            type=pathlib.Path, 
+                            help="Directory containing block traces")
+
+    parser.add_argument("--sample_trace_dir", 
+                            default=SAMPLE_TRACE_DIR,
+                            type=pathlib.Path, 
+                            help="DIrectory to output the sample trace")
+
     args = parser.parse_args()
 
-    sample_generator = SampleSet(args.workload_name, args.ts)
+    sample_generator = SampleSet(args.workload_name, args.ts, args.block_trace_dir, args.sample_trace_dir)
     sample_generator.generate()
