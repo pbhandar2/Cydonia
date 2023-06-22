@@ -15,7 +15,7 @@ SAMPLE_TRACE_DIR = pathlib.Path("/research2/mtc/cp_traces/sample/block")
 
 
 class SampleSet:
-    def __init__(self, workload_name, ts_method, trace_dir, sample_dir):
+    def __init__(self, workload_name, ts_method, trace_dir, sample_dir, rate_list):
         self.trace_dir = trace_dir
         self.bits_list = [None, 
                             range(3), # ignore bits 0,1 and 2 
@@ -32,7 +32,10 @@ class SampleSet:
                             range(15),
                             range(0,15,2),
                             range(0,15,3)]
-        self.sample_rate_list = [0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+        if rate_list is None:
+            self.sample_rate_list = [0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+        else:
+            self.sample_rate_list = rate_list
         self.seed_list = [42, 43, 44]
         self.percentiles_array = np.array([0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 99, 99.9, 100])
 
@@ -144,9 +147,14 @@ if __name__ == "__main__":
     parser.add_argument("--sample_trace_dir", 
                             default=SAMPLE_TRACE_DIR,
                             type=pathlib.Path, 
-                            help="DIrectory to output the sample trace")
+                            help="Directory to output the sample trace")
+    
+    parser.add_argument("--rate",
+                            nargs="?",
+                            default=None,
+                            help="The sample rates to generate")
 
     args = parser.parse_args()
 
-    sample_generator = SampleSet(args.workload_name, args.ts, args.block_trace_dir, args.sample_trace_dir)
+    sample_generator = SampleSet(args.workload_name, args.ts, args.block_trace_dir, args.sample_trace_dir, args.rate)
     sample_generator.generate()
