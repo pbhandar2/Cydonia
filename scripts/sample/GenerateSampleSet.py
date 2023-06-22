@@ -15,7 +15,7 @@ SAMPLE_TRACE_DIR = pathlib.Path("/research2/mtc/cp_traces/sample/block")
 
 
 class SampleSet:
-    def __init__(self, workload_name, ts_method="iat"):
+    def __init__(self, workload_name, ts_method):
         self.trace_dir = pathlib.Path("/research2/mtc/cp_traces/csv_traces")
         self.bits_list = [None, 
                             range(3), # ignore bits 0,1 and 2 
@@ -132,7 +132,8 @@ class SampleSet:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate a set of samples for a given workload")
     parser.add_argument("workload_name", help="Name of the workload")
+    parser.add_argument("--ts", default="iat", help="Method to generate timestamps 'iat' or 'ts'")
     args = parser.parse_args()
 
-    sample_generator = SampleSet(args.workload_name)
+    sample_generator = SampleSet(args.workload_name, args.ts)
     sample_generator.generate()
