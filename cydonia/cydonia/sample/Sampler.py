@@ -9,7 +9,7 @@ import pandas as pd
 import numpy as np 
 from collections import Counter
 
-from cydonia.sample.util import mask_equiv_bits
+from cydonia.sample.util import mask_equiv_bits, ignore_n_low_order_bits
 
 
 class Sampler:
@@ -102,7 +102,7 @@ class Sampler:
 
             for cur_lba in range(lba_start, lba_end):
                 # map the LBA to a new value by ignoring specified bits 
-                addr = mask_equiv_bits(cur_lba, bits)
+                addr = ignore_n_low_order_bits(cur_lba, bits)
 
                 # mask the address where bits are ignored 
                 hash_val = mmh3.hash128(str(addr), signed=False, seed=seed)

@@ -153,7 +153,13 @@ if __name__ == "__main__":
                             nargs="*",
                             type=float,
                             default=None,
-                            help="The sample rates to generate")
+                            help="The list of sample rates to evaluate")
+
+    parser.add_argument("--bits",
+                            nargs="*",
+                            type=float,
+                            default=None,
+                            help="The set of bits to ignore")
 
     args = parser.parse_args()
 
