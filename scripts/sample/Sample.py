@@ -5,6 +5,8 @@ import pathlib
 import logging
 import argparse 
 import itertools
+import numpy as np 
+import pandas as pd 
 
 from cydonia.util.S3Client import S3Client
 from cydonia.sample.Sampler import Sampler
@@ -13,6 +15,8 @@ from cydonia.sample.Sampler import Sampler
 SAMPLE_OUTPUT_DIR = pathlib.Path("/dev/shm")
 METADATA_DIR = pathlib.Path("./data/sample_split")
 MAX_BITS_IGNORE = 12
+SAMPLE_RATE_LIST = [0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99]
+PERCENTILE_TRACKED_ARRAY = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 99, 99.9, 100]
 
 
 class Sample:
@@ -35,7 +39,32 @@ class Sample:
 
         self.sampler = Sampler(self.block_trace_path)
         self.default_bit_list = list(range(MAX_BITS_IGNORE))
-        self.default_sample_rate_list = [0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99]
+        self.default_sample_rate_list = SAMPLE_RATE_LIST
+        self.percentiles_array = PERCENTILE_TRACKED_ARRAY
+
+
+    def generate_array_from_counter(self, counter):
+        """ Get array filled with values represented in the counter 
+
+            Parameters
+            ----------
+            counter : collections.Counter
+                the counter of the number of split per block request 
+
+            Return 
+            ------
+            array : np.array 
+                array of values representing the frequency in the counter
+        """
+        total_items = sum(counter.values())
+        array = np.zeros(total_items, dtype=int)
+
+        cur_index = 0 
+        for key in counter:
+            array[cur_index:cur_index+counter[key]] = key
+            cur_index += counter[key]
+            
+        return array 
 
 
     def get_stats_from_split_counter(self, split_counter):
@@ -113,7 +142,7 @@ class Sample:
             s3_key = self.get_s3_key(ts_method, sample_rate, bits, seed)
 
             # check if s3 key exists if it does, move to the next one 
-            if self.s3.get_key_size(s3_key):
+            if self.s3.check_prefix_exists3_key):
                 print("Sample in S3 {} already!".format(s3_key))
                 continue 
             
@@ -127,7 +156,7 @@ class Sample:
             print("Running sampling for s3 key: {}".format(s3_key))
             sample_df, split_counter = self.sampler.sample(sample_rate, seed, bits, ts_method)
 
-            split_stats = self.get_stats_from_split_counter(split_count_dict)
+            split_stats = self.get_stats_from_split_counter(split_counter)
             split_stats['rate'] = sample_rate 
             split_stats['seed'] = seed 
             split_stats['bits'] = bits 
