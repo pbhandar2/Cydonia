@@ -154,8 +154,9 @@ class Sample:
             self.s3.upload_s3_obj(s3_key, str(sample_file_path.absolute()))
 
             print("Running sampling for s3 key: {}".format(s3_key))
-            sample_df, split_counter = self.sampler.sample(sample_rate, seed, bits, ts_method)
+            split_counter = self.sampler.sample(sample_rate, seed, bits, ts_method, sample_file_path)
 
+            sample_df = pd.read_csv(sample_file_path, name=["ts", "lba", "op", "size"])
             split_stats = self.get_stats_from_split_counter(split_counter)
             split_stats['rate'] = sample_rate 
             split_stats['seed'] = seed 
@@ -166,8 +167,6 @@ class Sample:
             self.update_metadata(split_stats, ts_method)
 
             # upload the sample to S3 
-            sample_df = sample_df.astype({"ts": int, "lba": int, "op": str, "size": int})
-            sample_df.to_csv(sample_file_path, index=False, header=False)
             self.s3.upload_s3_obj(s3_key, str(sample_file_path.absolute()))
             print("Sample {} uploaded".format(s3_key))
 

@@ -40,7 +40,12 @@ class Sampler:
         self.block_trace_df.fillna(0, inplace=True)
 
 
-    def sample(self, rate, seed, bits, ts_method):
+    def add_to_sample(self, sample_entry, out_path):
+        df = pd.DataFrame([sample_entry])
+        df.to_csv(out_path, mode='a+', index=False)
+
+
+    def sample(self, rate, seed, bits, ts_method, sample_path):
         """ Sample using the specified rate, random seed, ts generation 
             method while ignoring specific bits of the address when 
             hashing such that multiple addresses could map to the 
@@ -56,6 +61,8 @@ class Sampler:
                 list of bits to ignore when hashing 
             ts_method : str 
                 the method to generate timestamps in the sample 
+            sample_path : pathlib.Path
+                path to the sample file 
 
             Return 
             ------
@@ -119,7 +126,7 @@ class Sampler:
                         else:
                             cur_sample_block_req['ts'] = int(row['ts'])
                         
-                        cur_sample_block_req['lba'] = cur_lba
+                        cur_sample_block_req['lba'] = int(cur_lba)
                         cur_sample_block_req['op'] = row['op']
                         cur_sample_block_req['size'] = self.lba_size
                     else:
@@ -133,7 +140,7 @@ class Sampler:
                         # this means that the streak of contiguous 
                         # blocks being sampled was broken so we 
                         # need to create a sample block request 
-                        row_json_list.append(copy.deepcopy(cur_sample_block_req))
+                        self.add_to_sample(copy.deepcopy(cur_sample_block_req), sample_path)
 
                         # reset the sample block request 
                         cur_sample_block_req = {
@@ -145,7 +152,7 @@ class Sampler:
             
             # we might exit while tracking a sample block request we never recorded 
             if cur_sample_block_req['size'] > 0:
-                row_json_list.append(copy.deepcopy(cur_sample_block_req))
+                self.add_to_sample(copy.deepcopy(cur_sample_block_req), sample_path)
             
             # check if we generated any sample from this block request 
             if len(row_json_list) > prev_sample_count:
@@ -156,8 +163,7 @@ class Sampler:
             # update sample count 
             prev_sample_count = len(row_json_list)
         
-        sample_df = pd.DataFrame(row_json_list)
         end_time = time.time()
         process_time = end_time - start_time 
         print("prog->{} sampled in {:.5f} minutes".format(self.trace_path, float(process_time/60.0)))
-        return sample_df, split_counter
+        return split_counter
