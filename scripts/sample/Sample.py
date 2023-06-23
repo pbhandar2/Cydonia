@@ -156,7 +156,7 @@ class Sample:
             print("Running sampling for s3 key: {}".format(s3_key))
             split_counter = self.sampler.sample(sample_rate, seed, bits, ts_method, sample_file_path)
 
-            sample_df = pd.read_csv(sample_file_path, name=["ts", "lba", "op", "size"])
+            sample_df = pd.read_csv(sample_file_path, names=["ts", "lba", "op", "size"])
             split_stats = self.get_stats_from_split_counter(split_counter)
             split_stats['rate'] = sample_rate 
             split_stats['seed'] = seed 
