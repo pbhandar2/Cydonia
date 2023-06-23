@@ -142,7 +142,7 @@ class Sample:
             s3_key = self.get_s3_key(ts_method, sample_rate, bits, seed)
 
             # check if s3 key exists if it does, move to the next one 
-            if self.s3.check_prefix_exists3_key):
+            if self.s3.check_prefix_exist(s3_key):
                 print("Sample in S3 {} already!".format(s3_key))
                 continue 
             
