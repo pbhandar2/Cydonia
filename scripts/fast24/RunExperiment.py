@@ -125,7 +125,7 @@ class RunExperiment:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run all the experiment listed in the experiment file.")
 
-    parser.add_argument("--machine_type".
+    parser.add_argument("machine_type",
                             help="The type of machine")
 
     parser.add_argument("--experiment_file", 
