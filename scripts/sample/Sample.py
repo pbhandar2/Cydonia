@@ -178,7 +178,7 @@ class Sample:
 
             print("Running sampling for s3 key: {}".format(s3_key))
             split_counter = self.sampler.sample(sample_rate, seed, bits, ts_method, sample_file_path)
-            split_stats = self.get_stats_from_split_counter(split_counter, sample_file_path)
+            split_stats = self.get_stats_from_split_counter(split_counter, sample, seed, bits, sample_file_path)
 
             # update metadata stats to a file named after the ts_method 
             self.update_metadata(split_stats, ts_method)
