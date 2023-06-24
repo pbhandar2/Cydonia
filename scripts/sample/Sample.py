@@ -105,7 +105,7 @@ class Sample:
                 'mean': 0,
                 'total': 0,
                 'freq%': 0,
-                'rate': rate,
+                'rate': sample_rate,
                 'seed': seed,
                 'bits': bits,
                 'unique_lba_count': 0
