@@ -67,7 +67,7 @@ class Sample:
         return array 
 
 
-    def get_stats_from_split_counter(self, split_counter):
+    def get_stats_from_split_counter(self, split_counter, sample_rate, seed, bits, sample_file_path):
         """ Get statistics (mean, min, max, percentiles) from the counter of number of samples 
             generated from a sampled block request. 
 
@@ -81,18 +81,37 @@ class Sample:
             stats : dict 
                 get split statistics such as (mean, min, max, percentiles) from the split_counter
         """
-        split_array = self.generate_array_from_counter(split_counter)
-
+        total_request_sampled = sum(split_counter.values())
         stats = {}
-        stats['mean'] = np.mean(split_array)
-        stats['total'] = len(split_array)
+        if total_request_sampled > 0:
+            split_array = self.generate_array_from_counter(split_counter)
 
-        for index, percentile in enumerate(self.percentiles_array):
-            stats['p_{}'.format(percentile)] = np.percentile(split_array, percentile, keepdims=False)
-        
-        no_split_count = len(split_array[split_array == 1])
-        stats['freq%'] = int(np.ceil(100*(stats['total'] - no_split_count)/stats['total']))
-        
+            stats['mean'] = np.mean(split_array) if len(spl)
+            stats['total'] = len(split_array)
+
+            for index, percentile in enumerate(self.percentiles_array):
+                stats['p_{}'.format(percentile)] = np.percentile(split_array, percentile, keepdims=False)
+            
+            no_split_count = len(split_array[split_array == 1])
+            stats['freq%'] = int(np.ceil(100*(stats['total'] - no_split_count)/stats['total']))
+
+            sample_df = pd.read_csv(sample_file_path, names=["ts", "lba", "op", "size"])
+            stats['rate'] = sample_rate 
+            stats['seed'] = seed 
+            stats['bits'] = bits 
+            stats['unique_lba_count'] = int(sample_df['lba'].nunique())
+        else:
+            stats = {
+                'mean': 0,
+                'total': 0,
+                'freq%': 0,
+                'rate': rate,
+                'seed': seed,
+                'bits': bits,
+                'unique_lba_count': 0
+            }
+            for index, percentile in enumerate(self.percentiles_array):
+                stats['p_{}'.format(percentile)] = 0
         return stats 
     
     
@@ -155,13 +174,7 @@ class Sample:
 
             print("Running sampling for s3 key: {}".format(s3_key))
             split_counter = self.sampler.sample(sample_rate, seed, bits, ts_method, sample_file_path)
-
-            sample_df = pd.read_csv(sample_file_path, names=["ts", "lba", "op", "size"])
-            split_stats = self.get_stats_from_split_counter(split_counter)
-            split_stats['rate'] = sample_rate 
-            split_stats['seed'] = seed 
-            split_stats['bits'] = bits 
-            split_stats['unique_lba_count'] = int(sample_df['lba'].nunique())
+            split_stats = self.get_stats_from_split_counter(split_counter, sample_file_path)
 
             # update metadata stats to a file named after the ts_method 
             self.update_metadata(split_stats, ts_method)
