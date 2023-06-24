@@ -86,7 +86,7 @@ class Sample:
         if total_request_sampled > 0:
             split_array = self.generate_array_from_counter(split_counter)
 
-            stats['mean'] = np.mean(split_array) if len(spl)
+            stats['mean'] = np.mean(split_array) 
             stats['total'] = len(split_array)
 
             for index, percentile in enumerate(self.percentiles_array):
@@ -133,8 +133,12 @@ class Sample:
             metadata_entry : dict 
                 a dictionary representing a row in the metadata file 
         """
+        metadata_file_path = self.metadata_dir.joinpath("{}.csv".format(metadata_file_name)
         df = pd.DataFrame([metadata_entry])
-        df.to_csv(self.metadata_dir.joinpath("{}.csv".format(metadata_file_name)), mode='a+', index=False)
+        if metadata_file_path.exists():
+            df.to_csv(), mode='a+', index=False)
+        else:
+            df.to_csv(), mode='a+', index=False, header=False)
     
 
     def sample(self, ts_method, sample_rate_list, bit_list, seed):
