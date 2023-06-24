@@ -18,7 +18,7 @@ OUTPUT_DIR = pathlib.Path("/dev/shm")
 
 
 class RunExperiment:
-    def __init__(self, experiment_file_path, backing_file_path, nvm_file_path, cachebench_binary_path, output_dir):
+    def __init__(self, machine_type, experiment_file_path, backing_file_path, nvm_file_path, cachebench_binary_path, output_dir):
         self.experiment_file_path = experiment_file_path
         with open(experiment_file_path) as f:
             self.experiment_list = json.load(f)
@@ -34,7 +34,7 @@ class RunExperiment:
         self.stat_file_path = self.output_dir.joinpath("stat_0.out")
         self.tsstat_file_path = self.output_dir.joinpath("tsstat_0.out")
         self.hostname = socket.gethostname()
-        self.machine_type = self.hostname.split(".")[1].split("-")[0]
+        self.machine_type = machine_type
         self.machine_name = self.hostname.split(".")[0]
         self.iteration_count = 3 
 
@@ -125,6 +125,9 @@ class RunExperiment:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run all the experiment listed in the experiment file.")
 
+    parser.add_argument("--machine_type".
+                            help="The type of machine")
+
     parser.add_argument("--experiment_file", 
                             default=EXPERIMENT_FILE_PATH,
                             type=pathlib.Path,
@@ -152,7 +155,8 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
 
-    runner = RunExperiment(args.experiment_file, 
+    runner = RunExperiment(args.machine_type,
+                            args.experiment_file, 
                             args.backing_file_path, 
                             args.nvm_file_path,
                             args.cachebench_binary_path,
