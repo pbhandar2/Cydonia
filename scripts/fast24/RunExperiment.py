@@ -107,8 +107,9 @@ class RunExperiment:
                 print("Completed-> Experiment {},{}", config.get_config(), cur_iteration)
                 # upload all necessary files 
                 done_s3_key_prefix = self.get_s3_key("live", workload, config.get_config(), cur_iteration)
+                
                 self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.config_file_path.name), str(self.config_file_path.absolute()))
-                self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.exp_output_path.name), str(self.experiment_output_path.absolute()))
+                self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.exp_output_path.name), str(self.exp_output_path.absolute()))
                 self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.usage_output_path.name), str(self.usage_output_path.absolute()))
                 self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.stat_file_path.name), str(self.stat_file_path.absolute()))
                 self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.tsstat_file_path.name), str(self.tsstat_file_path.absolute()))
