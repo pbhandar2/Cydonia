@@ -88,7 +88,7 @@ class Sampler:
 
         ts_tracker = 0 # track the timestamp of block request 
         prev_sample_count = 0 # track the number of block request sampled 
-        row_json_list = [] # list of rows in sample block request as JSON 
+        cur_sample_count = 0 
         for row_index, row in self.block_trace_df.iterrows():
             # the blocks that the block request touches 
             lba_start = row['lba']
@@ -149,19 +149,22 @@ class Sampler:
                             'op': 'r',
                             'size': 0
                         }
+
+                        cur_sample_count += 1
             
             # we might exit while tracking a sample block request we never recorded 
             if cur_sample_block_req['size'] > 0:
                 self.add_to_sample(copy.deepcopy(cur_sample_block_req), sample_path)
+                cur_sample_count += 1
             
             # check if we generated any sample from this block request 
-            if len(row_json_list) > prev_sample_count:
-                split_counter[len(row_json_list) - prev_sample_count] += 1
+            if cur_sample_count > prev_sample_count:
+                split_counter[cur_sample_count - prev_sample_count] += 1
                 # update the timestamp for the next sample block request 
                 ts_tracker += row['iat']
             
             # update sample count 
-            prev_sample_count = len(row_json_list)
+            prev_sample_count = cur_sample_count
         
         end_time = time.time()
         process_time = end_time - start_time 
