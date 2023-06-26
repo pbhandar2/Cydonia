@@ -172,6 +172,11 @@ class Sample:
             
             sample_file_name = self.get_sample_file_name(sample_rate, bits, seed)
             sample_file_path = self.output_dir.joinpath(sample_file_name)
+
+            # remove if there is a sample file already since there was no entry 
+            # for it in S3, we cannot trust the sample 
+            if sample_file_path.exists():
+                sample_file_path.unlink()
             sample_file_path.touch(exist_ok=True)
 
             # upload a tmp file to S3 to lock this sample to prevent or machine from generating the same sample 
@@ -182,7 +187,7 @@ class Sample:
             split_stats = self.get_stats_from_split_counter(split_counter, sample_rate, seed, bits, sample_file_path)
 
             # update metadata stats to a file named after the ts_method 
-            self.update_metadata(split_stats, ts_method)
+            self.update_metadata(split_stats, "{}_{}".format(int(sample_rate*100), ts_method))
 
             # upload the sample to S3 
             self.s3.upload_s3_obj(s3_key, str(sample_file_path.absolute()))
