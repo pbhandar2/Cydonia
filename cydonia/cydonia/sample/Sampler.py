@@ -9,8 +9,6 @@ import pandas as pd
 import numpy as np 
 from collections import Counter
 
-from cydonia.sample.util import mask_equiv_bits, ignore_n_low_order_bits
-
 
 class Sampler:
     def __init__(self, trace_path, lba_size=512):
@@ -39,18 +37,13 @@ class Sampler:
         # the 'iat' of the first request will be NA so replace it with 0 
         self.block_trace_df.fillna(0, inplace=True)
 
+    
+    def ignore_n_low_order_bits(self, val, n):
+        return val >> n
 
-    def add_to_sample(self, sample_entry, out_path):
-        """ Add an entry to the sample to the specified output path. 
 
-            Parameters
-            ----------
-            sample_entry : dict 
-                a row in sample represented as a dictionary 
-        """
-        
-        df = pd.DataFrame([sample_entry])
-        df.to_csv(out_path, mode='a+', index=False)
+    def sample_row_dict_to_str(self, sample_dict):
+        return "{},{},{},{}\n".format(sample_dict['ts'], sample_dict['lba'], sample_dict['op'], sample_dict['size'])
 
 
     def sample(self, rate, seed, bits, ts_method, sample_path):
@@ -80,6 +73,7 @@ class Sampler:
                 count of the number of samples generated per block request sampled 
         """
         start_time = time.time()
+        sample_file_handle = sample_path.open("w+")
 
         # define the limit based on the rate 
         # if the hash value is under this limit, we sample 
@@ -94,9 +88,14 @@ class Sampler:
             per block request that had at least 1 block sampled. """
         split_counter = Counter()
 
-        ts_tracker = 0 # track the timestamp of block request 
-        prev_sample_count = 0 # track the number of block request sampled 
-        cur_sample_count = 0 
+        next_sample_req_ts = 0 
+        """ Track how sample count changes after evaluating each 
+            block request in order to track if a single block request 
+            led to multiple sample block requests. The change in sample 
+            count after each evaluation of block request is also a trigger
+            to update the timestamp of the next sample block request. """
+        sample_count = 0 
+        prev_sample_count = 0 
         for row_index, row in self.block_trace_df.iterrows():
             # the blocks that the block request touches 
             lba_start = row['lba']
@@ -108,22 +107,21 @@ class Sampler:
                 'op': 'r',
                 'size': 0
             }
-
-            # print update every millions block request processed 
-            if row_index % 1e6 == 0:
+            # print update every 100,000 block request processed 
+            if row_index % 1e5 == 0:
                 end_time = time.time()
                 process_time = end_time - start_time 
                 print("prog->{} processed in {:.5f} minutes".format(row_index, float(process_time/60.0)))
 
             for cur_lba in range(lba_start, lba_end):
                 # map the LBA to a new value by ignoring specified bits 
-                addr = ignore_n_low_order_bits(cur_lba, bits)
+                addr = self.ignore_n_low_order_bits(cur_lba, bits)
 
                 # mask the address where bits are ignored 
                 hash_val = mmh3.hash128(str(addr), signed=False, seed=seed)
 
                 # the timestamp to be used for samples generated if this block request is sampled 
-                iat_ts = int(ts_tracker + row['iat'])
+                iat_ts = int(next_sample_req_ts + row['iat'])
                 if hash_val < limit:
                     # sample this block 
                     if cur_sample_block_req['size'] == 0:
@@ -148,8 +146,8 @@ class Sampler:
                         # this means that the streak of contiguous 
                         # blocks being sampled was broken so we 
                         # need to create a sample block request 
-                        self.add_to_sample(copy.deepcopy(cur_sample_block_req), sample_path)
-                        cur_sample_count += 1
+                        sample_file_handle.write(self.sample_row_dict_to_str(cur_sample_block_req))
+                        sample_count += 1
 
                         # reset the sample block request 
                         cur_sample_block_req = {
@@ -161,18 +159,19 @@ class Sampler:
 
             # we might exit while tracking a sample block request we never recorded 
             if cur_sample_block_req['size'] > 0:
-                self.add_to_sample(copy.deepcopy(cur_sample_block_req), sample_path)
-                cur_sample_count += 1
+                sample_file_handle.write(self.sample_row_dict_to_str(cur_sample_block_req))
+                sample_count += 1
             
             # check if we generated any sample from this block request 
-            if cur_sample_count > prev_sample_count:
-                split_counter[cur_sample_count - prev_sample_count] += 1
+            if sample_count > prev_sample_count:
+                split_counter[sample_count- prev_sample_count] += 1
                 # update the timestamp for the next sample block request 
-                ts_tracker += row['iat']
+                next_sample_req_ts += row['iat']
             
             # update sample count 
-            prev_sample_count = cur_sample_count
+            prev_sample_count = sample_count
         
+        sample_file_handle.close()
         end_time = time.time()
         process_time = end_time - start_time 
         print("prog->{} sampled in {:.5f} minutes".format(self.trace_path, float(process_time/60.0)))
