@@ -41,6 +41,14 @@ class Sampler:
 
 
     def add_to_sample(self, sample_entry, out_path):
+        """ Add an entry to the sample to the specified output path. 
+
+            Parameters
+            ----------
+            sample_entry : dict 
+                a row in sample represented as a dictionary 
+        """
+        
         df = pd.DataFrame([sample_entry])
         df.to_csv(out_path, mode='a+', index=False)
 
@@ -141,6 +149,7 @@ class Sampler:
                         # blocks being sampled was broken so we 
                         # need to create a sample block request 
                         self.add_to_sample(copy.deepcopy(cur_sample_block_req), sample_path)
+                        cur_sample_count += 1
 
                         # reset the sample block request 
                         cur_sample_block_req = {
@@ -150,8 +159,6 @@ class Sampler:
                             'size': 0
                         }
 
-                        cur_sample_count += 1
-            
             # we might exit while tracking a sample block request we never recorded 
             if cur_sample_block_req['size'] > 0:
                 self.add_to_sample(copy.deepcopy(cur_sample_block_req), sample_path)

@@ -135,10 +135,11 @@ class Sample:
         """
         metadata_file_path = self.metadata_dir.joinpath("{}.csv".format(metadata_file_name))
         df = pd.DataFrame([metadata_entry])
+
         if metadata_file_path.exists():
-            df.to_csv(metadata_file_path, mode='a+', index=False, header=False)
+            df.to_csv(metadata_file_path, mode='a', index=False, header=False)
         else:
-            df.to_csv(metadata_file_path, mode='a+', index=False)
+            df.to_csv(metadata_file_path, index=False)
     
 
     def sample(self, ts_method, sample_rate_list, bit_list, seed):
