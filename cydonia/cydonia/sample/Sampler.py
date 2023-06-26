@@ -127,7 +127,7 @@ class Sampler:
                     if cur_sample_block_req['size'] == 0:
                         # we were not tracking any sample block request 
                         # so start tracking  
-                        if ts_method == 'iat':
+                        if ts_method == 'iat' or ts_method == 'iat2':
                             cur_sample_block_req['ts'] = iat_ts
                         else:
                             cur_sample_block_req['ts'] = int(row['ts'])
@@ -149,6 +149,10 @@ class Sampler:
                         sample_file_handle.write(self.sample_row_dict_to_str(cur_sample_block_req))
                         sample_count += 1
 
+                        if ts_method == "iat2":
+                            next_sample_req_ts = iat_ts
+                            iat_ts = next_sample_req_ts + row['iat']
+
                         # reset the sample block request 
                         cur_sample_block_req = {
                             'ts': 0,
@@ -161,12 +165,17 @@ class Sampler:
             if cur_sample_block_req['size'] > 0:
                 sample_file_handle.write(self.sample_row_dict_to_str(cur_sample_block_req))
                 sample_count += 1
+
+                if ts_method == "iat2":
+                    next_sample_req_ts = iat_ts
+                    iat_ts = next_sample_req_ts + row['iat']
             
             # check if we generated any sample from this block request 
             if sample_count > prev_sample_count:
                 split_counter[sample_count- prev_sample_count] += 1
                 # update the timestamp for the next sample block request 
-                next_sample_req_ts += row['iat']
+                if ts_method == "iat":
+                    next_sample_req_ts += row['iat']
             
             # update sample count 
             prev_sample_count = sample_count
