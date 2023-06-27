@@ -35,7 +35,7 @@ class Sample:
         self.aws_key = os.environ['AWS_KEY']
         self.aws_secret = os.environ['AWS_SECRET']
         self.aws_bucket = os.environ['AWS_BUCKET']
-        self.s3 = S3Client(self.aws_key, self.aws_secret)
+        self.s3 = S3Client(self.aws_key, self.aws_secret, self.aws_bucket)
 
         self.sampler = Sampler(self.block_trace_path)
         self.default_bit_list = list(range(MAX_BITS_IGNORE))
@@ -125,7 +125,7 @@ class Sample:
         return "workloads/cp-{}/{}_{}_{}_{}.csv".format(ts_method, self.workload_name, int(sample_rate*100), seed, bits)
     
 
-    def update_metadata(self, metadata_entry, metadata_file_name):
+    def update_metadata(self, metadata_entry, metadata_file_name, ts_method):
         """ Update the metadata file with an entry for the sample generated 
             
             Parameters
@@ -133,7 +133,7 @@ class Sample:
             metadata_entry : dict 
                 a dictionary representing a row in the metadata file 
         """
-        metadata_file_path = self.metadata_dir.joinpath("{}.csv".format(metadata_file_name))
+        metadata_file_path = self.metadata_dir.joinpath(ts_method, "{}.csv".format(metadata_file_name))
         df = pd.DataFrame([metadata_entry])
 
         if metadata_file_path.exists():
@@ -209,7 +209,7 @@ if __name__ == "__main__":
     
     parser.add_argument("--ts", 
         default="iat", 
-        choices=["iat", "ts"],
+        choices=["iat", "ts", "iat2"],
         help="Method to generate timestamps (Default: 'ts')")
 
     parser.add_argument("--rate",
