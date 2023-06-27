@@ -125,7 +125,7 @@ class Sample:
         return "workloads/cp-{}/{}_{}_{}_{}.csv".format(ts_method, self.workload_name, int(sample_rate*100), seed, bits)
     
 
-    def update_metadata(self, metadata_entry, metadata_file_name, ts_method):
+    def update_metadata(self, metadata_entry, metadata_file_name):
         """ Update the metadata file with an entry for the sample generated 
             
             Parameters
@@ -133,7 +133,7 @@ class Sample:
             metadata_entry : dict 
                 a dictionary representing a row in the metadata file 
         """
-        metadata_file_path = self.metadata_dir.joinpath(ts_method, "{}.csv".format(metadata_file_name))
+        metadata_file_path = self.metadata_dir.joinpath("{}.csv".format(metadata_file_name))
         df = pd.DataFrame([metadata_entry])
 
         if metadata_file_path.exists():
