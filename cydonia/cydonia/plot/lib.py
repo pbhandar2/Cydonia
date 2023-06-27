@@ -47,20 +47,24 @@ def plot_iat_percentile_diff(block_trace_path, sample_trace_path, plot_path, per
         else:
             diff_array[diff_index] = 100*(orig_val - sample_val)/orig_val
         diff_index += 1
+    
+
 
     mean_original_iat = original_df.iloc[1:]['iat'].mean()
     plot_bars(ax, percentiles, original_percentile_vals)
     ax.set_xticks([])
-    ax.set_title("Mean: {:.3f}".format(mean_original_iat), fontsize=10, pad=5)
+    #ax.set_title("Mean: {:.3f}".format(mean_original_iat), fontsize=10, pad=5)
 
     mean_sample_iat = sample_df.iloc[1:]['iat'].mean()
     plot_bars(ax1, percentiles, sample_percentile_vals)
     ax1.set_xticks([])
-    ax1.set_title("Mean: {:.3f}".format(mean_sample_iat), fontsize=10, pad=5)
+    #ax1.set_title("Mean: {:.3f}".format(mean_sample_iat), fontsize=10, pad=5)
 
     mean_diff = 100*(mean_original_iat - mean_sample_iat)/mean_original_iat
     plot_bars(ax2, percentiles, diff_array)
-    ax2.set_title("Mean Error (%): {:.3f}".format(mean_diff), fontsize=10, pad=5)
+    #ax2.set_title("Mean Error (%): {:.3f}".format(mean_diff), fontsize=10, pad=5)
+
+    title_str = "Mean: sample={:.1f}, orig={:.1f}, error%={:.1f}".format(mean_sample_iat, mean_original_iat, mean_diff)
 
     for per, orig_val, sample_val, val in zip(percentiles, original_percentile_vals, sample_percentile_vals, diff_array):
         print("{}->{},{},{}".format(per, orig_val, sample_val, val))
@@ -69,12 +73,14 @@ def plot_iat_percentile_diff(block_trace_path, sample_trace_path, plot_path, per
     ax.set_ylim(max_y_val)
     ax1.set_ylim(max_y_val)
 
-    ax2.set_ylabel("Difference (%)")
+    ax2.set_ylabel("Error (%)")
     ax.set_ylabel("IAT ($\mu$s)")
     ax1.set_ylabel("IAT ($\mu$s)")
 
     ax2.set_xticks(percentiles, percentiles)
     ax2.set_xlabel("Percentiles")
+
+    ax.set_title(title_str, fontsize=12, pad=10)
 
     plt.tight_layout()
     plt.savefig(plot_path)
