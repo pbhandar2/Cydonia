@@ -1,4 +1,4 @@
-""" This class manages the data in S3 bucket 'mtcachedata'. """
+""" This class manages data in a S3 bucket. """
 
 import json 
 import pathlib 
@@ -6,8 +6,8 @@ import boto3
 from botocore.exceptions import ClientError
 
 class S3Client:
-    def __init__(self, s3_key, s3_secret):
-        self.bucket_name = "mtcachedata"
+    def __init__(self, s3_key, s3_secret, bucket_name):
+        self.bucket_name = bucket_name
         self.s3_key = s3_key
         self.s3_secret = s3_secret
 
@@ -18,6 +18,16 @@ class S3Client:
 
 
     def download_s3_obj(self, key, local_path):
+        """ Download object with S3 key to a local path
+            
+            Parameters
+            ----------
+            key : str 
+                the key of the object to download
+            
+            local_path : pathlib.Path / str 
+                path to download to 
+        """
         try:
             self.s3.download_file(self.bucket_name, key, local_path)
         except ClientError as e:
@@ -25,6 +35,16 @@ class S3Client:
 
 
     def upload_s3_obj(self, key, local_path):
+        """ Upload a local file to S3 with a given a key
+            
+            Parameters
+            ----------
+            key : str 
+                the key of the object to upload
+            
+            local_path : pathlib.Path / str 
+                path of the file to upload
+        """
         try:
             self.s3.upload_file(local_path, self.bucket_name, key)
         except ClientError as e:
@@ -71,8 +91,18 @@ class S3Client:
     
 
     def check_prefix_exist(self, prefix):
-        """ Check if any key with given prefix exists. """
+        """ Check if any key with given prefix exists. 
 
+            Parameters
+            ----------
+            prefix : str 
+                the prefix to match all the keys to 
+            
+            Return
+            ------
+            exist_flag : bool
+                flag indicating whether any key with specified prefix exists
+        """
         res = self.s3.list_objects_v2(Bucket=self.bucket_name, Prefix=prefix, MaxKeys=1)
         return 'Contents' in res
     
@@ -114,3 +144,33 @@ class S3Client:
                             aws_secret_access_key=self.s3_secret)
         copy_source = {'Bucket': self.bucket_name, 'Key': source_key}
         s3.meta.client.copy(copy_source, self.bucket_name, destination_key)
+    
+
+    def sync_s3_prefix_with_local_dir(self, s3_prefix, local_dir):
+        """ Sync all the objects with a given s3_prefix into a local directory.
+
+            Parameters
+            ----------
+            s3_prefix : str 
+                the s3 prefix that all objects in the directory should contain 
+            local_dir : pathlib.Path / str 
+                path of the local directory to store the objects 
+        """
+
+        s3_key_list = self.get_all_s3_content(s3_prefix)
+        for s3_key in s3_key_list:
+            s3_post_fix = s3_key.replace(s3_prefix, '').replace("/", '')
+            local_path = local_dir.joinpath(s3_post_fix)
+
+            if local_path.exists():
+                key_size = self.s3.get_key_size(s3_key)
+                file_size = local_path.stat().st_size
+                if key_size == file_size:
+                    print("Sync->Key and file already in sync {}, {}".format(s3_key, local_path))
+                    continue 
+                else:
+                    print("Bad sync->Key and file not in sync s3:{} local: {} {} {}".format(key_size, file_size, s3_key, local_path))
+
+            local_path.parent.mkdir(exist_ok=True, parents=True)
+            self.download_s3_obj(s3_key, str(local_path.absolute()))
+            print("Done-> Synced {} in local path {}".format(s3_key, local_path))
