@@ -41,7 +41,7 @@ class RunExperiment:
         self.aws_key = os.environ['AWS_KEY']
         self.aws_secret = os.environ['AWS_SECRET']
         self.aws_bucket = os.environ['AWS_BUCKET']
-        self.s3 = S3Client(self.aws_key, self.aws_secret)
+        self.s3 = S3Client(self.aws_key, self.aws_secret, self.aws_bucket)
 
 
     def experiment_running(self, config, workload, cur_iteration):
