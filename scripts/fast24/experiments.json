@@ -1,98 +1,26 @@
 [
-    {
-        "trace_s3_key": "workloads/cp-iat/w105_1_42_0.csv",
-        "t1_size_mb": 100,
-        "kwargs": {}
-    },
-    {
-        "trace_s3_key": "workloads/cp-iat/w105_1_42_0.csv",
-        "t1_size_mb": 100,
-        "kwargs": {
-            "nvmCacheSizeMB": 150
-        }
-    },
-    {
-        "trace_s3_key": "workloads/cp-iat/w105_1_42_1.csv",
-        "t1_size_mb": 100,
-        "kwargs": {}
-    },
-    {
-        "trace_s3_key": "workloads/cp-iat/w105_1_42_1.csv",
-        "t1_size_mb": 100,
-        "kwargs": {
-            "nvmCacheSizeMB": 150
-        }
-    },
-    {
-        "trace_s3_key": "workloads/cp-iat/w105_1_42_2.csv",
-        "t1_size_mb": 100,
-        "kwargs": {}
-    },
-    {
-        "trace_s3_key": "workloads/cp-iat/w105_1_42_2.csv",
-        "t1_size_mb": 100,
-        "kwargs": {
-            "nvmCacheSizeMB": 150
-        }
-    },
-    {
-        "trace_s3_key": "workloads/cp-iat/w47_1_42_0.csv",
-        "t1_size_mb": 100,
-        "kwargs": {}
-    },
-    {
-        "trace_s3_key": "workloads/cp-iat/w47_1_42_0.csv",
-        "t1_size_mb": 100,
-        "kwargs": {
-            "nvmCacheSizeMB": 150
-        }
-    },
-    {
-        "trace_s3_key": "workloads/cp-iat/w68_1_42_0.csv",
-        "t1_size_mb": 100,
-        "kwargs": {}
-    },
-    {
-        "trace_s3_key": "workloads/cp-iat/w68_1_42_0.csv",
-        "t1_size_mb": 100,
-        "kwargs": {
-            "nvmCacheSizeMB": 150
-        }
-    },
-    {
-        "trace_s3_key": "workloads/cp-iat/w98_1_42_0.csv",
-        "t1_size_mb": 100,
-        "kwargs": {}
-    },
-    {
-        "trace_s3_key": "workloads/cp-iat/w98_1_42_0.csv",
-        "t1_size_mb": 100,
-        "kwargs": {
-            "nvmCacheSizeMB": 150
-        }
-    },
-    {
-        "trace_s3_key": "workloads/cp-iat/w98_1_42_1.csv",
-        "t1_size_mb": 100,
-        "kwargs": {}
-    },
-    {
-        "trace_s3_key": "workloads/cp-iat/w98_1_42_1.csv",
-        "t1_size_mb": 100,
-        "kwargs": {
-            "nvmCacheSizeMB": 150
-        }
-    },
-    {
-        "trace_s3_key": "workloads/cp-iat/w98_1_42_2.csv",
-        "t1_size_mb": 100,
-        "kwargs": {}
-    },
-    {
-        "trace_s3_key": "workloads/cp-iat/w98_1_42_2.csv",
-        "t1_size_mb": 100,
-        "kwargs": {
-            "nvmCacheSizeMB": 150
-        }
-    }
+    {"trace_s3_key": "workloads/cp-iat/w13_1_42_0.csv", "t1_size_mb": 1100, "kwargs": {} },
+    {"trace_s3_key": "workloads/cp-iat/w13_1_42_0.csv", "t1_size_mb": 1100, "kwargs": {"nvmCacheSizeMB": 4200}},
+    {"trace_s3_key": "workloads/cp-iat/w13_1_42_2.csv", "t1_size_mb": 1100, "kwargs": {} },
+    {"trace_s3_key": "workloads/cp-iat/w13_1_42_2.csv", "t1_size_mb": 1100, "kwargs": {"nvmCacheSizeMB": 4200}},
+    {"trace_s3_key": "workloads/cp-iat/w13_1_42_4.csv", "t1_size_mb": 1100, "kwargs": {} },
+    {"trace_s3_key": "workloads/cp-iat/w13_1_42_4.csv", "t1_size_mb": 1100, "kwargs": {"nvmCacheSizeMB": 4200}},
+    {"trace_s3_key": "workloads/cp-iat/w13_10_42_0.csv", "t1_size_mb": 11000, "kwargs": {} },
+    {"trace_s3_key": "workloads/cp-iat/w13_10_42_0.csv", "t1_size_mb": 11000, "kwargs": {"nvmCacheSizeMB": 42000}},
+    {"trace_s3_key": "workloads/cp-iat/w13_10_42_2.csv", "t1_size_mb": 11000, "kwargs": {} },
+    {"trace_s3_key": "workloads/cp-iat/w13_10_42_2.csv", "t1_size_mb": 11000, "kwargs": {"nvmCacheSizeMB": 42000}},
+    {"trace_s3_key": "workloads/cp-iat/w13_10_42_4.csv", "t1_size_mb": 11000, "kwargs": {} },
+    {"trace_s3_key": "workloads/cp-iat/w13_10_42_4.csv", "t1_size_mb": 11000, "kwargs": {"nvmCacheSizeMB": 42000}},
+    {"trace_s3_key": "workloads/cp-iat/w13_40_42_0.csv", "t1_size_mb": 44000, "kwargs": {} },
+    {"trace_s3_key": "workloads/cp-iat/w13_40_42_0.csv", "t1_size_mb": 44000, "kwargs": {"nvmCacheSizeMB": 168000}},
+    {"trace_s3_key": "workloads/cp-iat/w13_40_42_2.csv", "t1_size_mb": 44000, "kwargs": {} },
+    {"trace_s3_key": "workloads/cp-iat/w13_40_42_2.csv", "t1_size_mb": 44000, "kwargs": {"nvmCacheSizeMB": 168000}},
+    {"trace_s3_key": "workloads/cp-iat/w13_40_42_4.csv", "t1_size_mb": 44000, "kwargs": {} },
+    {"trace_s3_key": "workloads/cp-iat/w13_40_42_4.csv", "t1_size_mb": 44000, "kwargs": {"nvmCacheSizeMB": 168000}},
+    {"trace_s3_key": "workloads/cp-iat/w13_40_42_8.csv", "t1_size_mb": 44000, "kwargs": {} },
+    {"trace_s3_key": "workloads/cp-iat/w13_40_42_8.csv", "t1_size_mb": 44000, "kwargs": {"nvmCacheSizeMB": 168000}},
+    {"trace_s3_key": "workloads/cp-iat/w13_40_42_10.csv", "t1_size_mb": 44000, "kwargs": {} },
+    {"trace_s3_key": "workloads/cp-iat/w13_40_42_10.csv", "t1_size_mb": 44000, "kwargs": {"nvmCacheSizeMB": 168000}},
+    {"trace_s3_key": "workloads/cp/w13.csv", "t1_size_mb": 110000, "kwargs": {} },
+    {"trace_s3_key": "workloads/cp/w13.csv", "t1_size_mb": 110000, "kwargs": {"nvmCacheSizeMB": 420000}}
 ]
