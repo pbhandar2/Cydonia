@@ -12,11 +12,12 @@ from cydonia.util.S3Client import S3Client
 from cydonia.sample.Sampler import Sampler
 
 # constants / defaults 
+MAX_BITS_IGNORE = 12
 SAMPLE_OUTPUT_DIR = pathlib.Path("/dev/shm")
 METADATA_DIR = pathlib.Path("./data/sample_split")
-MAX_BITS_IGNORE = 12
-SAMPLE_RATE_LIST = [0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99]
 PERCENTILE_TRACKED_ARRAY = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 99, 99.9, 100]
+SAMPLE_RATE_LIST = [0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99]
+
 
 
 class Sample:
