@@ -1,4 +1,6 @@
-# scripts 
+# Scripts
+
+This directory contains python scirpts that utilize the cyodnia package. 
 
 ### sample/Sample.py
 ```
