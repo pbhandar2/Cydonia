@@ -197,7 +197,11 @@ class Sample:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Generate sample block traces from a block trace",
-        epilog="Example usage: python3 Sample.py ~/w20.csv /dev/shm --rate 0.01 0.5 --bits 0 1 2")
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="Notes:\n"
+                "* Example usage: python3 Sample.py ~/w20.csv /dev/shm --rate 0.01 0.5 --bits 0 1 2\n"
+                "* The output sample file name has format: $WORKLOAD_FILE_NAME$_$SAMPLE_RATE$_$SEED$_$BITS$.csv\n"
+                "* For example: original trace w20.csv can generate samples with file name w20_10_42_2.csv")
 
     parser.add_argument("block_trace_path", 
         type=pathlib.Path,

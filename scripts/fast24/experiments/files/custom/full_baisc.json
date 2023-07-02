@@ -1,0 +1,6 @@
+[
+    {"trace_s3_key": "workloads/cp/w13.csv", "t1_size_mb": 110000, "kwargs": {} },
+    {"trace_s3_key": "workloads/cp/w13.csv", "t1_size_mb": 110000, "kwargs": {"nvmCacheSizeMB": 420000}},
+    {"trace_s3_key": "workloads/cp/w20.csv", "t1_size_mb": 110000, "kwargs": {} },
+    {"trace_s3_key": "workloads/cp/w20.csv", "t1_size_mb": 110000, "kwargs": {"nvmCacheSizeMB": 420000}}
+]
