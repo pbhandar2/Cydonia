@@ -18,7 +18,7 @@ OUTPUT_DIR = pathlib.Path("/dev/shm")
 
 
 class RunExperiment:
-    def __init__(self, machine_type, experiment_file_path, backing_file_path, nvm_file_path, cachebench_binary_path, output_dir):
+    def __init__(self, machine_type, experiment_file_path, backing_file_path, nvm_file_path, cachebench_binary_path, output_dir, num_itr):
         self.experiment_file_path = experiment_file_path
         with open(experiment_file_path) as f:
             self.experiment_list = json.load(f)
@@ -36,7 +36,7 @@ class RunExperiment:
         self.hostname = socket.gethostname()
         self.machine_type = machine_type
         self.machine_name = self.hostname.split(".")[0]
-        self.iteration_count = 3 
+        self.num_itr = num_itr
 
         self.aws_key = os.environ['AWS_KEY']
         self.aws_secret = os.environ['AWS_SECRET']
@@ -71,24 +71,24 @@ class RunExperiment:
     
 
     def run(self):
-        for experiment_entry in self.experiment_list:
-            t1_size_mb, trace_s3_key = experiment_entry['t1_size_mb'], experiment_entry['trace_s3_key']
+        for cur_iteration in range(self.num_itr):
+            for experiment_entry in self.experiment_list:
+                t1_size_mb, trace_s3_key = experiment_entry['t1_size_mb'], experiment_entry['trace_s3_key']
 
-            kwargs = {}
-            if "nvmCacheSizeMB" in experiment_entry["kwargs"]:
-                kwargs["nvmCacheSizeMB"] = experiment_entry["kwargs"]["nvmCacheSizeMB"]
-                kwargs["nvmCachePaths"] = [str(self.nvm_file_path.absolute())]
-            
-            workload = pathlib.Path(experiment_entry["trace_s3_key"]).stem 
-            local_trace_path = self.output_dir.joinpath("{}.csv".format(workload))
+                kwargs = {}
+                if "nvmCacheSizeMB" in experiment_entry["kwargs"]:
+                    kwargs["nvmCacheSizeMB"] = experiment_entry["kwargs"]["nvmCacheSizeMB"]
+                    kwargs["nvmCachePaths"] = [str(self.nvm_file_path.absolute())]
+                
+                workload = pathlib.Path(experiment_entry["trace_s3_key"]).stem 
+                local_trace_path = self.output_dir.joinpath("{}.csv".format(workload))
 
-            config = ReplayConfig([str(local_trace_path.resolve())], 
-                                    [str(self.backing_file_path.resolve())], 
-                                    experiment_entry["t1_size_mb"], 
-                                    **kwargs)
-            config.generate_config_file(self.config_file_path)
+                config = ReplayConfig([str(local_trace_path.resolve())], 
+                                        [str(self.backing_file_path.resolve())], 
+                                        experiment_entry["t1_size_mb"], 
+                                        **kwargs)
+                config.generate_config_file(self.config_file_path)
 
-            for cur_iteration in range(self.iteration_count):
                 if self.experiment_running(config.get_config(), workload, cur_iteration):
                     print("Done-> Experiment {},{} already done", config.get_config(), cur_iteration)
                     continue 
@@ -150,6 +150,11 @@ if __name__ == "__main__":
                             type=pathlib.Path, 
                             help="Directory where all files related to experiment is stored")
     
+    parser.add_argument("--num_iteration",
+                            default=3,
+                            type=int,
+                            help="The number of iterations to run experiments.")
+    
     args = parser.parse_args()
 
     runner = RunExperiment(args.machine_type,
@@ -157,5 +162,6 @@ if __name__ == "__main__":
                             args.backing_file_path, 
                             args.nvm_file_path,
                             args.cachebench_binary_path,
-                            args.output_dir)
+                            args.output_dir,
+                            args.num_iteration)
     runner.run()
