@@ -59,7 +59,7 @@ class RunExperiment:
         block_threads = config["test_config"]['blockReplayConfig']['blockRequestProcesserThreads']
         async_threads = config["test_config"]['blockReplayConfig']['asyncIOReturnTrackerThreads']
         t1_size_mb = config['cache_config']["cacheSizeMB"]
-        return "replay/{}/{}/{}/q={}_bt={}_at={}_t1={}_t2={}_it={}".format(status,
+        return "replay_output/{}/{}/{}/q={}_bt={}_at={}_t1={}_t2={}_it={}".format(status,
                                                                                 self.machine_type,
                                                                                 workload,
                                                                                 queue_size, 
