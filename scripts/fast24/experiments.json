@@ -66,5 +66,5 @@
     {"trace_s3_key": "workloads/cp-iat/w13_40_42_9.csv", "t1_size_mb": 44000, "kwargs": {} },
     {"trace_s3_key": "workloads/cp-iat/w13_40_42_9.csv", "t1_size_mb": 44000, "kwargs": {"nvmCacheSizeMB": 168000}},
     {"trace_s3_key": "workloads/cp-iat/w13_40_42_0.csv", "t1_size_mb": 44000, "kwargs": {} },
-    {"trace_s3_key": "workloads/cp-iat/w13_40_42_0.csv", "t1_size_mb": 44000, "kwargs": {"nvmCacheSizeMB": 168000}},
+    {"trace_s3_key": "workloads/cp-iat/w13_40_42_0.csv", "t1_size_mb": 44000, "kwargs": {"nvmCacheSizeMB": 168000}}
 ]
