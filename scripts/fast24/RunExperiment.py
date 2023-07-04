@@ -35,7 +35,6 @@ class RunExperiment:
         self.tsstat_file_path = self.output_dir.joinpath("tsstat_0.out")
         self.hostname = socket.gethostname()
         self.machine_name = machine_name
-        self.machine_name = self.hostname.split(".")[0]
         self.num_itr = num_itr
 
         self.aws_key = os.environ['AWS_KEY']
