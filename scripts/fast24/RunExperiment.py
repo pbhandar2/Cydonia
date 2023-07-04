@@ -59,15 +59,15 @@ class RunExperiment:
         block_threads = config["test_config"]['blockReplayConfig']['blockRequestProcesserThreads']
         async_threads = config["test_config"]['blockReplayConfig']['asyncIOReturnTrackerThreads']
         t1_size_mb = config['cache_config']["cacheSizeMB"]
-        return "replay/{}/{}/{}/q={}_bt={}_at={}_t1={}_t2={}_it={}".format(status,
-                                                                                self.machine_name,
-                                                                                workload,
-                                                                                queue_size, 
-                                                                                block_threads,
-                                                                                async_threads,
-                                                                                t1_size_mb, 
-                                                                                t2_size_mb,
-                                                                                cur_iteration)
+        return "block_replay/{}/{}/{}/q={}_bt={}_at={}_t1={}_t2={}_it={}".format(status,
+                                                                                    self.machine_name,
+                                                                                    workload,
+                                                                                    queue_size, 
+                                                                                    block_threads,
+                                                                                    async_threads,
+                                                                                    t1_size_mb, 
+                                                                                    t2_size_mb,
+                                                                                    cur_iteration)
     
 
     def run(self):
