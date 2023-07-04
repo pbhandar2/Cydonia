@@ -18,7 +18,7 @@ OUTPUT_DIR = pathlib.Path("/dev/shm")
 
 
 class RunExperiment:
-    def __init__(self, machine_type, experiment_file_path, backing_file_path, nvm_file_path, cachebench_binary_path, output_dir, num_itr):
+    def __init__(self, machine_name, experiment_file_path, backing_file_path, nvm_file_path, cachebench_binary_path, output_dir, num_itr):
         self.experiment_file_path = experiment_file_path
         with open(experiment_file_path) as f:
             self.experiment_list = json.load(f)
@@ -34,7 +34,7 @@ class RunExperiment:
         self.stat_file_path = self.output_dir.joinpath("stat_0.out")
         self.tsstat_file_path = self.output_dir.joinpath("tsstat_0.out")
         self.hostname = socket.gethostname()
-        self.machine_type = machine_type
+        self.machine_name = machine_name
         self.machine_name = self.hostname.split(".")[0]
         self.num_itr = num_itr
 
@@ -60,7 +60,7 @@ class RunExperiment:
         async_threads = config["test_config"]['blockReplayConfig']['asyncIOReturnTrackerThreads']
         t1_size_mb = config['cache_config']["cacheSizeMB"]
         return "replay/{}/{}/{}/q={}_bt={}_at={}_t1={}_t2={}_it={}".format(status,
-                                                                                self.machine_type,
+                                                                                self.machine_name,
                                                                                 workload,
                                                                                 queue_size, 
                                                                                 block_threads,
@@ -82,7 +82,6 @@ class RunExperiment:
                 
                 workload = pathlib.Path(experiment_entry["trace_s3_key"]).stem 
                 local_trace_path = self.output_dir.joinpath("{}.csv".format(workload))
-
                 config = ReplayConfig([str(local_trace_path.resolve())], 
                                         [str(self.backing_file_path.resolve())], 
                                         experiment_entry["t1_size_mb"], 
@@ -99,31 +98,38 @@ class RunExperiment:
                 self.s3.download_s3_obj(experiment_entry["trace_s3_key"], str(local_trace_path.absolute()))
 
                 runner = Runner()
-                runner.run(self.cachebench_binary_path, 
-                            self.config_file_path, 
-                            self.exp_output_path, 
-                            self.usage_output_path)
+                return_code = runner.run(self.cachebench_binary_path, 
+                                            self.config_file_path, 
+                                            self.exp_output_path, 
+                                            self.usage_output_path)
 
-                print("Completed-> Experiment {},{}", config.get_config(), cur_iteration)
-                # upload all necessary files 
-                done_s3_key_prefix = self.get_s3_key("done", workload, config.get_config(), cur_iteration)
+                print("Completed-> Experiment {},{} with return code {}", config.get_config(), cur_iteration, return_code)
+                if return_code == 0:
+                    done_s3_key_prefix = self.get_s3_key("done", workload, config.get_config(), cur_iteration)
+                    self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.config_file_path.name), str(self.config_file_path.absolute()))
+                    self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.exp_output_path.name), str(self.exp_output_path.absolute()))
+                    self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.usage_output_path.name), str(self.usage_output_path.absolute()))
+                    self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.stat_file_path.name), str(self.stat_file_path.absolute()))
+                    self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.tsstat_file_path.name), str(self.tsstat_file_path.absolute()))
+                    print("Done-> Experiment {},{}", config.get_config(), cur_iteration)
+                else:
+                    error_s3_key_prefix = self.get_s3_key("error", workload, config.get_config(), cur_iteration)
+                    self.s3.upload_s3_obj("{}/{}".format(error_s3_key_prefix, self.config_file_path.name), str(self.config_file_path.absolute()))
+                    self.s3.upload_s3_obj("{}/{}".format(error_s3_key_prefix, self.exp_output_path.name), str(self.exp_output_path.absolute()))
+                    self.s3.upload_s3_obj("{}/{}".format(error_s3_key_prefix, self.usage_output_path.name), str(self.usage_output_path.absolute()))
+                    self.s3.upload_s3_obj("{}/{}".format(error_s3_key_prefix, self.stat_file_path.name), str(self.stat_file_path.absolute()))
+                    self.s3.upload_s3_obj("{}/{}".format(error_s3_key_prefix, self.tsstat_file_path.name), str(self.tsstat_file_path.absolute()))
+                    print("Error-> Experiment {},{}", config.get_config(), cur_iteration)
                 
-                self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.config_file_path.name), str(self.config_file_path.absolute()))
-                self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.exp_output_path.name), str(self.exp_output_path.absolute()))
-                self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.usage_output_path.name), str(self.usage_output_path.absolute()))
-                self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.stat_file_path.name), str(self.stat_file_path.absolute()))
-                self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.tsstat_file_path.name), str(self.tsstat_file_path.absolute()))
-
                 # delete the key in the live link we uploaded to signify this experiment is running
                 self.s3.delete_s3_obj("{}/{}".format(live_s3_key_prefix, self.config_file_path.name))
-                print("Done-> Experiment {},{}", config.get_config(), cur_iteration)
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Run all the experiment listed in the experiment file.")
+    parser = argparse.ArgumentParser(description="Run block storage replay for all configurations listed in the experiment file.")
 
-    parser.add_argument("machine_type",
-                            help="The type of machine")
+    parser.add_argument("machine_name",
+                            help="Name used to uniquly identify a experiment.")
 
     parser.add_argument("--experiment_file", 
                             default=EXPERIMENT_FILE_PATH,
@@ -157,7 +163,7 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
 
-    runner = RunExperiment(args.machine_type,
+    runner = RunExperiment(args.machine_name,
                             args.experiment_file, 
                             args.backing_file_path, 
                             args.nvm_file_path,
