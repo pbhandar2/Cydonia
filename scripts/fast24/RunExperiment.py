@@ -110,6 +110,8 @@ class RunExperiment:
                     self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.usage_output_path.name), str(self.usage_output_path.absolute()))
                     self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.stat_file_path.name), str(self.stat_file_path.absolute()))
                     self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.tsstat_file_path.name), str(self.tsstat_file_path.absolute()))
+                    # delete the key in the live link we uploaded to signify this experiment is running
+                    self.s3.delete_s3_obj("{}/{}".format(live_s3_key_prefix, self.config_file_path.name))
                     print("Done-> Experiment {},{}", config.get_config(), cur_iteration)
                 else:
                     error_s3_key_prefix = self.get_s3_key("error", workload, config.get_config(), cur_iteration)
@@ -119,9 +121,9 @@ class RunExperiment:
                     self.s3.upload_s3_obj("{}/{}".format(error_s3_key_prefix, self.stat_file_path.name), str(self.stat_file_path.absolute()))
                     self.s3.upload_s3_obj("{}/{}".format(error_s3_key_prefix, self.tsstat_file_path.name), str(self.tsstat_file_path.absolute()))
                     print("Error-> Experiment {},{}", config.get_config(), cur_iteration)
-                
-                # delete the key in the live link we uploaded to signify this experiment is running
-                self.s3.delete_s3_obj("{}/{}".format(live_s3_key_prefix, self.config_file_path.name))
+                    # delete the key in the live link we uploaded to signify this experiment is running
+                    self.s3.delete_s3_obj("{}/{}".format(live_s3_key_prefix, self.config_file_path.name))
+                    return 
 
 
 if __name__ == "__main__":
