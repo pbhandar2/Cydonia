@@ -146,7 +146,7 @@ class S3Client:
         s3.meta.client.copy(copy_source, self.bucket_name, destination_key)
     
 
-    def sync_s3_prefix_with_local_dir(self, s3_prefix, local_dir):
+    def sync_s3_prefix_with_local_dir(self, s3_prefix, local_dir, check_size=False):
         """ Sync all the objects with a given s3_prefix into a local directory.
 
             Parameters
@@ -159,18 +159,18 @@ class S3Client:
 
         s3_key_list = self.get_all_s3_content(s3_prefix)
         for s3_key in s3_key_list:
-            s3_post_fix = s3_key.replace(s3_prefix, '').replace("/", '')
+            s3_post_fix = s3_key.replace(s3_prefix, '')
             local_path = local_dir.joinpath(s3_post_fix)
 
             if local_path.exists():
-                key_size = self.s3.get_key_size(s3_key)
+                key_size = self.get_key_size(s3_key)
                 file_size = local_path.stat().st_size
                 if key_size == file_size:
                     print("Sync->Key and file already in sync {}, {}".format(s3_key, local_path))
                     continue 
                 else:
                     print("Bad sync->Key and file not in sync s3:{} local: {} {} {}".format(key_size, file_size, s3_key, local_path))
-
+            
             local_path.parent.mkdir(exist_ok=True, parents=True)
             self.download_s3_obj(s3_key, str(local_path.absolute()))
             print("Done-> Synced {} in local path {}".format(s3_key, local_path))
