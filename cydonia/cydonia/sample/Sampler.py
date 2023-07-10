@@ -88,7 +88,7 @@ class Sampler:
             per block request that had at least 1 block sampled. """
         split_counter = Counter()
 
-        next_sample_req_ts = 0 
+        prev_sample_req_ts = 0 
         """ Track how sample count changes after evaluating each 
             block request in order to track if a single block request 
             led to multiple sample block requests. The change in sample 
@@ -121,16 +121,18 @@ class Sampler:
                 hash_val = mmh3.hash128(str(addr), signed=False, seed=seed)
 
                 # the timestamp to be used for samples generated if this block request is sampled 
-                iat_ts = int(next_sample_req_ts + row['iat'])
+                sample_ts = int(prev_sample_req_ts + row['iat'])
                 if hash_val < limit:
                     # sample this block 
                     if cur_sample_block_req['size'] == 0:
                         # we were not tracking any sample block request 
                         # so start tracking  
-                        if ts_method == 'iat' or ts_method == 'iat2':
-                            cur_sample_block_req['ts'] = iat_ts
+                        if ts_method == 'iat' or ts_method == 'iat0':
+                            cur_sample_block_req['ts'] = int(prev_sample_req_ts + row['iat'])
+                        elif ts_method == 'iatscale':
+                            cur_sample_block_req['ts'] = int(prev_sample_req_ts + (row['iat']*rate))
                         else:
-                            cur_sample_block_req['ts'] = int(row['ts'])
+                            raise ValueError("Unknown ts method {}".format(ts_method))
                         
                         cur_sample_block_req['lba'] = int(cur_lba)
                         cur_sample_block_req['op'] = row['op']
@@ -149,9 +151,10 @@ class Sampler:
                         sample_file_handle.write(self.sample_row_dict_to_str(cur_sample_block_req))
                         sample_count += 1
 
-                        if ts_method == "iat2":
-                            next_sample_req_ts = iat_ts
-                            iat_ts = next_sample_req_ts + row['iat']
+                        if ts_method == "iat":
+                            prev_sample_req_ts = int(prev_sample_req_ts + row['iat'])
+                        elif ts_method == "iatscale":
+                            prev_sample_req_ts = int(prev_sample_req_ts + (row['iat']*rate))
 
                         # reset the sample block request 
                         cur_sample_block_req = {
@@ -166,16 +169,16 @@ class Sampler:
                 sample_file_handle.write(self.sample_row_dict_to_str(cur_sample_block_req))
                 sample_count += 1
 
-                if ts_method == "iat2":
-                    next_sample_req_ts = iat_ts
-                    iat_ts = next_sample_req_ts + row['iat']
+                if ts_method == "iat":
+                    prev_sample_req_ts = int(prev_sample_req_ts + row['iat'])
+                elif ts_method == "iatscale":
+                    prev_sample_req_ts = int(prev_sample_req_ts + (row['iat']*rate))
             
             # check if we generated any sample from this block request 
             if sample_count > prev_sample_count:
                 split_counter[sample_count- prev_sample_count] += 1
-                # update the timestamp for the next sample block request 
-                if ts_method == "iat":
-                    next_sample_req_ts += row['iat']
+                if ts_method == "iat0":
+                    prev_sample_req_ts = int(prev_sample_req_ts + row['iat'])
             
             # update sample count 
             prev_sample_count = sample_count

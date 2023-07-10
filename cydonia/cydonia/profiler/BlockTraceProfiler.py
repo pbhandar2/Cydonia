@@ -5,7 +5,7 @@ import copy
 import logging
 from collections import defaultdict
 
-from cydonia.profiler.BlockWorkloadStats import BlockWorkloadStats
+from cydonia.profiler.BlockStorageTraceStats import BlockStorageTraceStats
 
 """ BlockTraceProfiler
     ------------------
@@ -27,7 +27,7 @@ class BlockTraceProfiler:
 
         self._stat = {} # current stat
         if 'block' in stat_types:
-            self._stat['block'] = BlockWorkloadStats()
+            self._stat['block'] = BlockStorageTraceStats()
 
         self._cur_req = {}
         self._cur_page_index = -1 
@@ -56,8 +56,6 @@ class BlockTraceProfiler:
                 self._load_next_block_req()
             else:
                 self._cur_req["key"] += 1
-                if "rd" in self._stat:
-                    self._cur_req["rd"] = self._rd_tracker.get_next_rd()
 
 
     def write_stat_to_file(self, output_path, **kwargs):
