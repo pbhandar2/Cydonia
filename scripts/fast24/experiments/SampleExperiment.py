@@ -13,3 +13,7 @@ class SampleExperiment:
     
     def generate_experiment_file(self):
         pass 
+
+
+if __name__ == "__main__":
+    pass 
