@@ -13,6 +13,11 @@ import subprocess
 import psutil 
 import time 
 import sys 
+import pyRAML
+
+
+pyRAPL.setup()
+csv_output = pyRAPL.outputs.CSVOutput('/dev/shm/power.csv')
 
 
 class Runner:
@@ -52,7 +57,8 @@ class Runner:
         output_str = ",".join([str(_) for _ in value_list])
         usage_handle.write("{}\n".format(output_str))
 
-    
+
+    @pyRAPL.measureit(output=csv_output)
     def run(self, cachebench_binary_path, cachebench_config_file_path, experiment_output_path, resource_usage_output_path):
         """ Run the CacheBench experiment and track its memory and CPU 
             usage. 
