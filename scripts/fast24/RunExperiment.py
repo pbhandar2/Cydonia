@@ -9,12 +9,18 @@ from cydonia.util.S3Client import S3Client
 from cydonia.cachelib.ReplayConfig import ReplayConfig
 from cydonia.cachelib.Runner import Runner 
 
+from pyJoules.energy_meter import measure_energy
+from pyJoules.handler.csv_handler import CSVHandler
+
 
 BACKING_FILE_PATH = pathlib.Path.home().joinpath("disk/disk.file")
 NVM_FILE_PATH = pathlib.Path.home().joinpath("nvm/disk.file")
 EXPERIMENT_FILE_PATH = pathlib.Path("experiments.json")
 CACHEBENCH_BINARY_PATH = pathlib.Path.home().joinpath("disk/CacheLib/opt/cachelib/bin/cachebench")
 OUTPUT_DIR = pathlib.Path("/dev/shm")
+POWER_FILE_PATH = OUTPUT_DIR.joinpath("power.csv")
+
+csv_handler = CSVHandler(str(POWER_FILE_PATH.absolute()))
 
 
 class RunExperiment:
@@ -30,6 +36,7 @@ class RunExperiment:
         self.output_dir.mkdir(exist_ok=True)
         self.config_file_path = self.output_dir.joinpath("config.json")
         self.exp_output_path = self.output_dir.joinpath("stdout.dump")
+        self.power_usage_path = POWER_FILE_PATH
         self.usage_output_path = self.output_dir.joinpath("usage.csv")
         self.stat_file_path = self.output_dir.joinpath("stat_0.out")
         self.tsstat_file_path = self.output_dir.joinpath("tsstat_0.out")
@@ -68,6 +75,16 @@ class RunExperiment:
                                                                                     t2_size_mb,
                                                                                     cur_iteration)
     
+    @measure_energy(handler=csv_handler)
+    def _run(self):
+        
+        runner = Runner()
+        return_code = runner.run(self.cachebench_binary_path, 
+                                    self.config_file_path, 
+                                    self.exp_output_path, 
+                                    self.usage_output_path)
+        return return_code
+
 
     def run(self):
         for cur_iteration in range(self.num_itr):
@@ -78,6 +95,9 @@ class RunExperiment:
                 if "nvmCacheSizeMB" in experiment_entry["kwargs"]:
                     kwargs["nvmCacheSizeMB"] = experiment_entry["kwargs"]["nvmCacheSizeMB"]
                     kwargs["nvmCachePaths"] = [str(self.nvm_file_path.absolute())]
+                
+                if "replayRate" in experiment_entry["kwargs"]:
+                    kwargs["replayRate"] = experiment_entry["kwargs"]["replayRate"]
                 
                 workload = pathlib.Path(experiment_entry["trace_s3_key"]).stem 
                 local_trace_path = self.output_dir.joinpath("{}.csv".format(workload))
@@ -96,12 +116,8 @@ class RunExperiment:
                 self.s3.upload_s3_obj("{}/{}".format(live_s3_key_prefix, self.config_file_path.name), str(self.config_file_path.absolute()))
                 self.s3.download_s3_obj(experiment_entry["trace_s3_key"], str(local_trace_path.absolute()))
 
-                runner = Runner()
-                return_code = runner.run(self.cachebench_binary_path, 
-                                            self.config_file_path, 
-                                            self.exp_output_path, 
-                                            self.usage_output_path)
 
+                return_code = self._run()
                 print("Completed-> Experiment {},{} with return code {}", config.get_config(), cur_iteration, return_code)
                 if return_code == 0:
                     done_s3_key_prefix = self.get_s3_key("done", workload, config.get_config(), cur_iteration)
@@ -110,6 +126,7 @@ class RunExperiment:
                     self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.usage_output_path.name), str(self.usage_output_path.absolute()))
                     self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.stat_file_path.name), str(self.stat_file_path.absolute()))
                     self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.tsstat_file_path.name), str(self.tsstat_file_path.absolute()))
+                    self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.power_usage_path.name), str(self.power_usage_path.absolute()))
                     # delete the key in the live link we uploaded to signify this experiment is running
                     self.s3.delete_s3_obj("{}/{}".format(live_s3_key_prefix, self.config_file_path.name))
                     print("Done-> Experiment {},{}", config.get_config(), cur_iteration)
