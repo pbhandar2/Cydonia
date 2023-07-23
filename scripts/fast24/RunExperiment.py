@@ -64,8 +64,9 @@ class RunExperiment:
         queue_size = config["test_config"]['blockReplayConfig']['maxPendingBlockRequestCount']
         block_threads = config["test_config"]['blockReplayConfig']['blockRequestProcesserThreads']
         async_threads = config["test_config"]['blockReplayConfig']['asyncIOReturnTrackerThreads']
+        replay_rate = config["test_config"]['blockReplayConfig']['replayRate']
         t1_size_mb = config['cache_config']["cacheSizeMB"]
-        return "block_replay/{}/{}/{}/q={}_bt={}_at={}_t1={}_t2={}_it={}".format(status,
+        return "replay_files/{}/{}/{}/q={}_bt={}_at={}_t1={}_t2={}_rr={}_it={}".format(status,
                                                                                     self.machine_name,
                                                                                     workload,
                                                                                     queue_size, 
@@ -73,6 +74,7 @@ class RunExperiment:
                                                                                     async_threads,
                                                                                     t1_size_mb, 
                                                                                     t2_size_mb,
+                                                                                    replay_rate,
                                                                                     cur_iteration)
     
     @measure_energy(handler=csv_handler)
