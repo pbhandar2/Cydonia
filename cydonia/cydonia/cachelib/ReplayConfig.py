@@ -47,11 +47,11 @@ class ReplayConfig:
         if 'globalClock' in kwargs:
             self.test_config['blockReplayConfig']['globalClock'] = kwargs['globalClock']
         
-        self.test_config['blockReplayConfig']['blockRequestProcesserThreads'] = 4
+        self.test_config['blockReplayConfig']['blockRequestProcesserThreads'] = 16
         if 'blockRequestProcesserThreads' in kwargs:
             self.test_config['blockReplayConfig']['blockRequestProcesserThreads'] = kwargs['blockRequestProcesserThreads']
 
-        self.test_config['blockReplayConfig']['asyncIOReturnTrackerThreads'] = 4 
+        self.test_config['blockReplayConfig']['asyncIOReturnTrackerThreads'] = 16
         if 'asyncIOReturnTrackerThreads' in kwargs:
             self.test_config['blockReplayConfig']['asyncIOReturnTrackerThreads'] = kwargs['asyncIOReturnTrackerThreads']
         

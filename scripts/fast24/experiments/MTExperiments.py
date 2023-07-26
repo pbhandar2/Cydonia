@@ -11,7 +11,7 @@ class MTExperiments:
     def __init__(self) -> None:
         self.workloads = ["w09", "w18", "w64", "w66", "w92"]
         self.wss_to_size_percent = [0.1, 0.2, 0.4, 0.6]
-        self.block_df = pd.read_csv("/research2/mtc/cp_traces/pranav/meta/blocks.csv")
+        self.block_df = pd.read_csv("~/disk/blocks.csv")
         self.output_file_path = Path("files/MTExperiments.json")
 
     
