@@ -1,0 +1,3122 @@
+[
+    {
+        "t1_size_mb": 50347,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 50347,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 50347,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 50347,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 100694,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 50347,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 201389,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 50347,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 302083,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 100694,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 100694,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 50347,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 100694,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 100694,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 100694,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 201389,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 100694,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 302083,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 201389,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 201389,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 50347,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 201389,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 100694,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 201389,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 201389,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 201389,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 302083,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 302083,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 302083,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 50347,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 302083,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 100694,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 302083,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 201389,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 302083,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 302083,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 50347,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 50347,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 50347,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 50347,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 100694,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 50347,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 201389,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 50347,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 302083,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 100694,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 100694,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 50347,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 100694,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 100694,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 100694,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 201389,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 100694,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 302083,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 201389,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 201389,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 50347,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 201389,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 100694,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 201389,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 201389,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 201389,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 302083,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 302083,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 302083,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 50347,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 302083,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 100694,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 302083,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 201389,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 302083,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 302083,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 50347,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 50347,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 50347,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 50347,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 100694,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 50347,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 201389,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 50347,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 302083,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 100694,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 100694,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 50347,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 100694,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 100694,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 100694,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 201389,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 100694,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 302083,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 201389,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 201389,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 50347,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 201389,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 100694,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 201389,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 201389,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 201389,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 302083,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 302083,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 302083,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 50347,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 302083,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 100694,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 302083,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 201389,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 302083,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 302083,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 50347,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 50347,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 50347,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 50347,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 100694,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 50347,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 201389,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 50347,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 302083,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 100694,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 100694,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 50347,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 100694,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 100694,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 100694,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 201389,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 100694,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 302083,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 201389,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 201389,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 50347,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 201389,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 100694,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 201389,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 201389,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 201389,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 302083,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 302083,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 302083,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 50347,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 302083,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 100694,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 302083,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 201389,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 302083,
+        "trace_s3_key": "workloads/cp-iat/w09.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 302083,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 4769,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 4769,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4769,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 4769,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 9538,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 4769,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 19076,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 4769,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 28614,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 9538,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 9538,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4769,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 9538,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 9538,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 9538,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 19076,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 9538,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 28614,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 19076,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 19076,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4769,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 19076,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 9538,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 19076,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 19076,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 19076,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 28614,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 28614,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 28614,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4769,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 28614,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 9538,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 28614,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 19076,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 28614,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 28614,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 4769,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 4769,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4769,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 4769,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 9538,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 4769,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 19076,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 4769,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 28614,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 9538,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 9538,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4769,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 9538,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 9538,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 9538,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 19076,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 9538,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 28614,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 19076,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 19076,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4769,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 19076,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 9538,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 19076,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 19076,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 19076,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 28614,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 28614,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 28614,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4769,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 28614,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 9538,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 28614,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 19076,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 28614,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 28614,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 4769,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 4769,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4769,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 4769,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 9538,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 4769,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 19076,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 4769,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 28614,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 9538,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 9538,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4769,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 9538,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 9538,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 9538,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 19076,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 9538,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 28614,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 19076,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 19076,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4769,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 19076,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 9538,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 19076,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 19076,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 19076,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 28614,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 28614,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 28614,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4769,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 28614,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 9538,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 28614,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 19076,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 28614,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 28614,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 4769,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 4769,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4769,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 4769,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 9538,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 4769,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 19076,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 4769,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 28614,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 9538,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 9538,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4769,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 9538,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 9538,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 9538,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 19076,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 9538,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 28614,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 19076,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 19076,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4769,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 19076,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 9538,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 19076,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 19076,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 19076,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 28614,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 28614,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 28614,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4769,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 28614,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 9538,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 28614,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 19076,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 28614,
+        "trace_s3_key": "workloads/cp-iat/w18.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 28614,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 35858,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 35858,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 35858,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 35858,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 71717,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 35858,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 143434,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 35858,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 215151,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 71717,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 71717,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 35858,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 71717,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 71717,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 71717,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 143434,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 71717,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 215151,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 143434,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 143434,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 35858,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 143434,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 71717,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 143434,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 143434,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 143434,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 215151,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 215151,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 215151,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 35858,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 215151,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 71717,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 215151,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 143434,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 215151,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 215151,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 35858,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 35858,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 35858,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 35858,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 71717,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 35858,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 143434,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 35858,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 215151,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 71717,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 71717,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 35858,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 71717,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 71717,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 71717,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 143434,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 71717,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 215151,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 143434,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 143434,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 35858,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 143434,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 71717,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 143434,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 143434,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 143434,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 215151,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 215151,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 215151,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 35858,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 215151,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 71717,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 215151,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 143434,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 215151,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 215151,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 35858,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 35858,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 35858,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 35858,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 71717,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 35858,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 143434,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 35858,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 215151,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 71717,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 71717,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 35858,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 71717,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 71717,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 71717,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 143434,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 71717,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 215151,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 143434,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 143434,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 35858,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 143434,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 71717,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 143434,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 143434,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 143434,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 215151,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 215151,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 215151,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 35858,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 215151,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 71717,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 215151,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 143434,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 215151,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 215151,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 35858,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 35858,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 35858,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 35858,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 71717,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 35858,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 143434,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 35858,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 215151,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 71717,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 71717,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 35858,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 71717,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 71717,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 71717,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 143434,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 71717,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 215151,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 143434,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 143434,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 35858,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 143434,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 71717,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 143434,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 143434,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 143434,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 215151,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 215151,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 215151,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 35858,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 215151,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 71717,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 215151,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 143434,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 215151,
+        "trace_s3_key": "workloads/cp-iat/w64.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 215151,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 87,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 87,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 87,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 87,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 175,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 87,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 350,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 87,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 526,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 175,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 175,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 87,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 175,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 175,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 175,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 350,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 175,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 526,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 350,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 350,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 87,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 350,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 175,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 350,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 350,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 350,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 526,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 526,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 526,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 87,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 526,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 175,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 526,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 350,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 526,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 526,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 87,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 87,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 87,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 87,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 175,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 87,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 350,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 87,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 526,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 175,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 175,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 87,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 175,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 175,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 175,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 350,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 175,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 526,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 350,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 350,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 87,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 350,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 175,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 350,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 350,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 350,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 526,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 526,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 526,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 87,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 526,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 175,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 526,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 350,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 526,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 526,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 87,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 87,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 87,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 87,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 175,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 87,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 350,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 87,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 526,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 175,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 175,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 87,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 175,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 175,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 175,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 350,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 175,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 526,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 350,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 350,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 87,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 350,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 175,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 350,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 350,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 350,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 526,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 526,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 526,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 87,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 526,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 175,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 526,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 350,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 526,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 526,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 87,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 87,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 87,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 87,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 175,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 87,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 350,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 87,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 526,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 175,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 175,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 87,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 175,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 175,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 175,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 350,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 175,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 526,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 350,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 350,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 87,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 350,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 175,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 350,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 350,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 350,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 526,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 526,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 526,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 87,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 526,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 175,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 526,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 350,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 526,
+        "trace_s3_key": "workloads/cp-iat/w66.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 526,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 2224,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 2224,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 2224,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 2224,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4449,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 2224,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 8899,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 2224,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 13349,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 4449,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 4449,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 2224,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 4449,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4449,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 4449,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 8899,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 4449,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 13349,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 8899,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 8899,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 2224,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 8899,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4449,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 8899,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 8899,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 8899,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 13349,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 13349,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 13349,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 2224,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 13349,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4449,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 13349,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 8899,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 13349,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 13349,
+            "replayRate": 8
+        }
+    },
+    {
+        "t1_size_mb": 2224,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 2224,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 2224,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 2224,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4449,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 2224,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 8899,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 2224,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 13349,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 4449,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 4449,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 2224,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 4449,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4449,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 4449,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 8899,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 4449,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 13349,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 8899,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 8899,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 2224,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 8899,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4449,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 8899,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 8899,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 8899,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 13349,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 13349,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 13349,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 2224,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 13349,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4449,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 13349,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 8899,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 13349,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 13349,
+            "replayRate": 4
+        }
+    },
+    {
+        "t1_size_mb": 2224,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 2224,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 2224,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 2224,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4449,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 2224,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 8899,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 2224,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 13349,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 4449,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 4449,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 2224,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 4449,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4449,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 4449,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 8899,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 4449,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 13349,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 8899,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 8899,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 2224,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 8899,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4449,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 8899,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 8899,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 8899,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 13349,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 13349,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 13349,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 2224,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 13349,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4449,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 13349,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 8899,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 13349,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 13349,
+            "replayRate": 2
+        }
+    },
+    {
+        "t1_size_mb": 2224,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 2224,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 2224,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 2224,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4449,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 2224,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 8899,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 2224,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 13349,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 4449,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 4449,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 2224,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 4449,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4449,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 4449,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 8899,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 4449,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 13349,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 8899,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 8899,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 2224,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 8899,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4449,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 8899,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 8899,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 8899,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 13349,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 13349,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 13349,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 2224,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 13349,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 4449,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 13349,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 8899,
+            "replayRate": 1
+        }
+    },
+    {
+        "t1_size_mb": 13349,
+        "trace_s3_key": "workloads/cp-iat/w92.csv",
+        "kwargs": {
+            "nvmCacheSizeMB": 13349,
+            "replayRate": 1
+        }
+    }
+]

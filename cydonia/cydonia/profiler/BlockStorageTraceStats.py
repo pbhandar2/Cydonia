@@ -260,7 +260,7 @@ class BlockStorageTraceStats:
 
         if req["op"] ==  'r':
             self._read_block_req_count += 1
-            self._read_io_request_size_sum = req["size"]
+            self._read_io_request_size_sum += req["size"]
             self._read_page_access_count += req["end_page"] - req["start_page"] + 1
             self._min_read_page = max(self._min_read_page, req["start_page"])
             self._max_read_page = max(self._max_read_page, req["end_page"])
@@ -268,7 +268,7 @@ class BlockStorageTraceStats:
             
         elif req["op"] == 'w':
             self._write_block_req_count += 1 
-            self._write_io_request_size_sum = req["size"]
+            self._write_io_request_size_sum += req["size"]
             self._write_page_access_count += req["end_page"] - req["start_page"] + 1
             self._min_write_page = max(self._min_write_page, req["start_page"])
             self._max_write_page = max(self._max_write_page, req["end_page"])

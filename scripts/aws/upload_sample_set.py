@@ -9,21 +9,23 @@ class SampleS3Sync:
         self.aws_key = os.environ['AWS_KEY']
         self.aws_secret = os.environ['AWS_SECRET']
         self.aws_bucket = os.environ['AWS_BUCKET']
-        self.s3 = S3Client(self.aws_key, self.aws_secret)
+        self.s3 = S3Client(self.aws_key, self.aws_secret, self.aws_bucket)
 
-        self.sample_dir = pathlib.Path("/research2/mtc/cp_traces/sample/block/")
-        self.sample_s3_key_prefix = "workloads/"
+        self.workload_name = "cp-test"
+        self.sample_dir = pathlib.Path("/research2/mtc/cp_traces/pranav/samples/cp-test/iat/w66/")
+        self.sample_s3_key_prefix = "blocktraces/samples/"
     
 
     def get_s3_key(self, sample_file_path):
         workload = sample_file_path.parent.name
-        sample_file_name_split = sample_file_path.stem.split("_")
-        ts_method = sample_file_name_split[0]
-        sample_rate = int(sample_file_name_split[1])
-        random_seed = int(sample_file_name_split[2])
-        bit_str = sample_file_name_split[3]
+        filename = sample_file_path.name 
+        sample_type = sample_file_path.parent.parent.name
+        workload_type = sample_file_path.parent.parent.parent.name 
 
-        return "{}cp-{}/{}_{}_{}_{}.csv".format(self.sample_s3_key_prefix, ts_method, workload, sample_rate, random_seed, bit_str)
+        print(sample_file_path)
+        print(workload, filename, sample_type, workload_type)
+
+        return "{}{}/{}/{}/{}".format(self.sample_s3_key_prefix, workload_type, sample_type, workload, filename)
 
     
     def sync(self):
@@ -31,6 +33,7 @@ class SampleS3Sync:
         s3_key_list = [self.get_s3_key(sample_file_path) for sample_file_path in sample_file_list]
 
         for s3_key, sample_file_path in zip(s3_key_list, sample_file_list):
+            print(s3_key)
             if self.s3.get_key_size(s3_key) == 0:
                 self.s3.upload_s3_obj(s3_key, str(sample_file_path.absolute()))
                 print("Uploaded: {} to {}".format(sample_file_path, s3_key))

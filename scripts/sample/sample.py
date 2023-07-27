@@ -3,9 +3,12 @@
 import argparse 
 import pathlib 
 import pandas as pd 
+import numpy as np 
 
 import logging
 import logging.handlers as handlers
+
+from itertools import product 
 
 from cydonia.sample.Sampler import Sampler
 
@@ -19,11 +22,11 @@ logHandler.setFormatter(formatter)
 logger.addHandler(logHandler)
 
 
-BITS_ARR = [0, 2, 4, 6, 8, 10, 12]
-SEED_ARR = [42, 43, 44]
-RATE_ARR = [0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.9]
+BITS_ARR = [0, 4, 8, 12]
+SEED_ARR = [42]
+RATE_ARR = [0.01, 0.05, 0.1, 0.2, 0.4, 0.6, 0.9]
 PERCENTILE_TRACKED_ARRAY = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 99, 99.9, 100]
-TS_ARR = ['iat', 'iat0', 'iatscale']
+TS_ARR = ['iat']
 
 
 def generate_array_from_counter(counter):
@@ -120,7 +123,9 @@ def main(args):
                 continue 
         
         sampler = Sampler(block_trace_path)
-        for rate, seed, bits, ts in zip(args.rate, args.bits, args.seed, args.ts):
+        print(args.rate, args.bits, args.seed, args.ts)
+        for rate, seed, bits, ts in product(args.rate, args.bits, args.seed, args.ts):
+            print("Processing ", rate, seed, bits, ts)
             sample_dir = args.sample_trace_dir.joinpath(ts, workload_name)
             sample_dir.mkdir(exist_ok=True, parents=True)
             sample_file_name = "{}_{}_{}.csv".format(rate, seed, bits)
