@@ -109,12 +109,16 @@ class RunExperiment:
                                         **kwargs)
                 config.generate_config_file(self.config_file_path)
 
-                if self.experiment_running(config.get_config(), workload, cur_iteration):
+                workload_str = pathlib.Path(experiment_entry['trace_s3_key'])
+                workload_type = workload_str.parent.name 
+                workload_name = workload_str.name 
+                workload_key_str = "{}/{}".format(workload_type, workload_name)
+                if self.experiment_running(config.get_config(), workload_key_str, cur_iteration):
                     print("Done-> Experiment {},{} already done", config.get_config(), cur_iteration)
                     continue 
                 
                 print("Running-> Experiment {},{}", config.get_config(), cur_iteration)
-                live_s3_key_prefix = self.get_s3_key("live", workload, config.get_config(), cur_iteration)
+                live_s3_key_prefix = self.get_s3_key("live", workload_key_str, config.get_config(), cur_iteration)
                 self.s3.upload_s3_obj("{}/{}".format(live_s3_key_prefix, self.config_file_path.name), str(self.config_file_path.absolute()))
                 self.s3.download_s3_obj(experiment_entry["trace_s3_key"], str(local_trace_path.absolute()))
 
@@ -122,7 +126,7 @@ class RunExperiment:
                 csv_handler.save_data()
                 print("Completed-> Experiment {},{} with return code {}", config.get_config(), cur_iteration, return_code)
                 if return_code == 0:
-                    done_s3_key_prefix = self.get_s3_key("done", workload, config.get_config(), cur_iteration)
+                    done_s3_key_prefix = self.get_s3_key("done", workload_key_str, config.get_config(), cur_iteration)
                     self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.config_file_path.name), str(self.config_file_path.absolute()))
                     self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.exp_output_path.name), str(self.exp_output_path.absolute()))
                     self.s3.upload_s3_obj("{}/{}".format(done_s3_key_prefix, self.usage_output_path.name), str(self.usage_output_path.absolute()))
@@ -133,7 +137,7 @@ class RunExperiment:
                     self.s3.delete_s3_obj("{}/{}".format(live_s3_key_prefix, self.config_file_path.name))
                     print("Done-> Experiment {},{}", config.get_config(), cur_iteration)
                 else:
-                    error_s3_key_prefix = self.get_s3_key("error", workload, config.get_config(), cur_iteration)
+                    error_s3_key_prefix = self.get_s3_key("error", workload_key_str, config.get_config(), cur_iteration)
                     self.s3.upload_s3_obj("{}/{}".format(error_s3_key_prefix, self.config_file_path.name), str(self.config_file_path.absolute()))
                     self.s3.upload_s3_obj("{}/{}".format(error_s3_key_prefix, self.exp_output_path.name), str(self.exp_output_path.absolute()))
                     self.s3.upload_s3_obj("{}/{}".format(error_s3_key_prefix, self.usage_output_path.name), str(self.usage_output_path.absolute()))
