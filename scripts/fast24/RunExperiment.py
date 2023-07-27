@@ -59,7 +59,7 @@ class RunExperiment:
     def get_s3_key(self, status, workload, config, cur_iteration):
         t2_size_mb = 0 
         if "nvmCacheSizeMB" in config["cache_config"]:
-            t2_size_mb = config["cache_config"]["nvmCacheSizeMB"]
+            t2_size_mb = config["cache_config"]["nvmCacheSizeMB"] if config["cache_config"]["nvmCacheSizeMB"] > 0 else 0
         
         queue_size = config["test_config"]['blockReplayConfig']['maxPendingBlockRequestCount']
         block_threads = config["test_config"]['blockReplayConfig']['blockRequestProcesserThreads']

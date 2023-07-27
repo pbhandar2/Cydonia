@@ -40,6 +40,7 @@ class BlockAccessTraceProfiler:
             self.id_set.add(row["id"])
 
             cur_time_us = row["ts"]
+            time_elapsed_us = (cur_time_us - self.start_time_us)/(1e6*3600)
             cur_window_index = int((cur_time_us - self.start_time_us)//(1e6*self.rd_hist_snapshot_window_size_sec))
             if row_index % 10000000 == 0 and row_index > 0:
                 print("{}/{} processed! {}%".format(row_index, len(self.df), 100*row_index/len(self.df)))
@@ -47,11 +48,13 @@ class BlockAccessTraceProfiler:
             if cur_window_index != active_window_index:
                 # window changed so collect stats
                 output_stat = self.get_stat(active_window_index, len(self.id_set))
+                output_stat['time_elapsed_us'] = time_elapsed_us
                 print(json.dumps(output_stat))
                 window_stat_arr.append(output_stat)
                 active_window_index = cur_window_index
         else:
             output_stat = self.get_stat(active_window_index, len(self.id_set)) 
+            output_stat['time_elapsed_us'] = time_elapsed_us
             print(json.dumps(output_stat))
             window_stat_arr.append(output_stat)
             active_window_index = cur_window_index

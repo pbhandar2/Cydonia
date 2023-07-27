@@ -1,0 +1,9 @@
+[
+    {
+        "t1_size_mb": 100,
+        "trace_s3_key": "blocktraces/cp-test/test.csv",
+        "kwargs": {
+            "replayRate": 1
+        }
+    }
+]
