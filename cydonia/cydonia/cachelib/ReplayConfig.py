@@ -55,9 +55,9 @@ class ReplayConfig:
         if 'asyncIOReturnTrackerThreads' in kwargs:
             self.test_config['blockReplayConfig']['asyncIOReturnTrackerThreads'] = kwargs['asyncIOReturnTrackerThreads']
         
-        self.test_config['blockReplayConfig']['minSleepTimeUs']  = 5
-        if 'minSleepTimeUs' in kwargs:
-            self.test_config['blockReplayConfig']['minSleepTimeUs'] = kwargs['minSleepTimeUs']
+        self.test_config['blockReplayConfig']['minIatUs']  = 5
+        if 'minIatUs' in kwargs:
+            self.test_config['blockReplayConfig']['minIatUs'] = kwargs['minIatUs']
         
         self.test_config['blockReplayConfig']['maxPendingBlockRequestCount'] = 128 
         if 'maxPendingBlockRequestCount' in kwargs:

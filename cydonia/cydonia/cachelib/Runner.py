@@ -13,6 +13,7 @@ import subprocess
 import psutil 
 import time 
 import sys 
+import pandas as pd 
 
 
 class Runner:
@@ -26,7 +27,7 @@ class Runner:
         self.snapshot_window_seconds = snapshot_window_seconds
 
 
-    def snap_system_stats(self, usage_handle):
+    def snap_system_stats(self, output_path):
         """ Write memory and CPU stats to a file. 
 
             Parameters
@@ -36,21 +37,21 @@ class Runner:
         """
         mem_stats = psutil.virtual_memory()
 
-        column_list, value_list = [], []
+        out_dict = {}
         for mem_stat_field in mem_stats._fields:
             mem_stat_value = getattr(mem_stats, mem_stat_field)
             if type(mem_stat_value) == str:
-                column_list.append(mem_stat_field)
-                value_list.append(mem_stat_value)
+                out_dict["mem_{}".format(mem_stat_field)] = mem_stat_value
 
         cpu_stats = psutil.cpu_percent(percpu=True)
-        cpu_stat_name = ["cpu_util_{}".format(_) for _ in range(len(cpu_stats))]
+        for cpu_index, cpu_stat in enumerate(cpu_stat_name):
+            out_dict["cpu_{}".format(cpu_index)] = cpu_stat
 
-        column_list += cpu_stat_name
-        value_list += cpu_stats 
-
-        output_str = ",".join([str(_) for _ in value_list])
-        usage_handle.write("{}\n".format(output_str))
+        df = pd.DataFrame([out_dict])
+        if output_path.exists():
+            old_df = pd.read_csv(output_path)
+            df = pd.concat([old_df, df], ignore_index=True)
+        df.to_csv(output_path, index=False)
 
 
     def run(self, cachebench_binary_path, cachebench_config_file_path, experiment_output_path, resource_usage_output_path):

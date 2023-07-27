@@ -118,8 +118,8 @@ class RunExperiment:
                 self.s3.upload_s3_obj("{}/{}".format(live_s3_key_prefix, self.config_file_path.name), str(self.config_file_path.absolute()))
                 self.s3.download_s3_obj(experiment_entry["trace_s3_key"], str(local_trace_path.absolute()))
 
-
                 return_code = self._run()
+                csv_handler.save_data()
                 print("Completed-> Experiment {},{} with return code {}", config.get_config(), cur_iteration, return_code)
                 if return_code == 0:
                     done_s3_key_prefix = self.get_s3_key("done", workload, config.get_config(), cur_iteration)
