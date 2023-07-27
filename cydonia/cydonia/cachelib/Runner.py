@@ -51,6 +51,7 @@ class Runner:
         if output_path.exists():
             old_df = pd.read_csv(output_path)
             df = pd.concat([old_df, df], ignore_index=True)
+        print(df)
         df.to_csv(output_path, index=False)
 
 
