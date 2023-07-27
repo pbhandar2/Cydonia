@@ -111,7 +111,7 @@ class RunExperiment:
 
                 workload_str = pathlib.Path(experiment_entry['trace_s3_key'])
                 workload_type = workload_str.parent.name 
-                workload_name = workload_str.name 
+                workload_name = workload_str.stem
                 workload_key_str = "{}/{}".format(workload_type, workload_name)
                 if self.experiment_running(config.get_config(), workload_key_str, cur_iteration):
                     print("Done-> Experiment {},{} already done", config.get_config(), cur_iteration)
