@@ -94,7 +94,7 @@ class Runner:
                     output_handle.write(line)
                     cur_time = time.time()
                     if (cur_time - start_time) > self.snapshot_window_seconds:
-                        self.snap_system_stats(usage_handle)
+                        self.snap_system_stats(resource_usage_output_path)
                         start_time = cur_time 
 
                 # wait for it to complete 
