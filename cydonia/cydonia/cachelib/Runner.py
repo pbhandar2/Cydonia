@@ -88,16 +88,11 @@ class Runner:
                                     stderr=subprocess.STDOUT, 
                                     bufsize=1,
                                     encoding='utf-8') as process_handle:
-                
-                # write every line to output dump 
-                for line in process_handle.stdout: # b'\n'-separated lines
-                    sys.stdout.buffer.write(bytes(line, 'utf-8')) 
-                    output_handle.write(line)
-                    cur_time = time.time()
-                    if (cur_time - start_time) > self.snapshot_window_seconds:
-                        self.snap_system_stats(resource_usage_output_path)
-                        start_time = cur_time 
 
+                while process_handle.poll() is None:
+                    time.sleep(self.snapshot_window_seconds)
+                    self.snap_system_stats(resource_usage_output_path)
+                            
                 # wait for it to complete 
                 process_handle.wait()
                 return_code = process_handle.returncode
