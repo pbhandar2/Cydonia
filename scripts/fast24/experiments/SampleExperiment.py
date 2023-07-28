@@ -18,7 +18,7 @@ class SampleExperiment:
             sample_rate_array: Array of sample rates. 
         """
         self.bits_arr = [12, 8, 4, 0]
-        self.sample_rate_arr = [0.01, 0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
+        self.sample_rate_arr = [0.01, 0.05, 0.1, 0.2, 0.4, 0.6, 0.9]
         self.seed = 42
         self.replay_rate_arr =[2, 1]
         self.sample_dir = Path("/research2/mtc/cp_traces/pranav/sample/iat/")
