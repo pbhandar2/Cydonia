@@ -16,14 +16,14 @@
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 495
@@ -31,14 +31,14 @@
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 495
@@ -46,14 +46,14 @@
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 495
@@ -61,14 +61,14 @@
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 495
@@ -91,14 +91,14 @@
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 289
@@ -106,14 +106,14 @@
     },
     {
         "t1_size_mb": 184,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 184,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 433
@@ -121,14 +121,14 @@
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 289
@@ -136,14 +136,14 @@
     },
     {
         "t1_size_mb": 184,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 184,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 433
@@ -151,14 +151,14 @@
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 289
@@ -166,14 +166,14 @@
     },
     {
         "t1_size_mb": 184,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 184,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 433
@@ -181,14 +181,14 @@
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 289
@@ -196,14 +196,14 @@
     },
     {
         "t1_size_mb": 184,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 184,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 433
@@ -226,14 +226,14 @@
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_12_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 165
@@ -241,14 +241,14 @@
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 247
@@ -256,14 +256,14 @@
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 371
@@ -271,14 +271,14 @@
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_8_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 165
@@ -286,14 +286,14 @@
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 247
@@ -301,14 +301,14 @@
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 371
@@ -316,14 +316,14 @@
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_4_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 165
@@ -331,14 +331,14 @@
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 247
@@ -346,14 +346,14 @@
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 371
@@ -361,14 +361,14 @@
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_0_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 165
@@ -376,14 +376,14 @@
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 247
@@ -391,14 +391,14 @@
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 371
@@ -421,21 +421,21 @@
     },
     {
         "t1_size_mb": 137,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 205,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 205,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 206
@@ -443,14 +443,14 @@
     },
     {
         "t1_size_mb": 308,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 308,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 309
@@ -458,21 +458,21 @@
     },
     {
         "t1_size_mb": 137,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 205,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 205,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 206
@@ -480,14 +480,14 @@
     },
     {
         "t1_size_mb": 308,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 308,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 309
@@ -495,21 +495,21 @@
     },
     {
         "t1_size_mb": 137,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 205,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 205,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 206
@@ -517,14 +517,14 @@
     },
     {
         "t1_size_mb": 308,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 308,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 309
@@ -532,21 +532,21 @@
     },
     {
         "t1_size_mb": 137,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 205,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 205,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 206
@@ -554,14 +554,14 @@
     },
     {
         "t1_size_mb": 308,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 308,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 309
@@ -584,21 +584,21 @@
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 165
@@ -606,14 +606,14 @@
     },
     {
         "t1_size_mb": 369,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 369,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 248
@@ -621,21 +621,21 @@
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 165
@@ -643,14 +643,14 @@
     },
     {
         "t1_size_mb": 369,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 369,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 248
@@ -658,21 +658,21 @@
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 165
@@ -680,14 +680,14 @@
     },
     {
         "t1_size_mb": 369,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 369,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 248
@@ -695,21 +695,21 @@
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 165
@@ -717,14 +717,14 @@
     },
     {
         "t1_size_mb": 369,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 369,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 248
@@ -747,28 +747,28 @@
     },
     {
         "t1_size_mb": 192,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 288,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 432,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 432,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 186
@@ -776,28 +776,28 @@
     },
     {
         "t1_size_mb": 192,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 288,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 432,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 432,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 186
@@ -805,28 +805,28 @@
     },
     {
         "t1_size_mb": 192,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 288,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 432,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 432,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 186
@@ -834,28 +834,28 @@
     },
     {
         "t1_size_mb": 192,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 288,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 432,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 432,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 2,
             "nvmCacheSizeMB": 186
@@ -870,112 +870,112 @@
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 219,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 329,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 494,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 219,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 329,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 494,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 219,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 329,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 494,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 219,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 329,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 494,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
@@ -989,112 +989,112 @@
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 370,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 555,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 370,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 555,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 370,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 555,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 370,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 555,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
@@ -1108,112 +1108,112 @@
     },
     {
         "t1_size_mb": 137,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 274,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 411,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 617,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 137,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 274,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 411,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 617,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 137,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 274,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 411,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 617,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 137,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 274,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 411,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
     },
     {
         "t1_size_mb": 617,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 2
         }
@@ -1235,14 +1235,14 @@
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 495
@@ -1250,14 +1250,14 @@
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 495
@@ -1265,14 +1265,14 @@
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 495
@@ -1280,14 +1280,14 @@
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 495
@@ -1310,14 +1310,14 @@
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 289
@@ -1325,14 +1325,14 @@
     },
     {
         "t1_size_mb": 184,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 184,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 433
@@ -1340,14 +1340,14 @@
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 289
@@ -1355,14 +1355,14 @@
     },
     {
         "t1_size_mb": 184,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 184,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 433
@@ -1370,14 +1370,14 @@
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 289
@@ -1385,14 +1385,14 @@
     },
     {
         "t1_size_mb": 184,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 184,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 433
@@ -1400,14 +1400,14 @@
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 289
@@ -1415,14 +1415,14 @@
     },
     {
         "t1_size_mb": 184,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 184,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 433
@@ -1445,14 +1445,14 @@
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_12_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 165
@@ -1460,14 +1460,14 @@
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 247
@@ -1475,14 +1475,14 @@
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 371
@@ -1490,14 +1490,14 @@
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_8_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 165
@@ -1505,14 +1505,14 @@
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 247
@@ -1520,14 +1520,14 @@
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 371
@@ -1535,14 +1535,14 @@
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_4_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 165
@@ -1550,14 +1550,14 @@
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 247
@@ -1565,14 +1565,14 @@
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 371
@@ -1580,14 +1580,14 @@
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_0_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 165
@@ -1595,14 +1595,14 @@
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 247
@@ -1610,14 +1610,14 @@
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 371
@@ -1640,21 +1640,21 @@
     },
     {
         "t1_size_mb": 137,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 205,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 205,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 206
@@ -1662,14 +1662,14 @@
     },
     {
         "t1_size_mb": 308,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 308,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 309
@@ -1677,21 +1677,21 @@
     },
     {
         "t1_size_mb": 137,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 205,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 205,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 206
@@ -1699,14 +1699,14 @@
     },
     {
         "t1_size_mb": 308,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 308,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 309
@@ -1714,21 +1714,21 @@
     },
     {
         "t1_size_mb": 137,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 205,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 205,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 206
@@ -1736,14 +1736,14 @@
     },
     {
         "t1_size_mb": 308,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 308,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 309
@@ -1751,21 +1751,21 @@
     },
     {
         "t1_size_mb": 137,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 205,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 205,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 206
@@ -1773,14 +1773,14 @@
     },
     {
         "t1_size_mb": 308,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 308,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 309
@@ -1803,21 +1803,21 @@
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 165
@@ -1825,14 +1825,14 @@
     },
     {
         "t1_size_mb": 369,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 369,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 248
@@ -1840,21 +1840,21 @@
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 165
@@ -1862,14 +1862,14 @@
     },
     {
         "t1_size_mb": 369,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 369,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 248
@@ -1877,21 +1877,21 @@
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 165
@@ -1899,14 +1899,14 @@
     },
     {
         "t1_size_mb": 369,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 369,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 248
@@ -1914,21 +1914,21 @@
     },
     {
         "t1_size_mb": 164,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 165
@@ -1936,14 +1936,14 @@
     },
     {
         "t1_size_mb": 369,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 369,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 248
@@ -1966,28 +1966,28 @@
     },
     {
         "t1_size_mb": 192,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 288,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 432,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 432,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 186
@@ -1995,28 +1995,28 @@
     },
     {
         "t1_size_mb": 192,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 288,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 432,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 432,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 186
@@ -2024,28 +2024,28 @@
     },
     {
         "t1_size_mb": 192,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 288,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 432,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 432,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 186
@@ -2053,28 +2053,28 @@
     },
     {
         "t1_size_mb": 192,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 288,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 432,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 432,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 1,
             "nvmCacheSizeMB": 186
@@ -2089,112 +2089,112 @@
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 219,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 329,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 494,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 219,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 329,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 494,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 219,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 329,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 494,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 109,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 219,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 329,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 494,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
@@ -2208,112 +2208,112 @@
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 370,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 555,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 370,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 555,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 370,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 555,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 123,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 246,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 370,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 555,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
@@ -2327,112 +2327,112 @@
     },
     {
         "t1_size_mb": 137,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 274,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 411,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 617,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_12_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_12_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 137,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 274,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 411,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 617,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_8_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_8_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 137,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 274,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 411,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 617,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_4_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_4_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 137,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.2_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.2_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 274,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.4_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.4_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 411,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.6_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.6_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
     },
     {
         "t1_size_mb": 617,
-        "trace_s3_key": "blocktraces/sample/cp-test/iat/w66/0.9_0_42.csv",
+        "trace_s3_key": "blocktraces/samples/cp-test/iat/w66/0.9_0_42.csv",
         "kwargs": {
             "replayRate": 1
         }
