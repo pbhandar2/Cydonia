@@ -30,7 +30,6 @@ class TraceReplay:
     def clean_files(self) -> None:
         STDOUT_FILE_PATH.unlink(missing_ok=True)
         STDERR_FILE_PATH.unlink(missing_ok=True)
-        CONFIG_FILE_PATH.unlink(missing_ok=True)
         SERVER_USAGE_FILE_PATH.unlink(missing_ok=True)
         STAT_FILE_PATH.unlink(missing_ok=True)
         TS_STAT_FILE_PATH.unlink(missing_ok=True)
