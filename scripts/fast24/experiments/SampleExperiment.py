@@ -39,7 +39,7 @@ class SampleExperiment:
         # Replay an ST and MT configuration with the full trace first 
         base_config = {
             "t1_size_mb": cache_size_mb,
-            "trace_s3_key": "blocktraces/{}/{}.csv".format(workload_type, workload),
+            "block_trace_path": "block_traces/{}/{}.csv".format(workload_type, workload),
             "kwargs": {
                 "replayRate": replay_rate
             }
@@ -60,7 +60,7 @@ class SampleExperiment:
             
             sample_st_config = deepcopy(base_config)
             sample_st_config["t1_size_mb"] = scaled_cache_size_mb
-            sample_st_config["trace_s3_key"] = "blocktraces/samples/{}/{}/{}/{}_{}_{}.csv".format(workload_type, sample_type, workload, rate, bits, self.seed)
+            sample_st_config["block_trace_path"] = "block_traces/samples/{}/{}/{}/{}_{}_{}.csv".format(workload_type, sample_type, workload, rate, self.seed, bits)
             experiment_list.append(sample_st_config)
 
             scaled_nvm_size_mb = int(rate * (max_cache_size_mb - cache_size_mb))

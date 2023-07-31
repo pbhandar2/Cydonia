@@ -29,7 +29,7 @@ class MTExperiments:
                 
                 st_config = {
                     "t1_size_mb": int(t1_size/(1024**2)),
-                    "trace_s3_key": "workloads/cp/{}.csv".format(workload),
+                    "block_trace_path": "workloads/cp/{}.csv".format(workload),
                     "kwargs": {
                         "replayRate": replay_rate
                     }
@@ -41,7 +41,7 @@ class MTExperiments:
 
                     mt_config = {
                         "t1_size_mb": int(t1_size/(1024**2)),
-                        "trace_s3_key": "workloads/cp/{}.csv".format(workload),
+                        "block_trace_path": "workloads/cp/{}.csv".format(workload),
                         "kwargs": {
                             "nvmCacheSizeMB": int(t2_size/(1024**2)),
                             "replayRate": replay_rate

@@ -62,7 +62,7 @@ def track_memory_cpu_usage_thread_function(
 class Runner:
     def __init__(
         self, 
-        cpu_memory_measurement_window_sec: int = 5
+        cpu_memory_measurement_window_sec: int = 30
     ) -> None:
         """Constructor for Runner class. 
 

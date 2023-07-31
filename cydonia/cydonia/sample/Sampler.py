@@ -186,5 +186,5 @@ class Sampler:
         sample_file_handle.close()
         end_time = time.time()
         process_time = end_time - start_time 
-        print("prog->{} sampled in {:.5f} minutes".format(self.trace_path, float(process_time/60.0)))
+        print("Done! prog->{} sampled in {:.5f} minutes".format(self.trace_path, float(process_time/60.0)))
         return split_counter
