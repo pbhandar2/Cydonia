@@ -75,7 +75,6 @@ class ReplayConfig:
         if 'replayRate' in kwargs:
             self.test_config['blockReplayConfig']['replayRate'] = kwargs['replayRate']
 
-        self.test_config['blockReplayConfig']['statOutputDir'] = '/dev/shm/tracereplay'
         self.test_config['tag'] = socket.gethostname()
     
 

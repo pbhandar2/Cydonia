@@ -11,7 +11,7 @@ T2_FILE_PATH = Path("~/nvm/disk.file")
 BACKING_FILE_PATH = Path("~/disk/disk.file")
 CACHEBENCH_BINARY_PATH = Path("~/disk/CacheLib/opt/cachelib/bin/cachebench").expanduser()
 
-REPLAY_DATA_PATH = Path("/dev/shm/tracereplay/")
+REPLAY_DATA_PATH = Path("/dev/shm/")
 REPLAY_DATA_PATH.mkdir(exist_ok=True, parents=True)
 POWER_OUT_FILE_PATH = REPLAY_DATA_PATH.joinpath("power.csv")
 STDOUT_FILE_PATH = REPLAY_DATA_PATH.joinpath("stdout.dump")
