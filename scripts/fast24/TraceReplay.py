@@ -11,7 +11,8 @@ T2_FILE_PATH = Path("~/nvm/disk.file")
 BACKING_FILE_PATH = Path("~/disk/disk.file")
 CACHEBENCH_BINARY_PATH = Path("~/disk/CacheLib/opt/cachelib/bin/cachebench").expanduser()
 
-REPLAY_DATA_PATH = Path("/dev/shm/")
+
+REPLAY_DATA_PATH = Path("/run/")
 REPLAY_DATA_PATH.mkdir(exist_ok=True, parents=True)
 POWER_OUT_FILE_PATH = REPLAY_DATA_PATH.joinpath("power.csv")
 STDOUT_FILE_PATH = REPLAY_DATA_PATH.joinpath("stdout.dump")
@@ -24,7 +25,7 @@ TS_STAT_FILE_PATH = REPLAY_DATA_PATH.joinpath("tsstat_0.out")
 
 class TraceReplay:
     def __init__(self) -> None:
-        self.clean_files()
+        self.run_cmd = "{} --json_test_config {}".format(CACHEBENCH_BINARY_PATH.absolute(), CONFIG_FILE_PATH.absolute())
 
 
     def clean_files(self) -> None:
@@ -37,7 +38,7 @@ class TraceReplay:
 
     def run(self) -> int:
         runner = Runner()
-        return_code = runner.run([str(CACHEBENCH_BINARY_PATH.absolute()), "--json_test_config", CONFIG_FILE_PATH.absolute()], 
+        return_code = runner.run(self.run_cmd.split(' '), 
                                     STDOUT_FILE_PATH, 
                                     STDERR_FILE_PATH,
                                     SERVER_USAGE_FILE_PATH,
