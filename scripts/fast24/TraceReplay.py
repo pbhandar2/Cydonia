@@ -53,7 +53,7 @@ def main(args):
         config_kwargs["nvmCachePaths"] = [str(T2_FILE_PATH.expanduser())]
     
     config_kwargs["replayRate"] = args.replay_rate
-    config_kwargs["statOutputDir"] = args.output_dir
+    config_kwargs["statOutputDir"] = str(args.output_dir.expanduser())
     config = ReplayConfig([str(args.block_trace_path.expanduser())], 
                 [str(BACKING_FILE_PATH.expanduser())], 
                 args.t1_size_mb, 
