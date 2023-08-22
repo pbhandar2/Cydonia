@@ -12,7 +12,7 @@ BACKING_FILE_PATH = Path("~/disk/disk.file")
 CACHEBENCH_BINARY_PATH = Path("~/disk/CacheLib/opt/cachelib/bin/cachebench").expanduser()
 
 
-REPLAY_DATA_PATH = Path("/run/")
+REPLAY_DATA_PATH = Path("/run/replay/")
 REPLAY_DATA_PATH.mkdir(exist_ok=True, parents=True)
 POWER_OUT_FILE_PATH = REPLAY_DATA_PATH.joinpath("power.csv")
 STDOUT_FILE_PATH = REPLAY_DATA_PATH.joinpath("stdout.dump")
@@ -53,6 +53,7 @@ def main(args):
         config_kwargs["nvmCachePaths"] = [str(T2_FILE_PATH.expanduser())]
     
     config_kwargs["replayRate"] = args.replay_rate
+    config_kwargs["statOutputDir"] = args.output_dir
     config = ReplayConfig([str(args.block_trace_path.expanduser())], 
                 [str(BACKING_FILE_PATH.expanduser())], 
                 args.t1_size_mb, 
@@ -83,6 +84,11 @@ if __name__ == "__main__":
         type=int,
         default=1,
         help="The factor by which interarrival times are divided to speed up replay.")
+    
+    parser.add_argument("--output_dir",
+        type=Path,
+        default=REPLAY_DATA_PATH,
+        help="Path to directory where experiment output is stored.")
     
     args = parser.parse_args()
 
