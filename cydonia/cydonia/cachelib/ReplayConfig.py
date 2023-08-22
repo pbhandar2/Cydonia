@@ -42,7 +42,7 @@ class ReplayConfig:
         }
 
         if "statOutputDir" in kwargs:
-            self.self.test_config['blockReplayConfig']["statOutputDir"] = kwargs["statOutputDir"]
+            self.test_config['blockReplayConfig']["statOutputDir"] = kwargs["statOutputDir"]
 
         self.test_config['blockReplayConfig']['traces'] = traces 
         self.test_config['blockReplayConfig']['backingFiles'] = backingFiles 
