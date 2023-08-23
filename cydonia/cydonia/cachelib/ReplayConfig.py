@@ -80,6 +80,8 @@ class ReplayConfig:
             self.test_config['blockReplayConfig']['replayRate'] = kwargs['replayRate']
 
         self.test_config['tag'] = socket.gethostname()
+        if 'iteration' in kwargs:
+            self.test_config['blockReplayConfig']['iteration'] = kwargs['iteration']
     
 
     def get_config(self):
