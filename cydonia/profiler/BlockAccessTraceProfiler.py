@@ -55,11 +55,9 @@ class BlockAccessTraceProfiler:
         else:
             output_stat = self.get_stat(active_window_index, len(self.id_set)) 
             output_stat['time_elapsed_us'] = time_elapsed_us
-            print(json.dumps(output_stat))
             window_stat_arr.append(output_stat)
             active_window_index = cur_window_index
         
-
         if output_path is not None:
             with open(output_path, "w+") as f:
                 json.dump(window_stat_arr, f, indent=4)

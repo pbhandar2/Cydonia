@@ -6,10 +6,8 @@ from collections import Counter, defaultdict
 from cydonia.profiler.PercentileStats import PercentileStats
 
 
-""" BlockStorageTraceStats
-    ------------------
-    This class generates the read and write statistics related to 
-    frequency, IO size, sequentiality, alignment and more.  
+"""Class BlockStorageTraceStats generates fearues from block 
+storage traces. 
 
     Parameters
     ----------
@@ -38,6 +36,7 @@ class BlockStorageTraceStats:
         self._write_io_request_size_sum = 0 
         self._write_seq_count = 0 
         self._write_misalignment_sum = 0 
+        self._write_misalignment_count = 0 
         self._min_write_page = 0 
         self._max_write_page = 0
         self._write_page_access_counter = Counter()
@@ -55,6 +54,7 @@ class BlockStorageTraceStats:
         self._prev_req = None 
         self._scan_length = 0 
         self._start_time = time.time()
+        self._start_ts = -1 
 
 
     def _get_jump_distance(self, req):
@@ -212,7 +212,7 @@ class BlockStorageTraceStats:
         elif req["op"] == "w":
             self._write_misalignment_sum += req["front_misalign"]
             self._write_misalignment_sum += req["rear_misalign"]
-
+            
 
     def _track_seq_access(self, req):
         """ A sequential block request starts at the same 
@@ -320,6 +320,8 @@ class BlockStorageTraceStats:
 
         if self._prev_req is not None:
             self._iat_pstats.add_data(self._get_iat(req))
+        else:
+            self._start_ts = req["ts"]
 
     
     def get_stat(self):
@@ -401,6 +403,7 @@ class BlockStorageTraceStats:
         stat['scan_read'] = self._scan_read_count
         stat['scan_write'] = self._scan_write_count
 
+        stat['ts_diff'] = self._prev_req["ts"] - self._start_ts
         for percentile, percentile_val in zip(self._iat_pstats.percentiles_tracked, self._iat_pstats.get_percentiles()):
             stat['iat_p{}'.format(percentile)] = percentile_val
         stat['iat_avg'] = self._iat_pstats.get_mean()

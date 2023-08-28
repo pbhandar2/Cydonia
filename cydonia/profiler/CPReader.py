@@ -3,9 +3,7 @@ from cydonia.profiler.Reader import Reader
 
 
 class CPReader(Reader): 
-    """
-    The class reads CSV Cloudphysics traces and returns 
-    block requests. 
+    """The class reads CSV Cloudphysics traces and returns block requests. 
 
     Parameters
     ----------
@@ -124,3 +122,81 @@ class CPReader(Reader):
                 reader2_req = reader2.get_next_block_req()
 
         out_handle.close()
+    
+
+    def get_block_req_arr(
+            self, 
+            block_size_byte: int = 4096
+    ) -> list:
+        """Get the array of fixed-sized block accesses from block storage trace. 
+
+        Args:
+            block_size_byte: Size of block in bytes. 
+        """
+        self.reset()
+        block_req_arr = []
+        block_req = self.get_next_block_req(page_size=block_size_byte)
+        while block_req:
+            if block_req["op"] == 'r':
+                for page_key in range(block_req["start_page"]. block_req["end_page"]+1):
+                    block_req_arr.append(page_key)
+            else:
+                if block_req["start_page"] == block_req["end_page"]:
+                    if block_req["front_misalign"] > 0 or block_req["rear_misalign"] > 0:
+                        block_req_arr.append(block_req["start_page"])
+                else:
+                    if block_req["front_misalign"] > 0:
+                        block_req_arr.append(block_req["start_page"])
+                    
+                    if block_req["rear_misalign"] > 0:
+                        block_req_arr.append(block_req["end_page"])
+
+                for page_key in range(block_req["start_page"]. block_req["end_page"]+1):
+                    block_req_arr.append(page_key)
+                    
+            block_req = self.get_next_block_req(page_size=block_size_byte)
+        return block_req_arr
+
+
+    def generate_block_req_trace(
+            self,
+            rd_arr: list,
+            block_req_trace_path: str,
+            block_size_byte: int = 4096
+    ) -> None:
+        """Generate a block req trace given the reuse distance of each block request to cache. 
+        
+        Args:
+            rd_arr: Array of reuse distance of each block request to cache. 
+            block_req_trace_path: Path to block request trace. 
+            block_size_byte: Size of block in bytes. 
+        """
+        self.reset()
+        block_req_trace_handle = open(block_req_trace_path, "w+")
+        block_req_count = 0 
+        block_req = self.get_next_block_req(page_size=block_size_byte)
+        while block_req:
+            block_ts, block_op = block_req["ts"], block_req["op"]
+            if block_op == 'r':
+                for page_key in range(block_req["start_page"]. block_req["end_page"]+1):
+                    block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, page_key, block_op, rd_arr[block_req_count]))
+                    block_req_count += 1
+            else:
+                if block_req["start_page"] == block_req["end_page"]:
+                    if block_req["front_misalign"] > 0 or block_req["rear_misalign"] > 0:
+                        block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, block_req["start_page"], 'r', rd_arr[block_req_count]))
+                        block_req_count += 1
+                else:
+                    if block_req["front_misalign"] > 0:
+                        block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, block_req["start_page"], 'r', rd_arr[block_req_count]))
+                        block_req_count += 1
+                    
+                    if block_req["rear_misalign"] > 0:
+                        block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, block_req["end_page"], 'r', rd_arr[block_req_count]))
+                        block_req_count += 1
+                for page_key in range(block_req["start_page"]. block_req["end_page"]+1):
+                        block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, page_key, block_op, rd_arr[block_req_count]))
+                        block_req_count += 1
+            block_req = self.get_next_block_req(page_size=block_size_byte)
+        assert len(rd_arr) == (block_req_count + 1)
+        block_req_trace_handle.close()

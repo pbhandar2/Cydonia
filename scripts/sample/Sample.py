@@ -111,7 +111,7 @@ class Sample:
                 'bits': bits,
                 'unique_lba_count': 0
             }
-            for index, percentile in enumerate(self.percentiles_array):
+            for _, percentile in enumerate(self.percentiles_array):
                 stats['p_{}'.format(percentile)] = 0
         return stats 
     
@@ -197,7 +197,7 @@ class Sample:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Generate sample block traces from a block trace",
+        description="Generate a sample block trace.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="Notes:\n"
                 "* Example usage: python3 Sample.py ~/w20.csv /dev/shm --rate 0.01 0.5 --bits 0 1 2\n"
