@@ -36,7 +36,7 @@ class CacheTrace:
         block_req_arr = reader.get_block_req_arr()        
         
         process = Popen([self._stack_binary_path], stdin=PIPE, stdout=PIPE)
-        stdout = process.communicate(input="\n".join(block_req_arr).encode("utf-8"))[0]
+        stdout = process.communicate(input="\n".join([str(_) for _ in block_req_arr]).encode("utf-8"))[0]
         rd_arr = stdout.decode("utf-8").split("\n")
 
         self.reader.generate_block_req_trace(rd_arr, cache_trace_path)
