@@ -138,7 +138,7 @@ class CPReader(Reader):
         block_req = self.get_next_block_req(page_size=block_size_byte)
         while block_req:
             if block_req["op"] == 'r':
-                for page_key in range(block_req["start_page"]. block_req["end_page"]+1):
+                for page_key in range(block_req["start_page"], block_req["end_page"]+1):
                     block_req_arr.append(page_key)
             else:
                 if block_req["start_page"] == block_req["end_page"]:
@@ -178,7 +178,7 @@ class CPReader(Reader):
         while block_req:
             block_ts, block_op = block_req["ts"], block_req["op"]
             if block_op == 'r':
-                for page_key in range(block_req["start_page"]. block_req["end_page"]+1):
+                for page_key in range(block_req["start_page"], block_req["end_page"]+1):
                     block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, page_key, block_op, rd_arr[block_req_count]))
                     block_req_count += 1
             else:
