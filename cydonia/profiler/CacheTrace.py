@@ -39,4 +39,4 @@ class CacheTrace:
         stdout = process.communicate(input="\n".join([str(_) for _ in block_req_arr]).encode("utf-8"))[0]
         rd_arr = stdout.decode("utf-8").split("\n")
 
-        self.reader.generate_block_req_trace(rd_arr, cache_trace_path)
+        reader.generate_block_req_trace(rd_arr, cache_trace_path)
