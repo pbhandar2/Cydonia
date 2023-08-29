@@ -151,7 +151,7 @@ class CPReader(Reader):
                     if block_req["rear_misalign"] > 0:
                         block_req_arr.append(block_req["end_page"])
 
-                for page_key in range(block_req["start_page"]. block_req["end_page"]+1):
+                for page_key in range(block_req["start_page"], block_req["end_page"]+1):
                     block_req_arr.append(page_key)
                     
             block_req = self.get_next_block_req(page_size=block_size_byte)
