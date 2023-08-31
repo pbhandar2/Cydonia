@@ -1,5 +1,6 @@
 """This file contains functions to create sample block storage traces."""
 
+from pathlib import Path 
 from mmh3 import hash128
 from numpy import mean, percentile, ceil 
 
@@ -34,7 +35,7 @@ def sample(
         ValueError: Raised if block trace path doesn't exist or rate is less than 1. 
         AssertionError: Raised if LBA of sampled block trace is invalid (less than zero). 
     """
-    if not block_trace_path.exists():
+    if not Path(block_trace_path).exists():
         raise ValueError("Block trace path {} does not exists.".format(block_trace_path))
 
     if rate >= 1:
@@ -42,7 +43,7 @@ def sample(
 
     max_hash_val = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
     sample_limit = max_hash_val * rate 
-    sample_file_handle = sample_trace_path.open("w+")
+    sample_file_handle = Path(sample_trace_path).open("w+")
     reader = CPReader(block_trace_path)
     
     """A single multi-block request in the original block trace can generate multiple possibly multi-block 
