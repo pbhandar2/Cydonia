@@ -42,12 +42,13 @@ class BlockStorageTraceStats:
         self._write_page_access_counter = Counter()
 
         self._iat_pstats = PercentileStats()
+        self._read_iat_pstats = PercentileStats()
+        self._write_iat_pstats = PercentileStats()
         self._scan_pstats = PercentileStats()
         self._read_size_pstats = PercentileStats()
         self._write_size_pstats = PercentileStats()
         self._jump_distance_pstats = PercentileStats()
         self._write_jump_distance_pstats = PercentileStats()
-        self._write_iat_pstats = PercentileStats()
         self._scan_read_count = 0 
         self._scan_write_count = 0 
 
@@ -245,7 +246,6 @@ class BlockStorageTraceStats:
             else:
                 self._write_seq_count += 1
                 if self._write_seq_count > 1:
-                    self._write_iat_pstats.add_data(self._get_iat(req))
                     self._write_jump_distance_pstats.add_data(self._get_jump_distance(req))
         
 
@@ -320,6 +320,10 @@ class BlockStorageTraceStats:
 
         if self._prev_req is not None:
             self._iat_pstats.add_data(self._get_iat(req))
+            if req["op"] == "r":
+                self._read_iat_pstats.add_data(self._get_iat(req))
+            else:
+                self._write_iat_pstats.add_data(self._get_iat(req))
         else:
             self._start_ts = req["ts"]
 
@@ -392,10 +396,6 @@ class BlockStorageTraceStats:
             stat['scan_p{}'.format(percentile)] = percentile_val
         stat['scan_avg'] = self._scan_pstats.get_mean()
 
-        for percentile, percentile_val in zip(self._write_iat_pstats.percentiles_tracked, self._write_iat_pstats.get_percentiles()):
-            stat['write_iat_p{}'.format(percentile)] = percentile_val
-        stat['write_iat_avg'] = self._write_iat_pstats.get_mean()
-
         for percentile, percentile_val in zip(self._write_jump_distance_pstats.percentiles_tracked, self._write_jump_distance_pstats.get_percentiles()):
             stat['write_jd_p{}'.format(percentile)] = percentile_val
         stat['write_jd_avg'] = self._write_jump_distance_pstats.get_mean()
@@ -407,6 +407,14 @@ class BlockStorageTraceStats:
         for percentile, percentile_val in zip(self._iat_pstats.percentiles_tracked, self._iat_pstats.get_percentiles()):
             stat['iat_p{}'.format(percentile)] = percentile_val
         stat['iat_avg'] = self._iat_pstats.get_mean()
+
+        for percentile, percentile_val in zip(self._read_iat_pstats.percentiles_tracked, self._read_iat_pstats.get_percentiles()):
+            stat['iat_read_p{}'.format(percentile)] = percentile_val
+        stat['iat_read_avg'] = self._read_iat_pstats.get_mean()
+
+        for percentile, percentile_val in zip(self._write_iat_pstats.percentiles_tracked, self._write_iat_pstats.get_percentiles()):
+            stat['iat_write_p{}'.format(percentile)] = percentile_val
+        stat['iat_write_avg'] = self._write_iat_pstats.get_mean()
 
         return stat
 

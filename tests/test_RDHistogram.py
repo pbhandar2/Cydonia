@@ -1,6 +1,4 @@
 from pathlib import Path 
-from pandas import DataFrame 
-from itertools import product
 from unittest import main, TestCase
 from pathlib import Path 
 
@@ -37,7 +35,7 @@ class TestRDHistogram(TestCase):
         assert rd_hist.get_max_hit_rate() == 0.5, "Max hit rate is not 0.5 but {}.".format(rd_hist.get_max_hit_rate())
 
         test_rd_hist_file_path.unlink()
-
+        
 
 if __name__ == '__main__':
     main()
