@@ -1,0 +1,8 @@
+argparse
+asserts
+boto3
+mmh3
+numpy
+pandas
+psutil
+pyJoules

@@ -1,48 +1,163 @@
-
+from decimal import DivisionByZero
 from pathlib import Path
 from copy import deepcopy
-from time import perf_counter
-from queue import PriorityQueue
-from urllib import request
 from pandas import DataFrame, read_csv 
-from numpy import inf, ndarray, zeros, mean, std 
+from numpy import ndarray, zeros, mean, std 
+
+from cydonia.sample.BlkReq import BlkReq, FirstTwoBlkReqTracker
+from cydonia.sample.Sample import create_sample_trace
 
 
-class BlkReq:
-    def __init__(
-            self, 
-            blk_addr: int, 
-            size: int, 
-            op: str, 
-            i: int, 
-            iat: int 
-    ) -> None:
-        self.addr = blk_addr
-        self.size = size
-        self.op = op 
-        self.index = i 
-        self.iat = iat 
+def load_remove_algorithm_metadata(
+        df: DataFrame,
+        block_size_byte: int = 512 
+) -> tuple:
+    """Get a tuple of a dictionary of access statistics of each block and an array of every
+    block request that introduces a new block in the trace in order of how they appear in 
+    the trace. 
+
+    Args:
+        df: DataFrame of block trace. 
+        block_size_byte: Size of block in byte. 
     
+    Returns:
+        access_stat_dict: Get access statistics from a block trace. 
+    """
+    access_stat_dict = {}
+    first_blk_req_tracker = FirstTwoBlkReqTracker()
 
-    def contains_blk_addr(self, addr: int):
-        return addr >= self.addr and addr < self.addr + self.size 
+    # track the number of request and unique blocks in the trace 
+    req_count_tracker = 0 
+    blk_count_tracker = 0 
+
+    for _, row in df.iterrows():
+        req_count_tracker += 1
+        # get the properties of the block request 
+        blk_addr, size_byte, op, ts = int(row["lba"]), int(row["size"]), row["op"], int(row["ts"])
+        size_block = size_byte//block_size_byte
+        assert size_byte % 512 == 0 and size_block > 0 
+        try:
+            cur_iat = int(row["iat"])
+        except ValueError:
+            cur_iat = 0
+
+        # track solo block requests 
+        if size_block == 1:
+            if blk_addr not in access_stat_dict:
+                blk_count_tracker += 1
+                access_stat_dict[blk_addr] = dict(init_access_stat_dict(ts, cur_iat, op, req_count_tracker))
+                first_blk_req_tracker.add_blk_req(BlkReq(blk_addr, size_block, op, blk_count_tracker, cur_iat))
+                
+            access_stat_dict[blk_addr]["{}_solo_count".format(op)] += 1 
+            access_stat_dict[blk_addr]["{}_solo_iat_sum".format(op)] += cur_iat
+            continue 
+
+        start_lba = blk_addr
+        end_lba = start_lba + size_block
+        new_blk_req_found = False 
+        for cur_lba in range(start_lba, end_lba):
+            if cur_lba not in access_stat_dict:
+                blk_count_tracker += 1
+                access_stat_dict[cur_lba] = dict(init_access_stat_dict(ts, cur_iat, op, req_count_tracker))
+                new_blk_req_found = True 
+
+            if cur_lba == start_lba:
+                access_stat_dict[cur_lba]["{}_left_count".format(op)] += 1 
+                access_stat_dict[cur_lba]["{}_left_iat_sum".format(op)] += cur_iat
+            elif cur_lba == start_lba+size_block-1:
+                access_stat_dict[cur_lba]["{}_right_count".format(op)] += 1 
+                access_stat_dict[cur_lba]["{}_right_iat_sum".format(op)] += cur_iat
+            else:
+                access_stat_dict[cur_lba]["{}_mid_count".format(op)] += 1 
+                access_stat_dict[cur_lba]["{}_mid_iat_sum".format(op)] += cur_iat
+        
+        if new_blk_req_found:
+            first_blk_req_tracker.add_blk_req(BlkReq(blk_addr, size_block, op, blk_count_tracker, cur_iat))
+
+    first_blk_req_tracker.load_arr()
+    return access_stat_dict, first_blk_req_tracker
 
 
-    def is_solo_req(self, addr: int):
-        return self.contains_blk_addr(addr) and self.size == 1
+def get_err_df_on_remove(
+        per_blk_access_stat_dict: dict, 
+        first_blk_req_tracker: FirstTwoBlkReqTracker,
+        sample_workload_stat_dict: dict, 
+        workload_stat_dict: dict,
+        num_lower_order_bits_ignored: int = 0,
+        blk_size_byte: int = 512
+) -> DataFrame:
+    """For each block in the trace, compute the error if the block is removed and return the information as a DataFrame. 
 
+    Args:
+        per_blk_access_stat_dict: Dictionary of access statistics of each block in the trace. 
+        first_blk_req_arr: Array of first block request of each block in order of appearence in trace. 
+        sample_workload_stat_dict: Dictionary of workload features of the sample. 
+        workload_stat_dict: Dictionary of workload features of the full trace. 
+        num_lower_order_bits_ignored: Number of lower order bits of block addresses ignored to increase sampling granularity.
+        blk_size_byte: Size of each block in byte. 
+    
+    Returns:
+        err_df: DataFrame of error values if each block were to be removed from the sample. 
+    """
+    error_dict_arr = []
+    region_addr_arr = list(set([block_addr >> num_lower_order_bits_ignored for block_addr in per_blk_access_stat_dict]))
+    for _, region_addr in enumerate(region_addr_arr):
+        region_blk_addr_arr = get_blk_addr_arr(region_addr, num_lower_order_bits_ignored)
 
-    def __lt__(self, other):
-        # overload < operator so that we can use it with a PriorityQueue
-        return self.index < other.index
+        first_blk_req_tracker_copy = first_blk_req_tracker.copy()
 
+        new_per_blk_access_stat_dict = {}
+        new_workload_stat_dict = deepcopy(sample_workload_stat_dict)
+        for blk_addr in region_blk_addr_arr:
+            if blk_addr not in per_blk_access_stat_dict:
+                continue 
+
+            if blk_addr in new_per_blk_access_stat_dict:
+                cur_blk_access_stat_dict = new_per_blk_access_stat_dict[blk_addr]
+            else:
+                cur_blk_access_stat_dict = per_blk_access_stat_dict[blk_addr]
+
+            right_blk_access_stat_dict = {}
+            if blk_addr+1 in new_per_blk_access_stat_dict:
+                right_blk_access_stat_dict = new_per_blk_access_stat_dict[blk_addr+1]
+            elif blk_addr+1 in per_blk_access_stat_dict:
+                right_blk_access_stat_dict = per_blk_access_stat_dict[blk_addr+1]
+
+            left_blk_access_stat_dict = {}
+            if blk_addr-1 in new_per_blk_access_stat_dict:
+                left_blk_access_stat_dict = new_per_blk_access_stat_dict[blk_addr-1]
+            elif blk_addr-1 in per_blk_access_stat_dict:
+                left_blk_access_stat_dict = per_blk_access_stat_dict[blk_addr-1]
+            
+            return_tuple = remove_blk(blk_addr, 
+                                        new_workload_stat_dict, 
+                                        cur_blk_access_stat_dict,
+                                        left_blk_access_stat_dict,
+                                        right_blk_access_stat_dict,
+                                        first_blk_req_tracker_copy,
+                                        blk_size_byte=blk_size_byte)
+            
+            new_workload_stat_dict, new_left_blk_access_stat_dict, new_right_blk_access_stat_dict = return_tuple
+            if new_left_blk_access_stat_dict:
+                new_per_blk_access_stat_dict[blk_addr-1] = new_left_blk_access_stat_dict
+            
+            if new_right_blk_access_stat_dict:
+                new_per_blk_access_stat_dict[blk_addr+1] = new_right_blk_access_stat_dict 
+
+        percent_error_dict = get_percent_error_dict(workload_stat_dict, new_workload_stat_dict)
+        percent_error_dict["region"] = region_addr
+        error_dict_arr.append(percent_error_dict)
+
+    return DataFrame(error_dict_arr)
 
 
 def blk_unsample(
         sample_df: DataFrame,
         workload_stat_dict: dict,
         num_lower_order_bits_ignored: int = 0,
-        blk_size_byte: int = 512
+        blk_size_byte: int = 512,
+        test_mode: bool = False,
+        test_trace_path: Path = Path("/")
 ) -> DataFrame:
     """Reduce sample workload feature error by unsampling (removing blocks).
 
@@ -52,19 +167,11 @@ def blk_unsample(
         num_lower_order_bits_ignored: Number of lower order bits ignored. 
         blk_size_byte: Size of block in byte. 
     """
-    per_blk_access_stat_dict, first_req_order_queue = get_access_stat_and_first_req_queue(sample_df)
+    per_blk_access_stat_dict, first_blk_req_tracker = load_remove_algorithm_metadata(sample_df)
 
-    # load an ordered array of first block request of each block request 
-    first_blk_req_arr = []
-    for index in range(first_req_order_queue.qsize()):
-        _, item = first_req_order_queue.get()
-        first_blk_req_arr.append(item)
-
-    # start tracking the current first and second block req 
-    first_req_index_tracker = 0 
     sample_workload_stat_dict = get_workload_stat_dict(sample_df)
     remove_error_df = get_err_df_on_remove(per_blk_access_stat_dict, 
-                                            first_blk_req_arr, 
+                                            first_blk_req_tracker,
                                             sample_workload_stat_dict, 
                                             workload_stat_dict,
                                             num_lower_order_bits_ignored=num_lower_order_bits_ignored)
@@ -74,144 +181,76 @@ def blk_unsample(
     new_workload_stat_dict = deepcopy(sample_workload_stat_dict)
     while len(remove_error_df):
         best_row = remove_error_df.sort_values(by=["mean"]).iloc[0]
-        region_addr = best_row["region"]
+        region_addr = int(best_row["region"])
 
-        new_workload_stat_dict, new_first_req_index_tracker = remove_region(region_addr, 
-                                                                                new_workload_stat_dict, 
-                                                                                per_blk_access_stat_dict, 
-                                                                                new_per_blk_access_stat_dict,
-                                                                                first_blk_req_arr[first_req_index_tracker:],
-                                                                                num_lower_order_bits_ignored)
-        first_req_index_tracker += new_first_req_index_tracker
-        # region_blk_addr_arr = get_blk_addr_arr(int(region_addr), num_lower_order_bits_ignored)
-        # for blk_addr in region_blk_addr_arr:
-        #     if blk_addr not in per_blk_access_stat_dict:
-        #         continue 
+        region_blk_addr_arr = get_blk_addr_arr(int(region_addr), num_lower_order_bits_ignored)
+        for blk_addr in region_blk_addr_arr:
+            if blk_addr not in per_blk_access_stat_dict:
+                continue 
 
-        #     if blk_addr in new_per_blk_access_stat_dict:
-        #         cur_blk_access_stat_dict = new_per_blk_access_stat_dict[blk_addr]
-        #     else:
-        #         cur_blk_access_stat_dict = per_blk_access_stat_dict[blk_addr]
+            if blk_addr in new_per_blk_access_stat_dict:
+                cur_blk_access_stat_dict = new_per_blk_access_stat_dict[blk_addr]
+            else:
+                cur_blk_access_stat_dict = per_blk_access_stat_dict[blk_addr]
 
-        #     right_blk_access_stat_dict = {}
-        #     if blk_addr+1 in new_per_blk_access_stat_dict:
-        #         right_blk_access_stat_dict = new_per_blk_access_stat_dict[blk_addr+1]
-        #     elif blk_addr+1 in per_blk_access_stat_dict:
-        #         right_blk_access_stat_dict = per_blk_access_stat_dict[blk_addr+1]
+            right_blk_access_stat_dict = {}
+            if blk_addr+1 in new_per_blk_access_stat_dict:
+                right_blk_access_stat_dict = new_per_blk_access_stat_dict[blk_addr+1]
+            elif blk_addr+1 in per_blk_access_stat_dict:
+                right_blk_access_stat_dict = per_blk_access_stat_dict[blk_addr+1]
 
-        #     left_blk_access_stat_dict = {}
-        #     if blk_addr-1 in new_per_blk_access_stat_dict:
-        #         left_blk_access_stat_dict = new_per_blk_access_stat_dict[blk_addr-1]
-        #     elif blk_addr-1 in per_blk_access_stat_dict:
-        #         left_blk_access_stat_dict = per_blk_access_stat_dict[blk_addr-1]
+            left_blk_access_stat_dict = {}
+            if blk_addr-1 in new_per_blk_access_stat_dict:
+                left_blk_access_stat_dict = new_per_blk_access_stat_dict[blk_addr-1]
+            elif blk_addr-1 in per_blk_access_stat_dict:
+                left_blk_access_stat_dict = per_blk_access_stat_dict[blk_addr-1]
             
-        #     return_tuple = remove_blk(blk_addr, 
-        #                                 new_workload_stat_dict, 
-        #                                 cur_blk_access_stat_dict,
-        #                                 left_blk_access_stat_dict,
-        #                                 right_blk_access_stat_dict,
-        #                                 first_blk_req,
-        #                                 second_blk_req,
-        #                                 blk_size_byte=blk_size_byte)
+            return_tuple = remove_blk(blk_addr, 
+                                        new_workload_stat_dict, 
+                                        cur_blk_access_stat_dict,
+                                        left_blk_access_stat_dict,
+                                        right_blk_access_stat_dict,
+                                        first_blk_req_tracker,
+                                        blk_size_byte=blk_size_byte)
+
+            new_workload_stat_dict, new_left_blk_access_stat_dict, new_right_blk_access_stat_dict= return_tuple
+            if new_left_blk_access_stat_dict:
+                new_per_blk_access_stat_dict[blk_addr-1] = deepcopy(new_left_blk_access_stat_dict)
             
-        #     new_workload_stat_dict, new_left_blk_access_stat_dict, new_right_blk_access_stat_dict = return_tuple
+            if new_right_blk_access_stat_dict:
+                new_per_blk_access_stat_dict[blk_addr+1] = deepcopy(new_right_blk_access_stat_dict)
 
-        #     new_per_blk_access_stat_dict[blk_addr-1] = new_left_blk_access_stat_dict
-        #     new_per_blk_access_stat_dict[blk_addr+1] = new_right_blk_access_stat_dict 
-
-        #     if first_blk_req.is_solo_req(blk_addr):
-        #         first_req_index_tracker += 1
-        #         first_blk_req = first_blk_req_arr[first_req_index_tracker]
-        #         second_blk_req = first_blk_req_arr[first_req_index_tracker+1]
-
-        #     per_blk_access_stat_dict.pop(blk_addr)
-        #     if new_left_blk_access_stat_dict:
-        #         per_blk_access_stat_dict[blk_addr-1] = new_left_blk_access_stat_dict
+            per_blk_access_stat_dict.pop(blk_addr)
             
-        #     if new_right_blk_access_stat_dict:
-        #         per_blk_access_stat_dict[blk_addr+1] = new_right_blk_access_stat_dict
+            if blk_addr in new_per_blk_access_stat_dict:
+                new_per_blk_access_stat_dict.pop(blk_addr)
+            
+            if new_left_blk_access_stat_dict:
+                per_blk_access_stat_dict[blk_addr-1] = deepcopy(new_left_blk_access_stat_dict)
+
+            if new_right_blk_access_stat_dict:
+                per_blk_access_stat_dict[blk_addr+1] = deepcopy(new_right_blk_access_stat_dict)
+
+        if test_mode:
+            sample_lba_dict = dict.fromkeys(per_blk_access_stat_dict.keys(), 1)
+            create_sample_trace(sample_df, sample_lba_dict, test_trace_path)
+            new_sample_df = load_blk_trace(test_trace_path)
+            new_sample_workload_stat_dict = get_workload_stat_dict(new_sample_df)
+            for key in new_workload_stat_dict:                    
+                assert new_workload_stat_dict[key] == new_sample_workload_stat_dict[key],\
+                    "Key {} not matching for region {} in  new compute dict {} and new file dict {}".format(key, region_addr, new_workload_stat_dict, new_sample_workload_stat_dict)
+            print("Test passed for region {}, {} remaining.".format(region_addr, len(remove_error_df)))
 
         percent_error_dict = get_percent_error_dict(workload_stat_dict, new_workload_stat_dict)
         percent_error_dict["region"] = region_addr
         percent_err_dict_arr.append(percent_error_dict)
+        print(percent_error_dict)
         remove_error_df = get_err_df_on_remove(per_blk_access_stat_dict, 
-                                                first_blk_req_arr[first_req_index_tracker:], 
+                                                first_blk_req_tracker, 
                                                 new_workload_stat_dict, 
                                                 workload_stat_dict,
                                                 num_lower_order_bits_ignored=num_lower_order_bits_ignored)
     return DataFrame(percent_err_dict_arr)
-
-
-def remove_region(
-        region_addr: int,
-        workload_stat_dict: dict,
-        per_blk_access_stat_dict: dict,
-        new_per_blk_access_stat_dict: dict,
-        first_blk_req_arr: list,
-        num_lower_order_bits_ignored: int,
-        blk_size_byte: int = 512
-) -> tuple:
-    # start tracking the current first and second block req 
-    first_req_index_tracker = 0 
-    first_blk_req = first_blk_req_arr[first_req_index_tracker]
-    second_blk_req = first_blk_req_arr[first_req_index_tracker+1]
-    if first_req_index_tracker + 1 >= len(first_blk_req_arr):
-        second_blk_req = BlkReq(-1, -1, '', -1, 0)
-    else:
-        second_blk_req = first_blk_req_arr[first_req_index_tracker+1]
-
-    new_workload_stat_dict = deepcopy(workload_stat_dict)
-    region_blk_addr_arr = get_blk_addr_arr(int(region_addr), num_lower_order_bits_ignored)
-    for blk_addr in region_blk_addr_arr:
-        if blk_addr not in per_blk_access_stat_dict:
-            continue 
-
-        if blk_addr in new_per_blk_access_stat_dict:
-            cur_blk_access_stat_dict = new_per_blk_access_stat_dict[blk_addr]
-        else:
-            cur_blk_access_stat_dict = per_blk_access_stat_dict[blk_addr]
-
-        right_blk_access_stat_dict = {}
-        if blk_addr+1 in new_per_blk_access_stat_dict:
-            right_blk_access_stat_dict = new_per_blk_access_stat_dict[blk_addr+1]
-        elif blk_addr+1 in per_blk_access_stat_dict:
-            right_blk_access_stat_dict = per_blk_access_stat_dict[blk_addr+1]
-
-        left_blk_access_stat_dict = {}
-        if blk_addr-1 in new_per_blk_access_stat_dict:
-            left_blk_access_stat_dict = new_per_blk_access_stat_dict[blk_addr-1]
-        elif blk_addr-1 in per_blk_access_stat_dict:
-            left_blk_access_stat_dict = per_blk_access_stat_dict[blk_addr-1]
-
-
-        return_tuple = remove_blk(blk_addr, 
-                                    new_workload_stat_dict, 
-                                    cur_blk_access_stat_dict,
-                                    left_blk_access_stat_dict,
-                                    right_blk_access_stat_dict,
-                                    first_blk_req,
-                                    second_blk_req,
-                                    blk_size_byte=blk_size_byte)
-        
-        new_workload_stat_dict, new_left_blk_access_stat_dict, new_right_blk_access_stat_dict = return_tuple
-        new_per_blk_access_stat_dict[blk_addr-1] = new_left_blk_access_stat_dict
-        new_per_blk_access_stat_dict[blk_addr+1] = new_right_blk_access_stat_dict 
-
-        if first_blk_req.is_solo_req(blk_addr):
-            first_req_index_tracker += 1
-            first_blk_req = first_blk_req_arr[first_req_index_tracker]
-            if first_req_index_tracker + 1 >= len(first_blk_req_arr):
-                second_blk_req = BlkReq(-1, -1, '', -1, 0)
-            else:
-                second_blk_req = first_blk_req_arr[first_req_index_tracker+1]
-                
-        per_blk_access_stat_dict.pop(blk_addr)
-        if new_left_blk_access_stat_dict:
-            per_blk_access_stat_dict[blk_addr-1] = new_left_blk_access_stat_dict
-        
-        if new_right_blk_access_stat_dict:
-            per_blk_access_stat_dict[blk_addr+1] = new_right_blk_access_stat_dict
-    return new_workload_stat_dict, first_req_index_tracker
 
 
 def remove_blk(
@@ -220,8 +259,7 @@ def remove_blk(
         blk_access_stat_dict: dict,
         left_blk_access_stat_dict: dict,
         right_blk_access_stat_dict: dict,
-        first_blk_req: BlkReq,
-        second_blk_req: BlkReq, 
+        first_blk_req_tracker: FirstTwoBlkReqTracker,
         blk_size_byte: int = 512
 ) -> tuple:
     new_sub_remove_stat_dict = get_new_sub_remove_stat_dict(blk_access_stat_dict, left_blk_access_stat_dict is not None, right_blk_access_stat_dict is not None)
@@ -244,23 +282,31 @@ def remove_blk(
     new_workload_stat_dict["write_count"] -= new_sub_remove_stat_dict["w_remove_count"]
     new_workload_stat_dict["total_write_iat"] -= new_sub_remove_stat_dict["w_remove_iat_sum"]
 
-    # adjust total IAT if the first request of the block request is being changed 
-    # first_blk_req_dict = get_first_block_req(per_blk_access_stat_dict)
-    if first_blk_req.is_solo_req(blk_addr):
-        # second_blk_req_dict = get_first_block_req(per_blk_access_stat_dict, filter_index=first_blk_req_dict["min_index"])
+    if first_blk_req_tracker.is_first_solo_req(blk_addr):
+        first_blk_req, second_blk_req =  first_blk_req_tracker._first_blk_req, first_blk_req_tracker._second_blk_req
         if second_blk_req.op == 'r':
             new_workload_stat_dict["total_read_iat"] -= (second_blk_req.iat - first_blk_req.iat)
         elif second_blk_req.op == 'w':
             new_workload_stat_dict["total_write_iat"] -= (second_blk_req.iat - first_blk_req.iat)
         else:
             raise ValueError("Unrecognized request type {}.".format(second_blk_req.op))
+    first_blk_req_tracker.remove(blk_addr)
 
+    
+    new_workload_stat_dict["write_ratio"] = new_workload_stat_dict["write_count"]/(new_workload_stat_dict["read_count"] + new_workload_stat_dict["write_count"]) \
+                                                if (new_workload_stat_dict["read_count"] + new_workload_stat_dict["write_count"]) > 0 else 0 
+    
+    new_workload_stat_dict["mean_read_size"] = new_workload_stat_dict["total_read_size"]/new_workload_stat_dict["read_count"] \
+                                                    if new_workload_stat_dict["read_count"] > 0 else 0 
 
-    new_workload_stat_dict["write_ratio"] = new_workload_stat_dict["write_count"]/(new_workload_stat_dict["read_count"] + new_workload_stat_dict["write_count"])
-    new_workload_stat_dict["mean_read_size"] = new_workload_stat_dict["total_read_size"]/new_workload_stat_dict["read_count"]
-    new_workload_stat_dict["mean_write_size"] = new_workload_stat_dict["total_write_size"]/new_workload_stat_dict["write_count"]
-    new_workload_stat_dict["mean_read_iat"] = new_workload_stat_dict["total_read_iat"]/new_workload_stat_dict["read_count"]
-    new_workload_stat_dict["mean_write_iat"] = new_workload_stat_dict["total_write_iat"]/new_workload_stat_dict["write_count"]
+    new_workload_stat_dict["mean_write_size"] = new_workload_stat_dict["total_write_size"]/new_workload_stat_dict["write_count"] \
+                                                    if new_workload_stat_dict["write_count"] > 0 else 0 
+    
+    new_workload_stat_dict["mean_read_iat"] = new_workload_stat_dict["total_read_iat"]/new_workload_stat_dict["read_count"] \
+                                                    if new_workload_stat_dict["read_count"] > 0 else 0 
+    
+    new_workload_stat_dict["mean_write_iat"] = new_workload_stat_dict["total_write_iat"]/new_workload_stat_dict["write_count"] \
+                                                    if new_workload_stat_dict["write_count"] > 0 else 0 
 
     copy_left_blk_access_stat_dict = deepcopy(left_blk_access_stat_dict)
     if left_blk_access_stat_dict:
@@ -299,272 +345,6 @@ def remove_blk(
     return new_workload_stat_dict, copy_left_blk_access_stat_dict, copy_right_blk_access_stat_dict
 
 
-def get_err_df_on_remove(
-        per_blk_access_stat_dict: dict, 
-        first_blk_req_arr: list, 
-        sample_workload_stat_dict: dict, 
-        workload_stat_dict: dict,
-        num_lower_order_bits_ignored: int = 0,
-        blk_size_byte: int = 512
-) -> DataFrame:
-    """Get DataFrame of error values when removing blocks. 
-
-    Args:
-        sample_df: DataFrame of sample block trace. 
-    """
-    region_addr_arr = list(set([block_addr >> num_lower_order_bits_ignored for block_addr in per_blk_access_stat_dict]))
-    num_region = len(region_addr_arr)
-
-    first_req_index_tracker = 0 
-    first_blk_req = first_blk_req_arr[first_req_index_tracker]
-    second_blk_req = first_blk_req_arr[first_req_index_tracker+1]
-
-    error_dict_arr = []
-    for index, region_addr in enumerate(region_addr_arr):
-        region_blk_addr_arr = get_blk_addr_arr(region_addr, num_lower_order_bits_ignored)
-
-        new_per_blk_access_stat_dict = {}
-        new_workload_stat_dict = deepcopy(sample_workload_stat_dict)
-        for blk_addr in region_blk_addr_arr:
-            if blk_addr not in per_blk_access_stat_dict:
-                continue 
-
-            if blk_addr in new_per_blk_access_stat_dict:
-                cur_blk_access_stat_dict = new_per_blk_access_stat_dict[blk_addr]
-            else:
-                cur_blk_access_stat_dict = per_blk_access_stat_dict[blk_addr]
-
-            right_blk_access_stat_dict = {}
-            if blk_addr+1 in new_per_blk_access_stat_dict:
-                right_blk_access_stat_dict = new_per_blk_access_stat_dict[blk_addr+1]
-            elif blk_addr+1 in per_blk_access_stat_dict:
-                right_blk_access_stat_dict = per_blk_access_stat_dict[blk_addr+1]
-
-            left_blk_access_stat_dict = {}
-            if blk_addr-1 in new_per_blk_access_stat_dict:
-                left_blk_access_stat_dict = new_per_blk_access_stat_dict[blk_addr-1]
-            elif blk_addr-1 in per_blk_access_stat_dict:
-                left_blk_access_stat_dict = per_blk_access_stat_dict[blk_addr-1]
-            
-            return_tuple = remove_blk(blk_addr, 
-                                        new_workload_stat_dict, 
-                                        cur_blk_access_stat_dict,
-                                        left_blk_access_stat_dict,
-                                        right_blk_access_stat_dict,
-                                        first_blk_req,
-                                        second_blk_req,
-                                        blk_size_byte=blk_size_byte)
-            
-            new_workload_stat_dict, new_left_blk_access_stat_dict, new_right_blk_access_stat_dict = return_tuple
-
-            new_per_blk_access_stat_dict[blk_addr-1] = new_left_blk_access_stat_dict
-            new_per_blk_access_stat_dict[blk_addr+1] = new_right_blk_access_stat_dict 
-
-            if first_blk_req.is_solo_req(blk_addr):
-                first_req_index_tracker += 1
-                first_blk_req = first_blk_req_arr[first_req_index_tracker]
-                second_blk_req = first_blk_req_arr[first_req_index_tracker+1]
-        
-        percent_error_dict = get_percent_error_dict(workload_stat_dict, new_workload_stat_dict)
-        percent_error_dict["region"] = region_addr
-        error_dict_arr.append(percent_error_dict)
-        # if index % 10000:
-        #     print("{}/{} completed".format(index, num_region))
-
-    return DataFrame(error_dict_arr)
-
-
-
-def get_access_stat_and_first_req_queue(
-        df: DataFrame,
-        block_size_byte: int = 512 
-) -> tuple:
-    """Get the dictionary of access statistics. 
-
-    Args:
-        df: DataFrame of block trace. 
-        block_size_byte: Size of block in byte. 
-    
-    Returns:
-        access_stat_dict: Get access statistics from a block trace. 
-    """
-    access_stat_dict = {}
-    first_req_queue = PriorityQueue()
-    req_count_tracker = 0 
-    blk_count_tracker = 0 
-    for _, row in df.iterrows():
-        req_count_tracker += 1
-        blk_addr, size_byte, op, ts = int(row["lba"]), int(row["size"]), row["op"], int(row["ts"])
-        size_block = size_byte//block_size_byte
-        assert size_byte % 512 == 0 
-        
-        try:
-            cur_iat = int(row["iat"])
-        except ValueError:
-            cur_iat = 0
-
-        if size_block == 1:
-            if blk_addr not in access_stat_dict:
-                blk_count_tracker += 1
-                access_stat_dict[blk_addr] = dict(BlkSample.init_access_stat_dict(ts, cur_iat, op, req_count_tracker))
-                first_req_queue.put((blk_count_tracker, BlkReq(blk_addr, size_block, op, req_count_tracker, cur_iat)))
-                
-
-            access_stat_dict[blk_addr]["{}_solo_count".format(op)] += 1 
-            access_stat_dict[blk_addr]["{}_solo_iat_sum".format(op)] += cur_iat
-            continue 
-
-        start_lba = blk_addr
-        end_lba = start_lba + size_block
-        for cur_lba in range(start_lba, end_lba):
-            if cur_lba not in access_stat_dict:
-                access_stat_dict[cur_lba] = dict(BlkSample.init_access_stat_dict(ts, cur_iat, op, req_count_tracker))
-                first_req_queue.put((blk_count_tracker, BlkReq(blk_addr, size_block, op, blk_count_tracker, cur_iat)))
-
-            if cur_lba == start_lba:
-                access_stat_dict[cur_lba]["{}_left_count".format(op)] += 1 
-                access_stat_dict[cur_lba]["{}_left_iat_sum".format(op)] += cur_iat
-            elif cur_lba == start_lba+size_block-1:
-                access_stat_dict[cur_lba]["{}_right_count".format(op)] += 1 
-                access_stat_dict[cur_lba]["{}_right_iat_sum".format(op)] += cur_iat
-            else:
-                access_stat_dict[cur_lba]["{}_mid_count".format(op)] += 1 
-                access_stat_dict[cur_lba]["{}_mid_iat_sum".format(op)] += cur_iat
-    return access_stat_dict, first_req_queue 
-
-
-
-def get_remove_error_df(
-        sample_df: DataFrame, 
-        full_workload_stat_dict: dict,
-        num_lower_order_bits_ignored: int = 0,
-        blk_size_byte: int = 512
-) -> DataFrame:
-    start_time = perf_counter()
-    num_blk_evaluated = 0 
-    new_workload_stat_arr = []
-    track_computed_region_dict = {}
-    per_blk_access_stat_dict, queue = get_access_stat_and_first_req_queue(sample_df)
-    blk_addr_list = list(per_blk_access_stat_dict.keys())
-    blk_addr_list_len = len(blk_addr_list)
-    workload_stat_dict = get_workload_stat_dict(sample_df)
-    end_time = perf_counter()
-    #print("Preprocessing done in {} minutes".format(float(end_time - start_time)/60))
-
-    _, first_blk_req = queue.get()
-    _, second_blk_req = queue.get()
-    for blk_addr in blk_addr_list:
-        pre_process_start_time = perf_counter()
-
-        region_tracker_start_time = perf_counter()
-        num_blk_evaluated += 1 
-        region_index = blk_addr >> num_lower_order_bits_ignored
-        if region_index in track_computed_region_dict:
-            if num_blk_evaluated % 5 == 0:
-                time_len = perf_counter() - start_time 
-                print("{}/{} completed in {} minutes.".format(num_blk_evaluated, blk_addr_list_len, float(time_len)/60))
-            continue 
-        track_computed_region_dict[region_index] = 1 
-        region_tracker_end_time = perf_counter()
-        #print("region tracker {} in {} seconds.".format(region_index, region_tracker_end_time - region_tracker_start_time))
-
-        data_copy_start_time = perf_counter()
-        cur_workload_stat_dict = deepcopy(workload_stat_dict)
-        #cur_per_blk_access_stat_dict = deepcopy(per_blk_access_stat_dict)
-        data_copy_end_time = perf_counter()
-        #print("copy time {} in {} seconds".format(region_index, data_copy_end_time - data_copy_start_time))
-
-        get_blk_addr_start_time = perf_counter()
-        region_blk_addr_arr = get_blk_addr_arr(blk_addr, num_lower_order_bits_ignored)
-        get_blk_addr_end_time = perf_counter()
-        #print("get block addr {} in {} seconds.".format(region_index, get_blk_addr_end_time - get_blk_addr_start_time))
-        pre_process_end_time = perf_counter()
-        #print("Preprocess {} in {} seconds.".format(region_index, pre_process_end_time - pre_process_start_time))
-
-        remove_start_time = perf_counter()
-        if num_lower_order_bits_ignored == 0:
-            cur_workload_stat_dict = remove_block(cur_workload_stat_dict, 
-                                                    per_blk_access_stat_dict, 
-                                                    region_blk_addr_arr[0], 
-                                                    first_blk_req, 
-                                                    second_blk_req, 
-                                                    blk_size_byte=blk_size_byte,
-                                                    update_stat_dict=False)
-            if first_blk_req.is_solo_req(region_blk_addr_arr[0]):
-                first_blk_req = second_blk_req
-                _, second_blk_req = queue.get()
-        else:
-            cur_per_blk_access_stat_dict = deepcopy(per_blk_access_stat_dict)
-            for region_blk_addr in region_blk_addr_arr:
-                if region_blk_addr not in per_blk_access_stat_dict:
-                    continue 
-                cur_workload_stat_dict = remove_block(cur_workload_stat_dict, 
-                                                        cur_per_blk_access_stat_dict, 
-                                                        region_blk_addr, 
-                                                        first_blk_req, 
-                                                        second_blk_req, 
-                                                        blk_size_byte=blk_size_byte,
-                                                        update_stat_dict=True)
-                if first_blk_req.is_solo_req(region_blk_addr):
-                    first_blk_req = second_blk_req
-                    _, second_blk_req = queue.get()
-        remove_end_time = perf_counter()
-        #print("Removed {} in {} seconds.".format(region_index, remove_end_time - remove_start_time))
-        
-        post_process_start_time = perf_counter()
-        percent_error_dict = get_percent_error_dict(full_workload_stat_dict, cur_workload_stat_dict)
-        percent_error_dict["region"] = region_index
-        new_workload_stat_arr.append(percent_error_dict)
-        if num_blk_evaluated % 5 == 0:
-            time_len = perf_counter() - start_time 
-            print("{}/{} completed in {} minutes.".format(num_blk_evaluated, blk_addr_list_len, float(time_len)/60))
-        post_process_end_time = perf_counter()
-        #print("Postprocess {} in {} seconds.".format(region_index, post_process_end_time - post_process_start_time))
-
-    return DataFrame(new_workload_stat_arr)
-
-
-
-
-def get_first_block_req(
-        per_blk_access_stat_dict: dict,
-        filter_index: int = -1
-) -> dict:
-    """Get the information of the first block request according to the per block statistics. 
-
-    Args:
-        per_blk_access_stat_dict: Dictionary of per block access statistics. 
-        filter_index: Index value to be ignored. 
-    
-    Returns:
-        first_block_req_dict: Dictionary of information on the first block request. 
-    """
-    min_index = inf
-    blk_addr_arr = []
-    op, iat = '', -1
-    for blk_addr in per_blk_access_stat_dict:
-        if filter_index == per_blk_access_stat_dict[blk_addr]['i']:
-            continue 
-        if per_blk_access_stat_dict[blk_addr]['i'] < min_index:
-            min_index = per_blk_access_stat_dict[blk_addr]['i']
-            blk_addr_arr = [blk_addr]
-            op = per_blk_access_stat_dict[blk_addr]["op0"]
-            iat = per_blk_access_stat_dict[blk_addr]["iat0"]
-        elif per_blk_access_stat_dict[blk_addr]['i'] == min_index:
-            blk_addr_arr.append(blk_addr)
-            assert op == per_blk_access_stat_dict[blk_addr]["op0"], \
-                "The block addresses with same index should have the same op. {} vs {}".format(op, per_blk_access_stat_dict[blk_addr]["op0"])
-            assert iat == per_blk_access_stat_dict[blk_addr]["iat0"], \
-                "The block addresses with same index should have the same iat. {} vs {}".format(iat, per_blk_access_stat_dict[blk_addr]["iat0"])
-            
-    return {
-        'blk_addr_arr': blk_addr_arr,
-        'op': op,
-        'min_index': min_index,
-        'iat': iat 
-    }
-
-
 def get_blk_addr_arr(
         region_addr: int,
         num_lower_order_bits_ignored: int 
@@ -582,8 +362,6 @@ def get_blk_addr_arr(
     num_block_in_region = 2**num_lower_order_bits_ignored
     block_addr_arr = zeros(num_block_in_region, dtype=int)
     for block_index in range(num_block_in_region):
-        #print(region_addr)
-        #ßprint(type(region_addr))
         block_addr_arr[block_index] = (region_addr << num_lower_order_bits_ignored) + block_index
     return block_addr_arr
 
@@ -602,26 +380,51 @@ def get_percent_error_dict(
         percent_error_dict: Dictionary of percent error of select features. 
     """
     percent_error_dict = {}
+    
+    full_mean_read_size = full_stat_dict["total_read_size"]/full_stat_dict["read_count"] \
+                            if full_stat_dict["read_count"] > 0 else 0
+    
+    sample_mean_read_size = sample_stat_dict["total_read_size"]/sample_stat_dict["read_count"] \
+                                if sample_stat_dict["read_count"] > 0 else 0
 
-    full_mean_read_size = full_stat_dict["total_read_size"]/full_stat_dict["read_count"]
-    sample_mean_read_size = sample_stat_dict["total_read_size"]/sample_stat_dict["read_count"]
-    percent_error_dict["mean_read_size"] = 100.0*(full_mean_read_size - sample_mean_read_size)/full_mean_read_size
+    percent_error_dict["mean_read_size"] = 100.0*(full_mean_read_size - sample_mean_read_size)/full_mean_read_size \
+                                                if full_mean_read_size > 0 else 0
 
-    full_mean_write_size = full_stat_dict["total_write_size"]/full_stat_dict["write_count"]
-    sample_mean_write_size = sample_stat_dict["total_write_size"]/sample_stat_dict["write_count"]
-    percent_error_dict["mean_write_size"] = 100.0*(full_mean_write_size - sample_mean_write_size)/full_mean_write_size
+    full_mean_write_size = full_stat_dict["total_write_size"]/full_stat_dict["write_count"] \
+                                if full_stat_dict["write_count"] > 0 else 0
 
-    full_mean_read_iat = full_stat_dict["total_read_iat"]/full_stat_dict["read_count"]
-    sample_mean_read_iat = sample_stat_dict["total_read_iat"]/sample_stat_dict["read_count"]
-    percent_error_dict["mean_read_iat"] = 100.0*(full_mean_read_iat - sample_mean_read_iat)/full_mean_read_iat
+    sample_mean_write_size = sample_stat_dict["total_write_size"]/sample_stat_dict["write_count"] \
+                                if sample_stat_dict["write_count"] > 0 else 0
 
-    full_mean_write_iat = full_stat_dict["total_write_iat"]/full_stat_dict["write_count"]
-    sample_mean_write_iat = sample_stat_dict["total_write_iat"]/sample_stat_dict["write_count"]
-    percent_error_dict["mean_write_iat"] = 100.0*(full_mean_write_iat - sample_mean_write_iat)/full_mean_write_iat
+    percent_error_dict["mean_write_size"] = 100.0*(full_mean_write_size - sample_mean_write_size)/full_mean_write_size \
+                                                if full_mean_write_size > 0 else 0
 
-    full_write_ratio = full_stat_dict["write_count"]/(full_stat_dict["read_count"] + full_stat_dict["write_count"])
-    sample_write_ratio = sample_stat_dict["write_count"]/(sample_stat_dict["read_count"] + sample_stat_dict["write_count"])
-    percent_error_dict["write_ratio"] = 100.0 * (full_write_ratio - sample_write_ratio)/full_write_ratio
+    full_mean_read_iat = full_stat_dict["total_read_iat"]/full_stat_dict["read_count"] \
+                            if full_stat_dict["read_count"] > 0 else 0
+
+    sample_mean_read_iat = sample_stat_dict["total_read_iat"]/sample_stat_dict["read_count"] \
+                                if sample_stat_dict["read_count"] > 0 else 0
+
+    percent_error_dict["mean_read_iat"] = 100.0*(full_mean_read_iat - sample_mean_read_iat)/full_mean_read_iat \
+                                            if full_mean_read_iat > 0 else 0 
+
+    full_mean_write_iat = full_stat_dict["total_write_iat"]/full_stat_dict["write_count"] \
+                            if full_stat_dict["write_count"] > 0 else 0 
+
+    sample_mean_write_iat = sample_stat_dict["total_write_iat"]/sample_stat_dict["write_count"] \
+                                if sample_stat_dict["write_count"] > 0 else 0 
+    
+    percent_error_dict["mean_write_iat"] = 100.0*(full_mean_write_iat - sample_mean_write_iat)/full_mean_write_iat \
+                                                if full_mean_write_iat > 0 else 0 
+
+    full_write_ratio = full_stat_dict["write_count"]/(full_stat_dict["read_count"] + full_stat_dict["write_count"]) \
+                            if (full_stat_dict["read_count"] + full_stat_dict["write_count"]) > 0 else 0 
+
+    sample_write_ratio = sample_stat_dict["write_count"]/(sample_stat_dict["read_count"] + sample_stat_dict["write_count"]) \
+                            if (sample_stat_dict["read_count"] + sample_stat_dict["write_count"]) > 0 else 0 
+
+    percent_error_dict["write_ratio"] = 100.0 * (full_write_ratio - sample_write_ratio)/full_write_ratio \
+                                            if full_write_ratio > 0 else 0 
 
     mean_err = mean(list([abs(_) for _ in percent_error_dict.values()]))
     std_dev = std(list([abs(_) for _ in percent_error_dict.values()]))
@@ -629,170 +432,6 @@ def get_percent_error_dict(
     percent_error_dict["mean"] = mean_err 
     percent_error_dict["std"] = std_dev
     return percent_error_dict
-
-
-
-
-
-
-
-def eval_all_blk(
-        full_workload_stat_dict: dict, 
-        workload_stat_dict: dict, 
-        per_blk_access_stat_dict: dict, 
-        num_lower_order_bits_ignored: int = 0,
-        blk_size_byte: int = 512
-) -> DataFrame:
-    """Evaluate the percent error when removing each region from the trace. 
-    """
-
-    start_time = perf_counter()
-    num_blk_evaluated = 0 
-    new_workload_stat_arr = []
-    track_computed_region_dict = {}
-    blk_addr_list = list(per_blk_access_stat_dict.keys())
-
-    queue = PriorityQueue()
-    for blk_addr in per_blk_access_stat_dict:
-        queue.put(per_blk_access_stat_dict[blk_addr]["i"], per_blk_access_stat_dict[blk_addr])
-
-    _, first_blk_req_dict = queue.get()
-    _, second_blk_req_dict = queue.get()
-    
-    for blk_addr in blk_addr_list:
-        num_blk_evaluated += 1 
-
-        region_index = blk_addr >> num_lower_order_bits_ignored
-        if region_index in track_computed_region_dict:
-            if num_blk_evaluated % 5 == 0:
-                time_len = perf_counter() - start_time 
-                print("{}, {}% completed in {}.".format(num_blk_evaluated, int(100*num_blk_evaluated/len(blk_addr_list)), time_len))
-            continue 
-        track_computed_region_dict[region_index] = 1 
-
-        cur_workload_stat_dict = deepcopy(workload_stat_dict)
-        cur_per_blk_access_stat_dict = deepcopy(per_blk_access_stat_dict)
-        region_blk_addr_arr = get_blk_addr_arr(blk_addr, num_lower_order_bits_ignored)
-        for region_blk_addr in region_blk_addr_arr:
-            cur_workload_stat_dict = remove_block(cur_workload_stat_dict, 
-                                                    cur_per_blk_access_stat_dict, 
-                                                    region_blk_addr, 
-                                                    first_blk_req_dict, 
-                                                    second_blk_req_dict, 
-                                                    blk_size_byte=blk_size_byte)
-            
-            if blk_addr in first_blk_req_dict["blk_addr_arr"] and len(first_blk_req_dict["blk_addr_arr"]) == 1:
-                first_blk_req_dict = second_blk_req_dict
-                _, second_blk_req_dict = queue.get()
-        
-        percent_error_dict = get_percent_error_dict(full_workload_stat_dict, cur_workload_stat_dict)
-        percent_error_dict["region"] = region_index
-        new_workload_stat_arr.append(percent_error_dict)
-        if num_blk_evaluated % 5 == 0:
-            time_len = perf_counter() - start_time 
-            print("{}, {}% completed in {}.".format(num_blk_evaluated, int(100*num_blk_evaluated/len(blk_addr_list)), time_len))
-
-    return DataFrame(new_workload_stat_arr)
-
-
-def remove_block(
-        workload_stat_dict: dict,
-        per_blk_access_stat_dict: dict, 
-        blk_addr: int,
-        first_blk_req: BlkReq,
-        second_blk_req: BlkReq, 
-        blk_size_byte: int = 512, 
-        update_stat_dict = True
-) -> dict:
-    """Remove a block from a block trace and return the new workload features.
-
-    Args:
-        blk_trace_df: DataFrame containing the block trace. 
-        blk_addr: Block address to remove. 
-        blk_size_byte: Size of a block in bytes. (Default: 512)
-    
-    Returns:
-        new_workload_feature_dict: Dictionary of workload features after removal of the block.
-    """
-    # blk access statistics 
-    blk_access_stat_dict = per_blk_access_stat_dict[blk_addr]
-
-    new_sub_remove_stat_dict = get_new_sub_remove_stat_dict(blk_access_stat_dict, blk_addr-1 in per_blk_access_stat_dict, blk_addr+1 in per_blk_access_stat_dict)
-    
-    new_workload_stat_dict = deepcopy(workload_stat_dict)
-    for stat_key in new_sub_remove_stat_dict:
-        if 'r' == stat_key[0] and "count" in stat_key:
-            new_workload_stat_dict["total_read_size"] -= (blk_size_byte * new_sub_remove_stat_dict[stat_key])
-        elif 'w' == stat_key[0] and "count" in stat_key:
-            new_workload_stat_dict["total_write_size"] -= (blk_size_byte * new_sub_remove_stat_dict[stat_key])
-        
-    new_workload_stat_dict["read_count"] += new_sub_remove_stat_dict["r_new_count"]
-    new_workload_stat_dict["total_read_iat"] += new_sub_remove_stat_dict["r_new_iat_sum"]
-
-    new_workload_stat_dict["write_count"] += new_sub_remove_stat_dict["w_new_count"]
-    new_workload_stat_dict["total_write_iat"] += new_sub_remove_stat_dict["w_new_iat_sum"]
-
-    new_workload_stat_dict["read_count"] -= new_sub_remove_stat_dict["r_remove_count"]
-    new_workload_stat_dict["total_read_iat"] -= new_sub_remove_stat_dict["r_remove_iat_sum"]
-
-    new_workload_stat_dict["write_count"] -= new_sub_remove_stat_dict["w_remove_count"]
-    new_workload_stat_dict["total_write_iat"] -= new_sub_remove_stat_dict["w_remove_iat_sum"]
-
-    # adjust total IAT if the first request of the block request is being changed 
-    # first_blk_req_dict = get_first_block_req(per_blk_access_stat_dict)
-    if first_blk_req.is_solo_req(blk_addr):
-        # second_blk_req_dict = get_first_block_req(per_blk_access_stat_dict, filter_index=first_blk_req_dict["min_index"])
-        if second_blk_req.op == 'r':
-            new_workload_stat_dict["total_read_iat"] -= (second_blk_req.iat - first_blk_req.iat)
-        elif second_blk_req.op == 'w':
-            new_workload_stat_dict["total_write_iat"] -= (second_blk_req.iat - first_blk_req.iat)
-        else:
-            raise ValueError("Unrecognized request type {}.".format(second_blk_req.op))
-
-    new_workload_stat_dict["write_ratio"] = new_workload_stat_dict["write_count"]/(new_workload_stat_dict["read_count"] + new_workload_stat_dict["write_count"])
-    new_workload_stat_dict["mean_read_size"] = new_workload_stat_dict["total_read_size"]/new_workload_stat_dict["read_count"]
-    new_workload_stat_dict["mean_write_size"] = new_workload_stat_dict["total_write_size"]/new_workload_stat_dict["write_count"]
-    new_workload_stat_dict["mean_read_iat"] = new_workload_stat_dict["total_read_iat"]/new_workload_stat_dict["read_count"]
-    new_workload_stat_dict["mean_write_iat"] = new_workload_stat_dict["total_write_iat"]/new_workload_stat_dict["write_count"]
-
-    left_accessed, right_accessed = blk_addr-1 in per_blk_access_stat_dict, blk_addr+1 in per_blk_access_stat_dict
-    if left_accessed and update_stat_dict:
-        per_blk_access_stat_dict[blk_addr-1]["r_right_count"] += per_blk_access_stat_dict[blk_addr-1]["r_mid_count"]
-        per_blk_access_stat_dict[blk_addr-1]["w_right_count"] += per_blk_access_stat_dict[blk_addr-1]["w_mid_count"]
-        per_blk_access_stat_dict[blk_addr-1]["r_right_iat_sum"] += per_blk_access_stat_dict[blk_addr-1]["r_mid_iat_sum"]
-        per_blk_access_stat_dict[blk_addr-1]["w_right_iat_sum"] += per_blk_access_stat_dict[blk_addr-1]["w_mid_iat_sum"]
-        per_blk_access_stat_dict[blk_addr-1]["r_mid_count"], per_blk_access_stat_dict[blk_addr-1]["w_mid_count"] = 0, 0 
-        per_blk_access_stat_dict[blk_addr-1]["r_mid_iat_sum"], per_blk_access_stat_dict[blk_addr-1]["w_mid_iat_sum"] = 0, 0 
-
-        # all request of the left block where it was the left most block now tuns into a solo access 
-        per_blk_access_stat_dict[blk_addr-1]["r_solo_count"] += per_blk_access_stat_dict[blk_addr-1]["r_left_count"]
-        per_blk_access_stat_dict[blk_addr-1]["w_solo_count"] += per_blk_access_stat_dict[blk_addr-1]["w_left_count"]
-        per_blk_access_stat_dict[blk_addr-1]["r_solo_iat_sum"] += per_blk_access_stat_dict[blk_addr-1]["r_left_iat_sum"]
-        per_blk_access_stat_dict[blk_addr-1]["w_solo_iat_sum"] += per_blk_access_stat_dict[blk_addr-1]["w_left_iat_sum"]
-        per_blk_access_stat_dict[blk_addr-1]["r_left_count"], per_blk_access_stat_dict[blk_addr-1]["w_left_count"] = 0, 0 
-        per_blk_access_stat_dict[blk_addr-1]["r_left_iat_sum"], per_blk_access_stat_dict[blk_addr-1]["w_left_iat_sum"] = 0, 0 
-    
-    if right_accessed and update_stat_dict:
-        # all requests of the right block where it used to be the mid block is now turns into the left most block
-        per_blk_access_stat_dict[blk_addr+1]["r_left_count"] += per_blk_access_stat_dict[blk_addr+1]["r_mid_count"]
-        per_blk_access_stat_dict[blk_addr+1]["w_left_count"] += per_blk_access_stat_dict[blk_addr+1]["w_mid_count"]
-        per_blk_access_stat_dict[blk_addr+1]["r_left_iat_sum"] += per_blk_access_stat_dict[blk_addr+1]["r_mid_iat_sum"]
-        per_blk_access_stat_dict[blk_addr+1]["w_left_iat_sum"] += per_blk_access_stat_dict[blk_addr+1]["w_mid_iat_sum"]
-        per_blk_access_stat_dict[blk_addr+1]["r_mid_count"], per_blk_access_stat_dict[blk_addr+1]["w_mid_count"] = 0, 0 
-        per_blk_access_stat_dict[blk_addr+1]["r_mid_iat_sum"], per_blk_access_stat_dict[blk_addr+1]["w_mid_iat_sum"] = 0, 0 
-
-        # all request of the right block where it was the right most block now tuns into a solo access 
-        per_blk_access_stat_dict[blk_addr+1]["r_solo_count"] += per_blk_access_stat_dict[blk_addr+1]["r_right_count"]
-        per_blk_access_stat_dict[blk_addr+1]["w_solo_count"] += per_blk_access_stat_dict[blk_addr+1]["w_right_count"]
-        per_blk_access_stat_dict[blk_addr+1]["r_solo_iat_sum"] += per_blk_access_stat_dict[blk_addr+1]["r_right_iat_sum"]
-        per_blk_access_stat_dict[blk_addr+1]["w_solo_iat_sum"] += per_blk_access_stat_dict[blk_addr+1]["w_right_iat_sum"]
-        per_blk_access_stat_dict[blk_addr+1]["r_right_count"], per_blk_access_stat_dict[blk_addr+1]["w_right_count"] = 0, 0 
-        per_blk_access_stat_dict[blk_addr+1]["r_right_iat_sum"], per_blk_access_stat_dict[blk_addr+1]["w_right_iat_sum"] = 0, 0 
-    
-    if update_stat_dict:
-        per_blk_access_stat_dict.pop(blk_addr)
-
-    return new_workload_stat_dict
 
 
 def get_new_sub_remove_stat_dict(
@@ -885,101 +524,14 @@ def get_new_sub_remove_stat_dict(
     }
 
 
-
-
-
-
-def add_block(
-        workload_stat_dict: dict,
-        per_blk_access_stat_dict: dict,
-        sample_block_addr_dict: dict, 
-        blk_addr: int,
-        blk_size_byte: int = 512 
-) -> dict:
-    left_sampled = blk_addr - 1 in sample_block_addr_dict
-    right_sampled = blk_addr + 1 in sample_block_addr_dict
-    blk_access_dict = per_blk_access_stat_dict[blk_addr]
-
-    print(blk_access_dict)
-
-    new_workload_stat_dict = deepcopy(workload_stat_dict)
-
-    new_workload_stat_dict["read_count"] += blk_access_dict["r_solo_count"]
-    new_workload_stat_dict["total_read_iat"] += blk_access_dict["r_solo_iat_sum"]
-    new_workload_stat_dict["total_read_size"] += (blk_access_dict["r_solo_count"] * blk_size_byte)
-
-    new_workload_stat_dict["write_count"] += blk_access_dict["w_solo_count"]
-    new_workload_stat_dict["total_write_iat"] += blk_access_dict["w_solo_iat_sum"]
-    new_workload_stat_dict["total_write_size"] += (blk_access_dict["w_solo_count"] * blk_size_byte)
-
-    if left_sampled and right_sampled:
-        new_workload_stat_dict["read_count"] -= blk_access_dict["r_mid_count"]
-        new_workload_stat_dict["write_count"] -= blk_access_dict["w_mid_count"]
-
-        new_workload_stat_dict["total_read_iat"] -= blk_access_dict["r_mid_iat_sum"]
-        new_workload_stat_dict["total_write_iat"] -= blk_access_dict["w_mid_iat_sum"]
-
-        new_workload_stat_dict["total_read_size"] += (blk_access_dict["r_mid_count"] * blk_size_byte)
-        new_workload_stat_dict["total_write_size"] += (blk_access_dict["w_mid_count"] * blk_size_byte)
-
-        new_workload_stat_dict["total_read_size"] += ((blk_access_dict["r_left_count"]+blk_access_dict["r_right_count"]) * blk_size_byte)
-        new_workload_stat_dict["total_write_size"] += ((blk_access_dict["w_left_count"]+blk_access_dict["w_right_count"]) * blk_size_byte)
-    elif not left_sampled and right_sampled:
-        new_workload_stat_dict["total_read_size"] += (blk_access_dict["r_mid_count"] * blk_size_byte)
-        new_workload_stat_dict["total_write_size"] += (blk_access_dict["w_mid_count"] * blk_size_byte)
-
-        new_workload_stat_dict["total_read_size"] += (blk_access_dict["r_left_count"] * blk_size_byte)
-        new_workload_stat_dict["total_write_size"] += (blk_access_dict["w_left_count"] * blk_size_byte)
-
-        new_workload_stat_dict["total_read_size"] += (blk_access_dict["r_right_count"] * blk_size_byte)
-        new_workload_stat_dict["total_write_size"] += (blk_access_dict["w_right_count"] * blk_size_byte)
-
-        new_workload_stat_dict["total_read_iat"] += blk_access_dict["r_right_iat_sum"]
-        new_workload_stat_dict["total_write_iat"] += blk_access_dict["w_right_iat_sum"]
-
-        new_workload_stat_dict["read_count"] += blk_access_dict["r_right_count"]
-        new_workload_stat_dict["write_count"] += blk_access_dict["w_right_count"]
-    elif left_sampled and not right_sampled:
-        new_workload_stat_dict["total_read_size"] += (blk_access_dict["r_mid_count"] * blk_size_byte)
-        new_workload_stat_dict["total_write_size"] += (blk_access_dict["w_mid_count"] * blk_size_byte)
-
-        new_workload_stat_dict["total_read_size"] += (blk_access_dict["r_right_count"] * blk_size_byte)
-        new_workload_stat_dict["total_write_size"] += (blk_access_dict["w_right_count"] * blk_size_byte)
-
-        new_workload_stat_dict["total_read_size"] += (blk_access_dict["r_left_count"] * blk_size_byte)
-        new_workload_stat_dict["total_write_size"] += (blk_access_dict["w_left_count"] * blk_size_byte)
-
-        new_workload_stat_dict["total_read_iat"] += blk_access_dict["r_left_iat_sum"]
-        new_workload_stat_dict["total_write_iat"] += blk_access_dict["w_left_iat_sum"]
-
-        new_workload_stat_dict["read_count"] += blk_access_dict["r_left_count"]
-        new_workload_stat_dict["write_count"] += blk_access_dict["w_left_count"]
-    else:
-        new_workload_stat_dict["read_count"] += (blk_access_dict["r_left_count"]+blk_access_dict["r_right_count"])
-        new_workload_stat_dict["write_count"] += (blk_access_dict["w_left_count"]+blk_access_dict["w_right_count"])  
-
-        new_workload_stat_dict["total_read_size"] += (blk_size_byte * (blk_access_dict["r_left_count"]+blk_access_dict["r_right_count"]))
-        new_workload_stat_dict["total_write_size"] += (blk_size_byte * (blk_access_dict["w_left_count"]+blk_access_dict["w_right_count"]))
-
-        new_workload_stat_dict["total_read_iat"] += (blk_access_dict["r_left_iat_sum"]+blk_access_dict["r_right_iat_sum"])
-        new_workload_stat_dict["total_write_iat"] += (blk_access_dict["w_left_iat_sum"]+blk_access_dict["w_right_iat_sum"])
-
-    new_workload_stat_dict["write_ratio"] = new_workload_stat_dict["write_count"]/(new_workload_stat_dict["read_count"] + new_workload_stat_dict["write_count"])
-    new_workload_stat_dict["mean_read_size"] = new_workload_stat_dict["total_read_size"]/new_workload_stat_dict["read_count"]
-    new_workload_stat_dict["mean_write_size"] = new_workload_stat_dict["total_write_size"]/new_workload_stat_dict["write_count"]
-    new_workload_stat_dict["mean_read_iat"] = new_workload_stat_dict["total_read_iat"]/new_workload_stat_dict["read_count"]
-    new_workload_stat_dict["mean_write_iat"] = new_workload_stat_dict["total_write_iat"]/new_workload_stat_dict["write_count"]
-    return new_workload_stat_dict
-
-
 def get_workload_stat_dict(df: DataFrame) -> dict:
-    """Get the statistics from a DataFram with the block trace.
+    """Get dictionary of workload statistics from a DataFrame of a block trace. 
     
     Args:
-        df: DataFrame with the block trace. 
+        df: DataFrame of a block trace. 
     
     Returns:
-        stat_dict: Dictionary of overall stat from block trace df. 
+        stat_dict: Dictionary of workload features. 
     """
     stat_dict = {}
     stat_dict["read_count"] = len(df[df['op']=='r'])
@@ -988,132 +540,76 @@ def get_workload_stat_dict(df: DataFrame) -> dict:
     stat_dict["total_write_size"] =  df[df['op']=='w']['size'].sum()
     stat_dict["total_read_iat"] = df[df['op']=='r']['iat'].sum()
     stat_dict["total_write_iat"] = df[df['op']=='w']['iat'].sum()
-    stat_dict["write_ratio"] = stat_dict["write_count"]/(stat_dict["read_count"] + stat_dict["write_count"])
-    stat_dict["mean_read_size"] = stat_dict["total_read_size"]/stat_dict["read_count"]
-    stat_dict["mean_write_size"] = stat_dict["total_write_size"]/stat_dict["write_count"]
-    stat_dict["mean_read_iat"] = stat_dict["total_read_iat"]/stat_dict["read_count"]
-    stat_dict["mean_write_iat"] = stat_dict["total_write_iat"]/stat_dict["write_count"]
+
+    stat_dict["write_ratio"] = stat_dict["write_count"]/(stat_dict["read_count"] + stat_dict["write_count"]) \
+                                    if (stat_dict["read_count"] + stat_dict["write_count"]) > 0 else 0 
+
+    stat_dict["mean_read_size"] = stat_dict["total_read_size"]/stat_dict["read_count"] \
+                                    if stat_dict["read_count"] > 0 else 0 
+
+    stat_dict["mean_write_size"] = stat_dict["total_write_size"]/stat_dict["write_count"] \
+                                        if stat_dict["write_count"] > 0 else 0 
+
+    stat_dict["mean_read_iat"] = stat_dict["total_read_iat"]/stat_dict["read_count"] \
+                                    if stat_dict["read_count"] > 0 else 0 
+    
+    stat_dict["mean_write_iat"] = stat_dict["total_write_iat"]/stat_dict["write_count"] \
+                                    if stat_dict["write_count"] > 0 else 0 
+
     return stat_dict 
 
 
+def init_access_stat_dict(
+        ts0: int, 
+        iat0: int, 
+        op0: str, 
+        i: int 
+) -> dict:
+    """Get the template for LBA access dict. 
 
-class BlkSample:
-    def __init__(
-            self,
-            block_trace_path: Path,
-            sample_trace_path: Path 
-    ) -> None:
-        self._block_df = self.load_block_trace(block_trace_path)
-        self._sample_df = self.load_block_trace(sample_trace_path)
-        self._per_block_access_stat_dict = self.get_per_block_access_stat_dict(self._sample_df)
+    Returns:
+        access_dict: Dictionary with all keys of LBA stats initiated to 0. 
+    """
+    return {
+        "r_solo_count": 0,
+        "w_solo_count": 0,
+        "r_solo_iat_sum": 0, 
+        "w_solo_iat_sum": 0,
 
+        "r_right_count": 0,
+        "w_right_count": 0,
+        "r_right_iat_sum": 0, 
+        "w_right_iat_sum": 0, 
 
-    @staticmethod
-    def get_per_block_access_stat_dict(
-            df: DataFrame,
-            block_size_byte: int = 512 
-    ) -> dict:
-        """Get the dictionary of access statistics. 
+        "r_left_count": 0,
+        "w_left_count": 0,
+        "r_left_iat_sum": 0, 
+        "w_left_iat_sum": 0, 
 
-        Args:
-            df: DataFrame of block trace. 
-            block_size_byte: Size of block in byte. 
-        
-        Returns:
-            access_stat_dict: Get access statistics from a block trace. 
-        """
-        access_stat_dict = {}
-        req_count_tracker = 0 
-        for _, row in df.iterrows():
-            req_count_tracker += 1
-            block_addr, size_byte, op, ts = int(row["lba"]), int(row["size"]), row["op"], int(row["ts"])
-            size_block = size_byte//block_size_byte
-            assert size_byte % 512 == 0 
-            
-            try:
-                cur_iat = int(row["iat"])
-            except ValueError:
-                cur_iat = 0
+        "r_mid_count": 0,
+        "w_mid_count": 0,
+        "r_mid_iat_sum": 0, 
+        "w_mid_iat_sum": 0,
 
-            if size_block == 1:
-                if block_addr not in access_stat_dict:
-                    access_stat_dict[block_addr] = dict(BlkSample.init_access_stat_dict(ts, cur_iat, op, req_count_tracker))
-
-                access_stat_dict[block_addr]["{}_solo_count".format(op)] += 1 
-                access_stat_dict[block_addr]["{}_solo_iat_sum".format(op)] += cur_iat
-                continue 
-
-            start_lba = block_addr
-            end_lba = start_lba + size_block
-            for cur_lba in range(start_lba, end_lba):
-                if cur_lba not in access_stat_dict:
-                    access_stat_dict[cur_lba] = dict(BlkSample.init_access_stat_dict(ts, cur_iat, op, req_count_tracker))
-
-                if cur_lba == start_lba:
-                    access_stat_dict[cur_lba]["{}_left_count".format(op)] += 1 
-                    access_stat_dict[cur_lba]["{}_left_iat_sum".format(op)] += cur_iat
-                elif cur_lba == start_lba+size_block-1:
-                    access_stat_dict[cur_lba]["{}_right_count".format(op)] += 1 
-                    access_stat_dict[cur_lba]["{}_right_iat_sum".format(op)] += cur_iat
-                else:
-                    access_stat_dict[cur_lba]["{}_mid_count".format(op)] += 1 
-                    access_stat_dict[cur_lba]["{}_mid_iat_sum".format(op)] += cur_iat
-        return access_stat_dict
+        "ts0": ts0,
+        "iat0": iat0,
+        "op0": op0,
+        "i": i 
+    }
 
 
-    @staticmethod
-    def init_access_stat_dict(
-            ts0: int, 
-            iat0: int, 
-            op0: str, 
-            i: int 
-    ) -> dict:
-        """Get the template for LBA access dict. 
-
-        Returns:
-            access_dict: Dictionary with all keys of LBA stats initiated to 0. 
-        """
-        return {
-            "r_solo_count": 0,
-            "w_solo_count": 0,
-            "r_solo_iat_sum": 0, 
-            "w_solo_iat_sum": 0,
-
-            "r_right_count": 0,
-            "w_right_count": 0,
-            "r_right_iat_sum": 0, 
-            "w_right_iat_sum": 0, 
-
-            "r_left_count": 0,
-            "w_left_count": 0,
-            "r_left_iat_sum": 0, 
-            "w_left_iat_sum": 0, 
-
-            "r_mid_count": 0,
-            "w_mid_count": 0,
-            "r_mid_iat_sum": 0, 
-            "w_mid_iat_sum": 0,
-
-            "ts0": ts0,
-            "iat0": iat0,
-            "op0": op0,
-            "i": i 
-        }
+def load_blk_trace(
+    trace_path: Path
+) -> DataFrame:
+    """Load a block trace file into a pandas DataFrame.  
     
-
-    @staticmethod
-    def load_block_trace(
-        trace_path: Path
-    ) -> DataFrame:
-        """Load a block trace file into a pandas DataFrame.  
-        
-        Args:
-            trace_path: Path to block trace. 
-        
-        Returns:
-            df: Block trace with additional features as a DataFrame. 
-        """
-        df = read_csv(trace_path, names=["ts", "lba", "op", "size"])
-        df["iat"] = df["ts"].diff()
-        df["iat"] = df["iat"].fillna(0)
-        return df 
+    Args:
+        trace_path: Path to block trace. 
+    
+    Returns:
+        df: Block trace with additional features as a DataFrame. 
+    """
+    df = read_csv(trace_path, names=["ts", "lba", "op", "size"])
+    df["iat"] = df["ts"].diff()
+    df["iat"] = df["iat"].fillna(0)
+    return df 
