@@ -1,51 +1,57 @@
-from decimal import DivisionByZero
+"""This file contains functions to post process block trace samples."""
+
 from pathlib import Path
 from copy import deepcopy
+from time import perf_counter_ns
 from pandas import DataFrame, read_csv 
 from numpy import ndarray, zeros, mean, std 
 
-from cydonia.sample.BlkReq import BlkReq, FirstTwoBlkReqTracker
 from cydonia.sample.Sample import create_sample_trace
+from cydonia.sample.BlkReq import BlkReq, FirstTwoBlkReqTracker
 
 
 def load_remove_algorithm_metadata(
         df: DataFrame,
         block_size_byte: int = 512 
 ) -> tuple:
-    """Get a tuple of a dictionary of access statistics of each block and an array of every
-    block request that introduces a new block in the trace in order of how they appear in 
-    the trace. 
+    """Get a tuple of a dictionary of access statistics of each block and a FirstTwoBlkReqTracker
+    object that tracks the first and second block request as blocks are removed from the block trace. 
 
     Args:
         df: DataFrame of block trace. 
         block_size_byte: Size of block in byte. 
     
     Returns:
-        access_stat_dict: Get access statistics from a block trace. 
+        access_stat_dict, first_blk_req_tracker: Access statistics of each block and a FirstTwoBlkReqTracker object that 
+                                                    tracks the first and second block request as blocks are removed from 
+                                                    the block trace. 
     """
     access_stat_dict = {}
+    # Everytime, we find a block request where we see a block for the first time, we add to this tracker. 
+    # Using that information, we can always track what the first two block request of the sample would
+    # be if a given block were to be removed. 
     first_blk_req_tracker = FirstTwoBlkReqTracker()
 
-    # track the number of request and unique blocks in the trace 
+    # track the number of request and unique blocks at each point in the trace 
     req_count_tracker = 0 
     blk_count_tracker = 0 
-
     for _, row in df.iterrows():
         req_count_tracker += 1
-        # get the properties of the block request 
         blk_addr, size_byte, op, ts = int(row["lba"]), int(row["size"]), row["op"], int(row["ts"])
         size_block = size_byte//block_size_byte
         assert size_byte % 512 == 0 and size_block > 0 
+        # first req has infinite IAT, setting it to 0 
         try:
             cur_iat = int(row["iat"])
         except ValueError:
             cur_iat = 0
 
-        # track solo block requests 
+        # We have to track solo requests separately, so this is a solo request, track and continue. 
         if size_block == 1:
             if blk_addr not in access_stat_dict:
                 blk_count_tracker += 1
-                access_stat_dict[blk_addr] = dict(init_access_stat_dict(ts, cur_iat, op, req_count_tracker))
+                access_stat_dict[blk_addr] = dict(init_access_stat_dict())
+                # If a new block was found in this block request, add it to the FirstTwoBlkReqTracker object. 
                 first_blk_req_tracker.add_blk_req(BlkReq(blk_addr, size_block, op, blk_count_tracker, cur_iat))
                 
             access_stat_dict[blk_addr]["{}_solo_count".format(op)] += 1 
@@ -58,7 +64,7 @@ def load_remove_algorithm_metadata(
         for cur_lba in range(start_lba, end_lba):
             if cur_lba not in access_stat_dict:
                 blk_count_tracker += 1
-                access_stat_dict[cur_lba] = dict(init_access_stat_dict(ts, cur_iat, op, req_count_tracker))
+                access_stat_dict[cur_lba] = dict(init_access_stat_dict())
                 new_blk_req_found = True 
 
             if cur_lba == start_lba:
@@ -71,6 +77,7 @@ def load_remove_algorithm_metadata(
                 access_stat_dict[cur_lba]["{}_mid_count".format(op)] += 1 
                 access_stat_dict[cur_lba]["{}_mid_iat_sum".format(op)] += cur_iat
         
+        # If a new block was found in this block request, add it to the FirstTwoBlkReqTracker object. 
         if new_blk_req_found:
             first_blk_req_tracker.add_blk_req(BlkReq(blk_addr, size_block, op, blk_count_tracker, cur_iat))
 
@@ -104,8 +111,10 @@ def get_err_df_on_remove(
     for _, region_addr in enumerate(region_addr_arr):
         region_blk_addr_arr = get_blk_addr_arr(region_addr, num_lower_order_bits_ignored)
 
+        # we need a copy of FirstTwoBlkReqTracker so that we do not update the metadata in the main object 
         first_blk_req_tracker_copy = first_blk_req_tracker.copy()
 
+        # any block with udpated stats will be stored in this dict 
         new_per_blk_access_stat_dict = {}
         new_workload_stat_dict = deepcopy(sample_workload_stat_dict)
         for blk_addr in region_blk_addr_arr:
@@ -167,6 +176,7 @@ def blk_unsample(
         num_lower_order_bits_ignored: Number of lower order bits ignored. 
         blk_size_byte: Size of block in byte. 
     """
+    start_time_ns = perf_counter_ns()
     per_blk_access_stat_dict, first_blk_req_tracker = load_remove_algorithm_metadata(sample_df)
 
     sample_workload_stat_dict = get_workload_stat_dict(sample_df)
@@ -243,8 +253,10 @@ def blk_unsample(
 
         percent_error_dict = get_percent_error_dict(workload_stat_dict, new_workload_stat_dict)
         percent_error_dict["region"] = region_addr
+        percent_error_dict["time_elapsed_ns"] = perf_counter_ns() - start_time_ns 
         percent_err_dict_arr.append(percent_error_dict)
-        print(percent_error_dict)
+        print("Remaining regions: {}\n Current error stats: {}".format(len(remove_error_df), percent_error_dict))
+        
         remove_error_df = get_err_df_on_remove(per_blk_access_stat_dict, 
                                                 first_blk_req_tracker, 
                                                 new_workload_stat_dict, 
@@ -284,12 +296,26 @@ def remove_blk(
 
     if first_blk_req_tracker.is_first_solo_req(blk_addr):
         first_blk_req, second_blk_req =  first_blk_req_tracker._first_blk_req, first_blk_req_tracker._second_blk_req
+        first_blk_req_iat = first_blk_req.iat 
         if second_blk_req.op == 'r':
-            new_workload_stat_dict["total_read_iat"] -= (second_blk_req.iat - first_blk_req.iat)
+            new_workload_stat_dict["total_read_iat"] -= (second_blk_req.iat - first_blk_req.iat) \
+                                                            if not second_blk_req.is_empty() else 0
+            if new_workload_stat_dict["total_read_iat"] < 0:
+                print(first_blk_req)
+                print(second_blk_req)
+                print(new_workload_stat_dict["total_read_iat"])
         elif second_blk_req.op == 'w':
-            new_workload_stat_dict["total_write_iat"] -= (second_blk_req.iat - first_blk_req.iat)
+            new_workload_stat_dict["total_write_iat"] -= (second_blk_req.iat - first_blk_req.iat) \
+                                                            if not second_blk_req.is_empty() else 0
+            if new_workload_stat_dict["total_write_iat"] < 0:
+                print(first_blk_req)
+                print(second_blk_req)
+                print(new_workload_stat_dict["total_read_iat"])
         else:
-            raise ValueError("Unrecognized request type {}.".format(second_blk_req.op))
+            new_workload_stat_dict["total_read_size"] = 0
+            new_workload_stat_dict["total_write_size"] = 0
+            new_workload_stat_dict["total_read_iat"] = 0
+            new_workload_stat_dict["total_write_iat"] = 0
     first_blk_req_tracker.remove(blk_addr)
 
     
@@ -560,10 +586,6 @@ def get_workload_stat_dict(df: DataFrame) -> dict:
 
 
 def init_access_stat_dict(
-        ts0: int, 
-        iat0: int, 
-        op0: str, 
-        i: int 
 ) -> dict:
     """Get the template for LBA access dict. 
 
@@ -589,12 +611,7 @@ def init_access_stat_dict(
         "r_mid_count": 0,
         "w_mid_count": 0,
         "r_mid_iat_sum": 0, 
-        "w_mid_iat_sum": 0,
-
-        "ts0": ts0,
-        "iat0": iat0,
-        "op0": op0,
-        "i": i 
+        "w_mid_iat_sum": 0
     }
 
 
@@ -613,3 +630,22 @@ def load_blk_trace(
     df["iat"] = df["ts"].diff()
     df["iat"] = df["iat"].fillna(0)
     return df 
+
+
+def get_unique_blk_addr_set(
+        df: DataFrame, 
+        blk_size_byte: int = 512
+) -> set:
+    blk_addr_set = set()
+    total_line = len(df)
+    line_count = 0 
+    for index, row in df.iterrows():
+        line_count += 1
+        blk_addr, size_byte, = int(row["lba"]), int(row["size"])
+        size_block = size_byte//blk_size_byte
+        for cur_lba in range(blk_addr, blk_addr + size_block):
+            blk_addr_set.add(cur_lba)
+        if line_count % 1000000 == 0:
+            print("unique lba tracking {}% completed".format(100*line_count/total_line))
+
+    return blk_addr_set

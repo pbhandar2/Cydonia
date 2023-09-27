@@ -134,6 +134,8 @@ class FirstTwoBlkReqTracker:
                                 break 
                 
                     second_req_tracker += 1 
+                if second_req_tracker >= self._req_count:
+                    self._second_blk_req = BlkReq(-1, 1, '', -1, 0)
                 break 
     
 
