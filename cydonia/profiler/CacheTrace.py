@@ -40,3 +40,23 @@ class CacheTrace:
         rd_arr = stdout.decode("utf-8").split("\n")
 
         reader.generate_block_req_trace(rd_arr, cache_trace_path)
+
+
+    def generate_access_trace(
+            self, 
+            block_trace_path: str,
+            cache_trace_path: str 
+    ) -> None:
+        """Generate a cache trace at the specified path from the multi-block storage trace of this class.
+        
+        Args:
+            cache_trace_path: Path to cache trace. 
+        """
+        reader = CPReader(block_trace_path)
+        block_req_arr = reader.get_block_req_arr_without_misalignment()       
+        
+        process = Popen([self._stack_binary_path], stdin=PIPE, stdout=PIPE)
+        stdout = process.communicate(input="\n".join([str(_) for _ in block_req_arr]).encode("utf-8"))[0]
+        rd_arr = stdout.decode("utf-8").split("\n")
+
+        reader.generate_block_req_trace_without_alignment(rd_arr, cache_trace_path)

@@ -156,6 +156,20 @@ class CPReader(Reader):
                     
             block_req = self.get_next_block_req(page_size=block_size_byte)
         return block_req_arr
+    
+
+    def get_block_req_arr_without_misalignment(
+            self, 
+            block_size_byte: int = 4096  
+    ) -> list:
+        self.reset()
+        block_req_arr = []
+        block_req = self.get_next_block_req(page_size=block_size_byte)
+        while block_req:
+            for page_key in range(block_req["start_page"], block_req["end_page"]+1):
+                block_req_arr.append(page_key)
+            block_req = self.get_next_block_req(page_size=block_size_byte)
+        return block_req_arr
 
 
     def generate_block_req_trace(
@@ -200,3 +214,32 @@ class CPReader(Reader):
             block_req = self.get_next_block_req(page_size=block_size_byte)
         assert len(rd_arr) == (block_req_count + 1)
         block_req_trace_handle.close()
+
+
+    def generate_block_req_trace_without_alignment(
+            self,
+            rd_arr: list,
+            block_req_trace_path: str,
+            block_size_byte: int = 4096
+    ) -> None:
+        """Generate a block req trace given the reuse distance of each block request to cache. 
+        
+        Args:
+            rd_arr: Array of reuse distance of each block request to cache. 
+            block_req_trace_path: Path to block request trace. 
+            block_size_byte: Size of block in bytes. 
+        """
+        self.reset()
+        block_req_trace_handle = open(block_req_trace_path, "w+")
+        block_req_count = 0 
+        block_req = self.get_next_block_req(page_size=block_size_byte)
+        while block_req:
+            block_ts, block_op = block_req["ts"], block_req["op"]
+            for page_key in range(block_req["start_page"], block_req["end_page"]+1):
+                block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, page_key, block_op, rd_arr[block_req_count]))
+                block_req_count += 1
+            block_req = self.get_next_block_req(page_size=block_size_byte)
+        assert len(rd_arr) == (block_req_count + 1)
+        block_req_trace_handle.close()
+
+    

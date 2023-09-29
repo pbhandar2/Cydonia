@@ -296,7 +296,6 @@ def remove_blk(
 
     if first_blk_req_tracker.is_first_solo_req(blk_addr):
         first_blk_req, second_blk_req =  first_blk_req_tracker._first_blk_req, first_blk_req_tracker._second_blk_req
-        first_blk_req_iat = first_blk_req.iat 
         if second_blk_req.op == 'r':
             new_workload_stat_dict["total_read_iat"] -= (second_blk_req.iat - first_blk_req.iat) \
                                                             if not second_blk_req.is_empty() else 0

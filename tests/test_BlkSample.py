@@ -10,8 +10,8 @@ from cydonia.sample.BlkSample import get_workload_stat_dict, get_percent_error_d
 
 
 class TestBlkSample(TestCase):
-    test_block_trace_path = Path("/research2/mtc/cp_traces/pranav/block_traces/cp/w92.csv")
-    test_sample_block_trace_path = Path("/research2/mtc/cp_traces/pranav/sample_block_traces/iat/cp/w92/5_8_42.csv")
+    test_block_trace_path = Path("/research2/mtc/cp_traces/pranav/block_traces/cp/w66.csv")
+    test_sample_block_trace_path = Path("/research2/mtc/cp_traces/pranav/sample_block_traces/iat/cp/w66/1_8_44.csv")
 
     test_data_dir = Path("../data/test_post_process")
     test_post_process_update_file_path = test_data_dir.joinpath("update.csv")
@@ -25,7 +25,7 @@ class TestBlkSample(TestCase):
         sample_workload_stat_dict = get_workload_stat_dict(sample_df)
         cur_percent_error_dict = get_percent_error_dict(workload_stat_dict, sample_workload_stat_dict)
         print(cur_percent_error_dict)
-        blk_unsample(sample_df, workload_stat_dict, num_lower_order_bits_ignored=12,
+        blk_unsample(sample_df, workload_stat_dict, num_lower_order_bits_ignored=14,
                         test_mode=True, test_trace_path=self.test_post_process_sample_file_path)
 
 
