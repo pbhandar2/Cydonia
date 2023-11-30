@@ -138,6 +138,7 @@ def sample(
                 unsampled_lba_dict[cur_lba] = 1
         block_req = reader.get_next_block_req()
     
+    reader.trace_file_handle.close()
     trace_df = read_csv(block_trace_path, names=["ts", "lba", "op", "size"])
     sample_stat_dict = create_sample_trace(trace_df, sample_lba_dict, Path(sample_trace_path))
     sample_stat_dict["rate"] = rate 

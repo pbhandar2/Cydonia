@@ -31,8 +31,11 @@ class PercentileStats:
                 the int or float to be added to the array 
         """
         if self.cur_index == -1:
-            self.data.append(data_entry)
-            self.size += 1
+            if type(self.data) is list:
+                self.data.append(data_entry)
+                self.size += 1
+            else:
+                raise TypeError("Wrong data type not a list.")
         else:
             if self.cur_index >= self.size:
                 raise ValueError("Not space left in array of size {}".format(len(self.data)))

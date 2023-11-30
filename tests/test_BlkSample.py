@@ -6,28 +6,31 @@ from pandas import read_csv, DataFrame
 from pathlib import Path 
 from unittest import main, TestCase
 
-from cydonia.sample.BlkSample import get_workload_stat_dict, get_percent_error_dict, blk_unsample, load_blk_trace
+from cydonia.blksample.blksample import blksample, get_workload_feature_dict_from_block_trace, get_feature_err_dict
+from cydonia.profiler.BlockAccessFeatureMap import BlockAccessFeatureMap
 
 
 class TestBlkSample(TestCase):
-    test_block_trace_path = Path("/research2/mtc/cp_traces/pranav/block_traces/cp/w66.csv")
-    test_sample_block_trace_path = Path("/research2/mtc/cp_traces/pranav/sample_block_traces/iat/cp/w66/1_8_44.csv")
-
-    test_data_dir = Path("../data/test_post_process")
-    test_post_process_update_file_path = test_data_dir.joinpath("update.csv")
-    test_post_process_metadata_file_path = test_data_dir.joinpath("metadata.json")
-    test_post_process_sample_file_path = test_data_dir.joinpath("sample.json")
+    test_block_trace_path = Path("/research2/mtc/cp_traces/pranav-phd/cp/block_traces/w105.csv")
+    test_sample_block_trace_path = Path("/research2/mtc/cp_traces/pranav-phd/cp--iat/block_traces/w105/5_0_44.csv")
+    test_per_iteration_output_path = Path("../data/temp_per_iteration_output.csv")
 
     def test_reduce_err_by_removing(self):
-        full_df = load_blk_trace(self.test_block_trace_path)
-        sample_df = load_blk_trace(self.test_sample_block_trace_path)
-        workload_stat_dict = get_workload_stat_dict(full_df)
-        sample_workload_stat_dict = get_workload_stat_dict(sample_df)
-        cur_percent_error_dict = get_percent_error_dict(workload_stat_dict, sample_workload_stat_dict)
-        print(cur_percent_error_dict)
-        blk_unsample(sample_df, workload_stat_dict, num_lower_order_bits_ignored=14,
-                        test_mode=True, test_trace_path=self.test_post_process_sample_file_path)
+        feature_map = BlockAccessFeatureMap()
+        feature_map.load(self.test_sample_block_trace_path, 4)
+        print("Feature map computed...")
 
+        full_workload_feature_dict = get_workload_feature_dict_from_block_trace(self.test_block_trace_path)
+        print(full_workload_feature_dict)
+        sample_workload_feature_dict = get_workload_feature_dict_from_block_trace(self.test_sample_block_trace_path)
+        print(sample_workload_feature_dict)
+
+        feature_err_dict = get_feature_err_dict(full_workload_feature_dict, sample_workload_feature_dict)
+        print(feature_err_dict)
+
+        blksample(feature_map, full_workload_feature_dict, sample_workload_feature_dict, self.test_per_iteration_output_path)
+
+        
 
 if __name__ == '__main__':
     main()

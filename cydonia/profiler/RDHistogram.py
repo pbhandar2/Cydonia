@@ -9,7 +9,8 @@ Usage:
     rd_hist.write_to_file(rd_hist_file_path)
 """
 from numpy import linspace 
-from numpy import array as np_arr
+from numpy import array, cumsum 
+from numpy import ndarray, zeros
 from pathlib import Path 
 from collections import Counter 
 
@@ -38,6 +39,36 @@ class RDHistogram:
         self.max_read_hit_count = 0 
         self.max_rd = -1
         self._infinite_rd_val = infinite_rd_val
+    
+
+    def get_cum_hit_count_arr(self) -> ndarray:
+        """Get the array of cumulative hit rate counts at each reuse distance.
+        
+        Returns:
+            cum_hit_count_arr: Array of cumulative read/write hit count where index represents the reuse distance.
+        """
+        hit_count_arr = zeros((self.max_rd+1, 2), dtype=int)
+        for reuse_distance in range(self.max_rd + 1):
+            hit_count_arr[reuse_distance][0] = self.read_counter[reuse_distance]
+            hit_count_arr[reuse_distance][1] = self.write_counter[reuse_distance]
+        return cumsum(hit_count_arr, axis=0)
+    
+
+    def get_hit_rate_arr(self) -> ndarray:
+        """Get the array of hit rate at each reuse distance.
+        
+        Returns:
+            hit_rate_arr: Array of hit rates (overall, read, write) at each reuse distance.
+        """
+        hit_rate_arr = zeros((self.max_rd+1, 3), dtype=float)
+        total_req = self.read_count + self.write_count
+        cum_hit_count_arr = self.get_cum_hit_count_arr()
+        for index, (cum_read_hit_count, cum_write_hit_count) in enumerate(cum_hit_count_arr):
+            hit_rate_arr[index][0] = (cum_read_hit_count+cum_write_hit_count)/total_req
+            hit_rate_arr[index][1] = cum_read_hit_count/total_req
+            hit_rate_arr[index][2] = cum_write_hit_count/total_req
+        return hit_rate_arr
+
     
 
     def get_max_hit_rate(self) -> float:
@@ -116,7 +147,7 @@ class RDHistogram:
     def get_equal_spaced_read_hrc(
             self,
             num_points = 20
-    ) -> np_arr:
+    ) -> ndarray:
         """Get the hit rate curve (HRC) as a numpy array. 
 
         Args:
@@ -130,10 +161,10 @@ class RDHistogram:
             that is larger than max_rd so max_rd will always be part of the HRC. 
         """
         size_arr = linspace(0, self.max_rd+num_points, num_points)
-        hrc_arr = np_arr(size_arr.size)
+        hrc_arr = array(size_arr.size)
         for arr_index, cache_size in enumerate(size_arr):
             hrc_arr[arr_index] = self.get_read_hit_rate(cache_size)
-        return np_arr([size_arr, hrc_arr])
+        return array([size_arr, hrc_arr])
 
         
     def write_to_file(
@@ -233,18 +264,8 @@ class RDHistogram:
                         break 
         
         return equal_bool
-
-    
-    @property
-    def infinite_rd_val(self):
-        return self._infinite_rd_val
     
 
     @property
     def infinite_rd_val(self):
         return self._infinite_rd_val
-
-
-    @infinite_rd_val.setter
-    def infinite_rd_val(self, value: int) -> None:
-        raise AttributeError("The value for infinite reuse distance cannot be change after initialization. Please set it when creating the class.".format(value))

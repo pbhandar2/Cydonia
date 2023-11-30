@@ -213,6 +213,11 @@ class BlockStorageTraceStats:
         elif req["op"] == "w":
             self._write_misalignment_sum += req["front_misalign"]
             self._write_misalignment_sum += req["rear_misalign"]
+
+            if req["front_misalign"] > 0 and req["rear_misalign"] > 0:
+                self._read_page_access_count += 1 if (req["start_page"] == req["end_page"]) else 2
+            elif req["front_misalign"] > 0 or req["rear_misalign"] > 0:
+                self._read_page_access_count += 1
             
 
     def _track_seq_access(self, req):
@@ -261,7 +266,7 @@ class BlockStorageTraceStats:
         if req["op"] ==  'r':
             self._read_block_req_count += 1
             self._read_io_request_size_sum += req["size"]
-            self._read_page_access_count += req["end_page"] - req["start_page"] + 1
+            self._read_page_access_count += (req["end_page"] - req["start_page"] + 1)
             self._min_read_page = max(self._min_read_page, req["start_page"])
             self._max_read_page = max(self._max_read_page, req["end_page"])
             self._read_size_pstats.add_data(req["size"])
@@ -269,7 +274,7 @@ class BlockStorageTraceStats:
         elif req["op"] == 'w':
             self._write_block_req_count += 1 
             self._write_io_request_size_sum += req["size"]
-            self._write_page_access_count += req["end_page"] - req["start_page"] + 1
+            self._write_page_access_count += (req["end_page"] - req["start_page"] + 1)
             self._min_write_page = max(self._min_write_page, req["start_page"])
             self._max_write_page = max(self._max_write_page, req["end_page"])
             self._write_size_pstats.add_data(req["size"])
@@ -361,6 +366,8 @@ class BlockStorageTraceStats:
         stat['misalignment_byte'] = self.misalignment_sum()
         stat['read_misalignment_byte'] = self._read_misalignment_sum
         stat['write_misalignment_byte'] = self._write_misalignment_sum
+        stat['read_misalignment_per_req'] = self._read_misalignment_sum/self._read_block_req_count if self._read_block_req_count > 0 else 0 
+        stat['write_misalignment_per_req'] = self._write_misalignment_sum/self._write_block_req_count if self._write_block_req_count > 0 else 0 
         
         stat['range'] = self.range()
         stat['min_offset'] = min(self._min_read_page, self._min_write_page) * self._page_size
@@ -410,11 +417,13 @@ class BlockStorageTraceStats:
 
         for percentile, percentile_val in zip(self._read_iat_pstats.percentiles_tracked, self._read_iat_pstats.get_percentiles()):
             stat['iat_read_p{}'.format(percentile)] = percentile_val
-        stat['iat_read_avg'] = self._read_iat_pstats.get_mean()
+        stat['iat_read_avg'] = sum(self._read_iat_pstats.data)/self._read_block_req_count
+        stat['iat_read_sum'] = sum(self._read_iat_pstats.data)
 
         for percentile, percentile_val in zip(self._write_iat_pstats.percentiles_tracked, self._write_iat_pstats.get_percentiles()):
             stat['iat_write_p{}'.format(percentile)] = percentile_val
-        stat['iat_write_avg'] = self._write_iat_pstats.get_mean()
+        stat['iat_write_avg'] = sum(self._write_iat_pstats.data)/self._write_block_req_count
+        stat['iat_write_sum'] = sum(self._write_iat_pstats.data)
 
         return stat
 

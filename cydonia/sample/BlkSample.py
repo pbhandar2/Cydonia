@@ -584,8 +584,7 @@ def get_workload_stat_dict(df: DataFrame) -> dict:
     return stat_dict 
 
 
-def init_access_stat_dict(
-) -> dict:
+def init_access_stat_dict() -> dict:
     """Get the template for LBA access dict. 
 
     Returns:
@@ -596,21 +595,37 @@ def init_access_stat_dict(
         "w_solo_count": 0,
         "r_solo_iat_sum": 0, 
         "w_solo_iat_sum": 0,
+        "r_solo_reuse_time_sum": 0,
+        "w_solo_reuse_time_sum": 0,
+        "r_solo_reuse_count_sum": 0,
+        "w_solo_reuse_count_sum": 0,
 
         "r_right_count": 0,
         "w_right_count": 0,
         "r_right_iat_sum": 0, 
         "w_right_iat_sum": 0, 
+        "r_right_reuse_time_sum": 0,
+        "w_right_reuse_time_sum": 0,
+        "r_right_reuse_count_sum": 0,
+        "w_right_reuse_count_sum": 0,
 
         "r_left_count": 0,
         "w_left_count": 0,
         "r_left_iat_sum": 0, 
         "w_left_iat_sum": 0, 
+        "r_left_reuse_time_sum": 0,
+        "w_left_reuse_time_sum": 0,
+        "r_left_reuse_count_sum": 0,
+        "w_left_reuse_count_sum": 0,
 
         "r_mid_count": 0,
         "w_mid_count": 0,
         "r_mid_iat_sum": 0, 
-        "w_mid_iat_sum": 0
+        "w_mid_iat_sum": 0,
+        "r_mid_reuse_time_sum": 0,
+        "w_mid_reuse_time_sum": 0,
+        "r_mid_reuse_count_sum": 0,
+        "w_mid_reuse_count_sum": 0
     }
 
 
@@ -638,7 +653,7 @@ def get_unique_blk_addr_set(
     blk_addr_set = set()
     total_line = len(df)
     line_count = 0 
-    for index, row in df.iterrows():
+    for _, row in df.iterrows():
         line_count += 1
         blk_addr, size_byte, = int(row["lba"]), int(row["size"])
         size_block = size_byte//blk_size_byte

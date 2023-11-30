@@ -7,8 +7,36 @@ Usage:
     stats = profiler.get_stat() 
 """
 
+from typing import Union
+from pathlib import Path 
+from numpy import ndarray, array 
+
 from cydonia.profiler.CPReader import CPReader
 from cydonia.profiler.BlockStorageTraceStats import BlockStorageTraceStats
+
+
+def get_unique_block_arr(
+        block_trace_path: Union[str, Path],
+        block_size_byte: int
+) -> ndarray:
+    """Get a numpy array of all unique block address from a CP block trace.
+
+    Args:
+        block_trace_path: Path object or string pointing to the CP block trace.
+        block_size_byte: Size of data block in bytes. Note that it is different from the size of the LBA
+                            which is fixed to 512 bytes in CP block traces.
+    
+    Returns:
+        unique_block_arr: Numpy array of unique block addresses in the CP block trace.
+    """
+    reader = CPReader(block_trace_path)
+    unique_block_set = set()
+    cur_block_req = reader.get_next_block_req(block_size=block_size_byte)
+    while cur_block_req:
+        for block_addr in range(cur_block_req["start_block"], cur_block_req["end_block"]+1):
+            unique_block_set.add(block_addr)
+        cur_block_req = reader.get_next_block_req(block_size=block_size_byte)
+    return array(unique_block_set, dtype=int)
 
 
 class BlockTraceProfiler:

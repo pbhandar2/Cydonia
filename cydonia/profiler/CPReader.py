@@ -1,22 +1,20 @@
 import numpy as np 
+from pathlib import Path 
 from cydonia.profiler.Reader import Reader
 
 
-class CPReader(Reader): 
-    """The class reads CSV Cloudphysics traces and returns block requests. 
+KEY_LIST = ["ts", "lba", "op", "size"]
 
-    Parameters
-    ----------
-    trace_path : str
-        path of the CSV CloudPhysics trace 
-    """
+
+class CPReader(Reader): 
+    """A reader class for cloudphysics block traces in CSV format."""
 
     def __init__(self, trace_path):
         super().__init__(trace_path)
-        self.key_list = ["ts", "lba", "op", "size"]
-        self.cur_block_req = {} # stores current req 
+        self.key_list = KEY_LIST
+        self.cur_block_req = {}  
         self.start_time_ts = None 
-        self.block_size = 512
+        self.lba_size_byte = 512
         self.time_store = "relative"
 
 
@@ -45,18 +43,18 @@ class CPReader(Reader):
             block_req["lba"] = int(split_line[1])
             block_req["op"] = split_line[2]
             block_req["size"] = int(split_line[3])
-            block_req["start_offset"] = block_req["lba"] * self.block_size
+            block_req["start_offset"] = block_req["lba"] * self.lba_size_byte
             block_req["end_offset"] = block_req["start_offset"] + block_req["size"] 
 
-            if 'page_size' in kwargs:
-                page_size = int(kwargs['page_size'])
-                block_req["start_page"] = (block_req["lba"] * self.block_size)//page_size
-                block_req["key"] = block_req["start_page"]
-                block_req["page_start_offset"] = block_req["start_page"] * page_size 
-                block_req["end_page"] = (block_req["end_offset"]-1)//page_size 
-                block_req["page_end_offset"] = (block_req["end_page"]+1) * page_size 
-                block_req["front_misalign"] = block_req["start_offset"] - block_req["page_start_offset"]
-                block_req["rear_misalign"] = block_req["page_end_offset"] - block_req["end_offset"] 
+            if 'block_size' in kwargs:
+                block_size = int(kwargs['block_size'])
+                block_req["start_block"] = (block_req["lba"] * self.lba_size_byte)//block_size
+                block_req["key"] = block_req["start_block"]
+                block_req["block_start_offset"] = block_req["start_block"] * block_size 
+                block_req["end_block"] = (block_req["end_offset"]-1)//block_size 
+                block_req["block_end_offset"] = (block_req["end_block"]+1) * block_size 
+                block_req["front_misalign"] = block_req["start_offset"] - block_req["block_start_offset"]
+                block_req["rear_misalign"] = block_req["block_end_offset"] - block_req["end_offset"] 
 
             if block_req and self.cur_block_req:
                 assert(block_req["ts"] >= self.cur_block_req["ts"])
@@ -135,26 +133,26 @@ class CPReader(Reader):
         """
         self.reset()
         block_req_arr = []
-        block_req = self.get_next_block_req(page_size=block_size_byte)
+        block_req = self.get_next_block_req(block_size=block_size_byte)
         while block_req:
             if block_req["op"] == 'r':
-                for page_key in range(block_req["start_page"], block_req["end_page"]+1):
-                    block_req_arr.append(page_key)
+                for block_key in range(block_req["start_block"], block_req["end_block"]+1):
+                    block_req_arr.append(block_key)
             else:
-                if block_req["start_page"] == block_req["end_page"]:
+                if block_req["start_block"] == block_req["end_block"]:
                     if block_req["front_misalign"] > 0 or block_req["rear_misalign"] > 0:
-                        block_req_arr.append(block_req["start_page"])
+                        block_req_arr.append(block_req["start_block"])
                 else:
                     if block_req["front_misalign"] > 0:
-                        block_req_arr.append(block_req["start_page"])
+                        block_req_arr.append(block_req["start_block"])
                     
                     if block_req["rear_misalign"] > 0:
-                        block_req_arr.append(block_req["end_page"])
+                        block_req_arr.append(block_req["end_block"])
 
-                for page_key in range(block_req["start_page"], block_req["end_page"]+1):
-                    block_req_arr.append(page_key)
+                for block_key in range(block_req["start_block"], block_req["end_block"]+1):
+                    block_req_arr.append(block_key)
                     
-            block_req = self.get_next_block_req(page_size=block_size_byte)
+            block_req = self.get_next_block_req(block_size=block_size_byte)
         return block_req_arr
     
 
@@ -164,11 +162,11 @@ class CPReader(Reader):
     ) -> list:
         self.reset()
         block_req_arr = []
-        block_req = self.get_next_block_req(page_size=block_size_byte)
+        block_req = self.get_next_block_req(block_size=block_size_byte)
         while block_req:
-            for page_key in range(block_req["start_page"], block_req["end_page"]+1):
-                block_req_arr.append(page_key)
-            block_req = self.get_next_block_req(page_size=block_size_byte)
+            for block_key in range(block_req["start_block"], block_req["end_block"]+1):
+                block_req_arr.append(block_key)
+            block_req = self.get_next_block_req(block_size=block_size_byte)
         return block_req_arr
 
 
@@ -188,30 +186,30 @@ class CPReader(Reader):
         self.reset()
         block_req_trace_handle = open(block_req_trace_path, "w+")
         block_req_count = 0 
-        block_req = self.get_next_block_req(page_size=block_size_byte)
+        block_req = self.get_next_block_req(block_size=block_size_byte)
         while block_req:
             block_ts, block_op = block_req["ts"], block_req["op"]
             if block_op == 'r':
-                for page_key in range(block_req["start_page"], block_req["end_page"]+1):
-                    block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, page_key, block_op, rd_arr[block_req_count]))
+                for block_key in range(block_req["start_block"], block_req["end_block"]+1):
+                    block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, block_key, block_op, rd_arr[block_req_count]))
                     block_req_count += 1
             else:
-                if block_req["start_page"] == block_req["end_page"]:
+                if block_req["start_block"] == block_req["end_block"]:
                     if block_req["front_misalign"] > 0 or block_req["rear_misalign"] > 0:
-                        block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, block_req["start_page"], 'r', rd_arr[block_req_count]))
+                        block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, block_req["start_block"], 'r', rd_arr[block_req_count]))
                         block_req_count += 1
                 else:
                     if block_req["front_misalign"] > 0:
-                        block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, block_req["start_page"], 'r', rd_arr[block_req_count]))
+                        block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, block_req["start_block"], 'r', rd_arr[block_req_count]))
                         block_req_count += 1
                     
                     if block_req["rear_misalign"] > 0:
-                        block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, block_req["end_page"], 'r', rd_arr[block_req_count]))
+                        block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, block_req["end_block"], 'r', rd_arr[block_req_count]))
                         block_req_count += 1
-                for page_key in range(block_req["start_page"], block_req["end_page"]+1):
-                        block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, page_key, block_op, rd_arr[block_req_count]))
+                for block_key in range(block_req["start_block"], block_req["end_block"]+1):
+                        block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, block_key, block_op, rd_arr[block_req_count]))
                         block_req_count += 1
-            block_req = self.get_next_block_req(page_size=block_size_byte)
+            block_req = self.get_next_block_req(block_size=block_size_byte)
         assert len(rd_arr) == (block_req_count + 1)
         block_req_trace_handle.close()
 
@@ -232,14 +230,94 @@ class CPReader(Reader):
         self.reset()
         block_req_trace_handle = open(block_req_trace_path, "w+")
         block_req_count = 0 
-        block_req = self.get_next_block_req(page_size=block_size_byte)
+        block_req = self.get_next_block_req(block_size=block_size_byte)
         while block_req:
             block_ts, block_op = block_req["ts"], block_req["op"]
-            for page_key in range(block_req["start_page"], block_req["end_page"]+1):
-                block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, page_key, block_op, rd_arr[block_req_count]))
+            for block_key in range(block_req["start_block"], block_req["end_block"]+1):
+                block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, block_key, block_op, rd_arr[block_req_count]))
                 block_req_count += 1
-            block_req = self.get_next_block_req(page_size=block_size_byte)
+            block_req = self.get_next_block_req(block_size=block_size_byte)
         assert len(rd_arr) == (block_req_count + 1)
         block_req_trace_handle.close()
-
     
+
+    def generate_cache_trace(
+            self, 
+            cache_trace_path: Path, 
+            block_size_byte: int = 4096
+    ) -> None:
+        """Generate cache trace from a block trace. 
+        
+        Args:
+            cache_trace_path: Path to the new cache trace. 
+            block_size_byte: Size of a block in cache. (Default: 4096)
+        """
+        self.reset()
+        block_req_count = 0 
+        cache_trace_handle = open(cache_trace_path, "w+")
+
+        block_req = self.get_next_block_req(block_size=block_size_byte)
+        prev_ts_us = block_req["ts"]
+        """A cache trace has format: block_req_index, iat, block_key, op, front misalign, rear misalign. 
+            - "block_req_index" identifies requests to cache that belong to the same block request. 
+                This attribute is useful when converting a cache trace to a sample block trace. 
+            - "iat" is interarrival time of the block request. All blocks related to the same block request share
+                the same interarrival time. 
+            - "block_key" is the key of the block accessed. 
+            - "op" is the operation 
+            - "front misalign" represents the misalignment in the first block. 
+            - "rear misalign" represents the misalignment in the rear block. 
+        """ 
+        while block_req:
+            block_req_count += 1
+            block_iat_us = block_req["ts"] - prev_ts_us
+            block_op = block_req["op"]
+            block_count = block_req["end_block"] + 1 - block_req["start_block"]
+
+            if block_count == 1:
+                if block_op == 'w' and (block_req["front_misalign"] > 0 or block_req["rear_misalign"] > 0):
+                    cache_trace_handle.write("{},{},{},{},{},{}\n".format(block_req_count, 
+                                                                            block_iat_us, 
+                                                                            block_req["start_block"], 
+                                                                            'r', 
+                                                                            block_req["front_misalign"], 
+                                                                            block_req["rear_misalign"]))
+                        
+                cache_trace_handle.write("{},{},{},{},{},{}\n".format(block_req_count, 
+                                                                        block_iat_us, 
+                                                                        block_req["start_block"], 
+                                                                        block_op, 
+                                                                        block_req["front_misalign"], 
+                                                                        block_req["rear_misalign"]))
+            else:
+                if block_op == 'w':
+                    if block_req["front_misalign"] > 0:
+                        cache_trace_handle.write("{},{},{},{},{},{}\n".format(block_req_count, 
+                                                                                block_iat_us, 
+                                                                                block_req["start_block"], 
+                                                                                'r', 
+                                                                                block_req["front_misalign"], 
+                                                                                0))
+
+                    if block_req["rear_misalign"] > 0:
+                        cache_trace_handle.write("{},{},{},{},{},{}\n".format(block_req_count, 
+                                                                                block_iat_us, 
+                                                                                block_req["end_block"], 
+                                                                                'r', 
+                                                                                0, 
+                                                                                block_req["rear_misalign"]))
+
+                for block_key in range(block_req["start_block"], block_req["end_block"]+1):
+                    if block_key == block_req["start_block"]:
+                        cache_trace_handle.write("{},{},{},{},{},{}\n".format(block_req_count, block_iat_us, block_key, block_op, block_req["front_misalign"], 0))
+                    elif block_key == block_req["end_block"]:
+                        cache_trace_handle.write("{},{},{},{},{},{}\n".format(block_req_count, block_iat_us, block_key, block_op, 0, block_req["rear_misalign"]))
+                    else:
+                        cache_trace_handle.write("{},{},{},{},{},{}\n".format(block_req_count, block_iat_us, block_key, block_op, 0, 0))
+
+            prev_ts_us = block_req["ts"]
+            block_req = self.get_next_block_req(block_size=block_size_byte)
+        cache_trace_handle.close()
+
+    def __exit__(self, exc_type, exc_value, exc_traceback): 
+        self.trace_file_handle.close()
