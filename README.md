@@ -1,12 +1,21 @@
 # Cydonia
 
-Cydonia is a python package for analyzing workloads and experiment outputs 
-from block storage trace replay using the block storage system stressor implemented
-in our fork of [CacheLib](https://github.com/pbhandar2/CacheLib).
+Cydonia is a package for analysis and sampling of block storage traces. Any trace with the following properties timestamp, address, operation (read/write) and size in bytes can be used
+with Cydonia. 
+
+
+## Analysis
+
+Cydonia generated a large set of features given a block storage trace. The following are some of the features computed by Cydonia:
+
+- Overall workload features: The overall features of the workload such as percentiles of read/write request sizes, inter-arrival time and more. 
+- Per block access type features: A map with block addresses as key and array of block features based on access types. The access types is divided by the index of a block in a multi-block request. A block can be solo, left-most, right-most or middle block of a block request that can request accesses to multiple blocks.  
+
 
 ## Sampling
 
 Cydonia uses randomized spatial sampling used in the FAST 15 paper ["Efficient MRC Construction with SHARDS"](https://www.usenix.org/system/files/conference/fast15/fast15-paper-waldspurger.pdf) to sample block addresses. Miss ratio curves (MRCs) generated from block addresses sampled using randomized spatial sampling have shown to have an average miss ratio error of less than 0.01 when using sampling rates lower than 1%[1].
+
 
 ### Multi-block requests
 The above mentioned approach uses fixed sized blocks but block storage traces contain multi-block requests.
