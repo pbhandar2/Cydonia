@@ -1,33 +1,53 @@
+"""The reader class to read and process CSV block traces with format: ts, lba, op, size."""
+
 import numpy as np 
 from pathlib import Path 
-from cydonia.profiler.Reader import Reader
+from cydonia.profiler.Reader import Reader, get_cache_access_features 
 
 
 KEY_LIST = ["ts", "lba", "op", "size"]
 
 
-class CPReader(Reader): 
-    """A reader class for cloudphysics block traces in CSV format."""
-
-    def __init__(self, trace_path):
+class CPReader(Reader):
+    """The reader class to read and process CSV block traces with format: ts, lba, op, size.
+    
+    Attributes:
+        key_list: List of keys in a dictionary of block request. 
+        cur_block_req: Dictionary with attributes of the most recently read block request. 
+        start_time_ts: The start time timestamp of the block trace. 
+        lba_size_byte: The size of a sector or logical block address in bytes. 
+        _relative_time_flag: Boolean flag indicating if relative time should be used instead of absolute time. 
+    """
+    def __init__(
+            self, 
+            trace_path: Path 
+    ) -> None:
+        """
+        Args:
+            trace_path: Path to the block trace to read.
+        """
         super().__init__(trace_path)
         self.key_list = KEY_LIST
         self.cur_block_req = {}  
         self.start_time_ts = None 
         self.lba_size_byte = 512
-        self.time_store = "relative"
+        self._relative_time_flag = True
 
 
-    def get_next_block_req(self, **kwargs):
-        """ Return a dict of block request attributes
+    def get_next_block_req(
+            self, 
+            **kwargs: dict
+    ) -> dict:
+        """Return a dictionary with attributes of the next block request.
 
-        Return 
-        ------
-        block_req : dict 
-            dict with block request attributes and values 
+        Args:
+            kwargs: Dictionary of keyword arguments. 
+
+        Returns:
+            block_req: Dictionary with block request attributes and values 
         """
         
-        line = self.trace_file_handle.readline().rstrip()
+        line = self._trace_file_handle.readline().rstrip()
         block_req = {}
         if line:
             split_line = line.split(",")
@@ -35,7 +55,7 @@ class CPReader(Reader):
             if self.start_time_ts == None:
                 self.start_time_ts = int(split_line[0])
 
-            if self.time_store == "relative":
+            if self._relative_time_flag:
                 block_req["ts"] = int(split_line[0]) - self.start_time_ts
             else:
                 block_req["ts"] = int(split_line[0])
@@ -48,42 +68,35 @@ class CPReader(Reader):
 
             if 'block_size' in kwargs:
                 block_size = int(kwargs['block_size'])
-                block_req["start_block"] = (block_req["lba"] * self.lba_size_byte)//block_size
-                block_req["key"] = block_req["start_block"]
-                block_req["block_start_offset"] = block_req["start_block"] * block_size 
-                block_req["end_block"] = (block_req["end_offset"]-1)//block_size 
-                block_req["block_end_offset"] = (block_req["end_block"]+1) * block_size 
-                block_req["front_misalign"] = block_req["start_offset"] - block_req["block_start_offset"]
-                block_req["rear_misalign"] = block_req["block_end_offset"] - block_req["end_offset"] 
+                cache_access_feature_tuple = get_cache_access_features(block_req["lba"], self.lba_size_byte, block_req["size"], block_size)
+                block_req["start_block"], block_req["end_block"], block_req["front_misalign"], block_req["rear_misalign"] = cache_access_feature_tuple
+                assert block_req["front_misalign"] < block_size and block_req["rear_misalign"] < block_size, \
+                        "The misalignment cannot be greater than or equal to the cache block size, but found {} and {} with block size {}.".format(block_req["front_misalign"], block_req["rear_misalign"], block_size)
 
             if block_req and self.cur_block_req:
-                assert(block_req["ts"] >= self.cur_block_req["ts"])
+                assert(block_req["ts"] >= self.cur_block_req["ts"], \
+                        "Timestamp of consequetive block request should be equal or greater, but found {} vs {}.".format(block_req["ts"], self.cur_block_req["ts"]))
 
         self.cur_block_req = block_req
         return block_req
 
     
     def reset(self):
-        """ Reset the file handle of the trace to the beginning and class
-            attributes. 
-        """
-
-        self.trace_file_handle.seek(0)
+        """Reset the file handle of the trace to the beginning and class attributes."""
+        self._trace_file_handle.seek(0)
         self.cur_block_req = {}
 
 
-    def merge(self, reader2, output_path):
-        """ Merge the trace from two readers ordered by the timestamp to create a new 
-            trace file. 
+    def merge(self, 
+                reader2: Reader, 
+                output_path: Path
+    ) -> None:
+        """Merge the trace from two readers ordered by the timestamp to create a new trace file. 
 
-        Parameters
-        ----------
-        reader2 : CPReader 
-            CPReader with the trace to be combined with the trace of this reader 
-        output_path : str 
-            the path of the combined trace 
+        Args:
+            reader2: CPReader with the trace to be combined with the trace of this reader. 
+            output_path: Output path of the combined trace. 
         """
-
         self.reset()
         reader2.reset()
         out_handle = open(output_path, "w+")
@@ -120,127 +133,8 @@ class CPReader(Reader):
                 reader2_req = reader2.get_next_block_req()
 
         out_handle.close()
+
     
-
-    def get_block_req_arr(
-            self, 
-            block_size_byte: int = 4096
-    ) -> list:
-        """Get the array of fixed-sized block accesses from block storage trace. 
-
-        Args:
-            block_size_byte: Size of block in bytes. 
-        """
-        self.reset()
-        block_req_arr = []
-        block_req = self.get_next_block_req(block_size=block_size_byte)
-        while block_req:
-            if block_req["op"] == 'r':
-                for block_key in range(block_req["start_block"], block_req["end_block"]+1):
-                    block_req_arr.append(block_key)
-            else:
-                if block_req["start_block"] == block_req["end_block"]:
-                    if block_req["front_misalign"] > 0 or block_req["rear_misalign"] > 0:
-                        block_req_arr.append(block_req["start_block"])
-                else:
-                    if block_req["front_misalign"] > 0:
-                        block_req_arr.append(block_req["start_block"])
-                    
-                    if block_req["rear_misalign"] > 0:
-                        block_req_arr.append(block_req["end_block"])
-
-                for block_key in range(block_req["start_block"], block_req["end_block"]+1):
-                    block_req_arr.append(block_key)
-                    
-            block_req = self.get_next_block_req(block_size=block_size_byte)
-        return block_req_arr
-    
-
-    def get_block_req_arr_without_misalignment(
-            self, 
-            block_size_byte: int = 4096  
-    ) -> list:
-        self.reset()
-        block_req_arr = []
-        block_req = self.get_next_block_req(block_size=block_size_byte)
-        while block_req:
-            for block_key in range(block_req["start_block"], block_req["end_block"]+1):
-                block_req_arr.append(block_key)
-            block_req = self.get_next_block_req(block_size=block_size_byte)
-        return block_req_arr
-
-
-    def generate_block_req_trace(
-            self,
-            rd_arr: list,
-            block_req_trace_path: str,
-            block_size_byte: int = 4096
-    ) -> None:
-        """Generate a block req trace given the reuse distance of each block request to cache. 
-        
-        Args:
-            rd_arr: Array of reuse distance of each block request to cache. 
-            block_req_trace_path: Path to block request trace. 
-            block_size_byte: Size of block in bytes. 
-        """
-        self.reset()
-        block_req_trace_handle = open(block_req_trace_path, "w+")
-        block_req_count = 0 
-        block_req = self.get_next_block_req(block_size=block_size_byte)
-        while block_req:
-            block_ts, block_op = block_req["ts"], block_req["op"]
-            if block_op == 'r':
-                for block_key in range(block_req["start_block"], block_req["end_block"]+1):
-                    block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, block_key, block_op, rd_arr[block_req_count]))
-                    block_req_count += 1
-            else:
-                if block_req["start_block"] == block_req["end_block"]:
-                    if block_req["front_misalign"] > 0 or block_req["rear_misalign"] > 0:
-                        block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, block_req["start_block"], 'r', rd_arr[block_req_count]))
-                        block_req_count += 1
-                else:
-                    if block_req["front_misalign"] > 0:
-                        block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, block_req["start_block"], 'r', rd_arr[block_req_count]))
-                        block_req_count += 1
-                    
-                    if block_req["rear_misalign"] > 0:
-                        block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, block_req["end_block"], 'r', rd_arr[block_req_count]))
-                        block_req_count += 1
-                for block_key in range(block_req["start_block"], block_req["end_block"]+1):
-                        block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, block_key, block_op, rd_arr[block_req_count]))
-                        block_req_count += 1
-            block_req = self.get_next_block_req(block_size=block_size_byte)
-        assert len(rd_arr) == (block_req_count + 1)
-        block_req_trace_handle.close()
-
-
-    def generate_block_req_trace_without_alignment(
-            self,
-            rd_arr: list,
-            block_req_trace_path: str,
-            block_size_byte: int = 4096
-    ) -> None:
-        """Generate a block req trace given the reuse distance of each block request to cache. 
-        
-        Args:
-            rd_arr: Array of reuse distance of each block request to cache. 
-            block_req_trace_path: Path to block request trace. 
-            block_size_byte: Size of block in bytes. 
-        """
-        self.reset()
-        block_req_trace_handle = open(block_req_trace_path, "w+")
-        block_req_count = 0 
-        block_req = self.get_next_block_req(block_size=block_size_byte)
-        while block_req:
-            block_ts, block_op = block_req["ts"], block_req["op"]
-            for block_key in range(block_req["start_block"], block_req["end_block"]+1):
-                block_req_trace_handle.write("{},{},{},{}\n".format(block_ts, block_key, block_op, rd_arr[block_req_count]))
-                block_req_count += 1
-            block_req = self.get_next_block_req(block_size=block_size_byte)
-        assert len(rd_arr) == (block_req_count + 1)
-        block_req_trace_handle.close()
-    
-
     def generate_cache_trace(
             self, 
             cache_trace_path: Path, 
@@ -318,6 +212,3 @@ class CPReader(Reader):
             prev_ts_us = block_req["ts"]
             block_req = self.get_next_block_req(block_size=block_size_byte)
         cache_trace_handle.close()
-
-    def __exit__(self, exc_type, exc_value, exc_traceback): 
-        self.trace_file_handle.close()

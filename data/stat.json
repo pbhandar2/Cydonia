@@ -1,0 +1,14 @@
+{
+  "block_read_count": 47,
+  "block_write_count": 953,
+  "block_read_byte_sum": 357376,
+  "block_write_byte_sum": 5877248,
+  "block_read_iat_sum": 38045785,
+  "block_write_iat_sum": 822235892,
+  "misaligned_read_count": 92,
+  "misaligned_write_count": 1878,
+  "misaligned_read_byte": 195584,
+  "misaligned_write_byte": 4071936,
+  "misaligned_read_cache_req_count": 90,
+  "misaligned_write_cache_req_count": 1819
+}

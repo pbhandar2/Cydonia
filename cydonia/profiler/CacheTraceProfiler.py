@@ -1,4 +1,6 @@
 from pathlib import Path 
+from json import JSONEncoder, dumps
+from numpy import ndarray, int64 
 from pandas import read_csv, DataFrame 
 
 from cydonia.profiler.CPReader import CPReader
@@ -8,18 +10,40 @@ DEFAULT_COMPARE_FEATURE_LIST = ["write_block_req_split", "write_cache_req_split"
                                     "read_size_avg", "write_size_avg", "read_misalignment_per_req", "write_misalignment_per_req"]
 
 
+class NumpyEncoder(JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, ndarray):
+            return obj.tolist()
+        elif isinstance(obj, int64):
+            return int(obj)
+        return JSONEncoder.default(self, obj)
+
+
 def validate_cache_trace(
         block_trace_path: Path,
         cache_trace_path: Path
-) -> bool:
+) -> None:
+    """Validate cache trace by generating features from the cache trace and block trace and comparing them.
+
+    Args:
+        block_trace_path: Path of block trace.
+        cache_trace_path: Path of cache trace.
+    """
     block_feature_dict = get_workload_feature_dict_from_block_trace(block_trace_path)
     cache_trace_df = load_cache_trace(cache_trace_path)
     cache_feature_dict = get_workload_feature_dict_from_cache_trace(cache_trace_df)
     for feature_name in block_feature_dict:
-        assert block_feature_dict[feature_name]==cache_feature_dict[feature_name],\
-            "Feature {} not equal in block trace {} and cache trace {}.".format(feature_name, 
+        if block_feature_dict[feature_name]!=cache_feature_dict[feature_name]:
+            print("Found unequal feature from block trace {} and cache trace {}.".format(block_trace_path, cache_trace_path))
+            print(dumps(block_feature_dict, indent=2, cls=NumpyEncoder))
+            print(dumps(cache_feature_dict, indent=2, cls=NumpyEncoder))
+            raise ValueError("Feature {} not equal in block trace {} and cache trace {}.".format(feature_name, 
                                                                                     block_feature_dict[feature_name], 
-                                                                                    cache_feature_dict[feature_name])
+                                                                                    cache_feature_dict[feature_name]))
+        
+    print("Validated block trace {} and cache trace {}.".format(block_trace_path, cache_trace_path))
+    print(dumps(block_feature_dict, indent=2, cls=NumpyEncoder))
+    print(dumps(cache_feature_dict, indent=2, cls=NumpyEncoder))
 
 
 def load_cache_trace(cache_trace_path: Path) -> DataFrame:
@@ -34,93 +58,90 @@ def load_cache_trace(cache_trace_path: Path) -> DataFrame:
     return read_csv(cache_trace_path, 
                         names=["i", "iat", "key", "op", "front_misalign", "rear_misalign"])
 
+
+def get_block_req_arr(
+        cache_req_df: DataFrame, 
+        lba_size_byte: int, 
+        block_size_byte: int
+) -> list:
+    """Get block requests from a set of cache requests originating from the
+    same source block request.
+
+    Args:
+        cache_req_df: DataFrame containing a set of cache requests.
+        lba_size_byte: Size of an LBA in bytes. 
+        block_size_byte: Size of a cache block in bytes.
+    
+    Returns:
+        block_req_arr: List of dictionary with attributes of each block request.
+    """
+    block_req_arr = []
+    if not cache_req_df["op"].str.contains('w').any():
+        cur_cache_req_df = cache_req_df
+        cur_op = 'r'
+    else:
+        cur_cache_req_df = cache_req_df[cache_req_df["op"] == 'w']
+        cur_op = 'w'
+
+    # handle the misalignment possible in the first block accessed
+    first_cache_req = cur_cache_req_df.iloc[0]
+    iat_us = first_cache_req["iat"]
+    prev_key = first_cache_req["key"]
+    rear_misalign_byte = first_cache_req["rear_misalign"]
+    req_start_byte = (first_cache_req["key"] * block_size_byte) + first_cache_req["front_misalign"]
+
+    req_size_byte = block_size_byte - first_cache_req["front_misalign"]
+    for _, row in cur_cache_req_df.iloc[1:].iterrows():
+        cur_key = row["key"]
+        if cur_key - 1 == prev_key:
+            req_size_byte += block_size_byte
+        else:
+            block_req_arr.append({
+                "iat": iat_us,
+                "lba": int(req_start_byte/lba_size_byte),
+                "size": req_size_byte,
+                "op": cur_op
+            })
+            req_start_byte = cur_key * block_size_byte
+            req_size_byte = block_size_byte
+        rear_misalign_byte = row["rear_misalign"]
+        prev_key = cur_key
+    
+    block_req_arr.append({
+        "iat": iat_us,
+        "lba": int(req_start_byte/lba_size_byte),
+        "size": int(req_size_byte - rear_misalign_byte),
+        "op": cur_op
+    })
+    assert all([req["size"]>0 for req in block_req_arr]), "All sizes not greater than 0, found {}.".format(block_req_arr)
+    return block_req_arr
         
+
 def generate_block_trace(
         cache_trace_path: Path, 
         block_trace_path: Path,
         lba_size_byte: int = 512, 
         block_size_byte: int = 4096
 ) -> None:
-    """Generate block trace from a cache trace.
+    """Generate block trace from cache trace.
 
     Args:
-        cache_trace_path: Path to the cache trace.
-        block_trace_path: Path to the block trace.
-        lba_size_byte: Size of each LBA in byte.
-        block_size_byte: Size of a cache block in byte. 
+        cache_trace_path: Path of the cache trace.
+        block_trace_path: Path of the block trace to be generated.
+        lba_size_byte: Size of an LBA in bytes. 
+        block_size_byte: Size of a cache block in bytes. 
     """
     cur_ts = 0
-    cache_trace_df = read_csv(cache_trace_path, names=["i", "iat", "key", "op", "front_misalign", "rear_misalign"])
+    cache_trace_df = load_cache_trace(cache_trace_path)
     with block_trace_path.open("w+") as block_trace_handle:
         for _, group_df in cache_trace_df.groupby(by=['i']):
-            # Get the list of block requests generated from this group of cache requests that belong to the
-            # same souce block request in the full trace. 
             sorted_group_df = group_df.sort_values(by=["key"])
-            write_group_df = sorted_group_df[sorted_group_df["op"] == 'w']
-            if len(write_group_df) == 0:
-                read_group_df = sorted_group_df[sorted_group_df["op"] == 'r']
-                block_req_arr = get_block_reqs_from_cache_reqs(read_group_df, block_size_byte, lba_size_byte)
-            else:
-                block_req_arr = get_block_reqs_from_cache_reqs(write_group_df, block_size_byte, lba_size_byte)
-            
-            # Write block requests generated from the set of cache accesses to the new block trace. 
+            block_req_arr = get_block_req_arr(sorted_group_df, lba_size_byte, block_size_byte)
+
             for cur_block_req in block_req_arr:
                 cur_ts += int(cur_block_req["iat"])
                 assert int(cur_block_req["size"]) >= lba_size_byte, "Size too small {}.".format(int(cur_block_req["size"]))
-                block_trace_handle.write("{},{},{},{}\n".format(cur_ts, 
-                                                                    int(cur_block_req["lba"]), 
-                                                                    cur_block_req["op"], 
-                                                                    int(cur_block_req["size"])))
-
-
-def get_block_reqs_from_cache_reqs(
-        cache_req_df: DataFrame,
-        block_size_byte: int,
-        lba_size_byte: int
-) -> list:
-    """Get block requests from a set of cache requests.
-
-    Args:
-        cache_req_df: DataFrame of cache requests from which to generate block requests.
-        block_size_byte: Size of a cache block.
-        lba_size_byte: Size of an LBA. 
-    
-    Returns:
-        block_req_arr: List of block requests represented by dicts.
-    """
-    block_req_arr = []
-    prev_req = cache_req_df.iloc[0]
-    cur_req_start_byte = (int(prev_req["key"]) * block_size_byte) + int(prev_req["front_misalign"])
-    cur_req_size = block_size_byte - prev_req["front_misalign"]
-    for _, cur_req in cache_req_df.iloc[1:].iterrows():
-        if cur_req["key"] == (prev_req["key"]+1):
-            cur_req_size += block_size_byte
-        else:
-            assert cur_req_start_byte % lba_size_byte == 0, \
-                "Req start byte is {} and lba size byte is {}".format(cur_req_start_byte, lba_size_byte)
-            assert cur_req_size % lba_size_byte == 0 and cur_req_size > 0
-            block_req_arr.append({
-                "iat": cur_req["iat"],
-                "lba": int(cur_req_start_byte/lba_size_byte),
-                "size": cur_req_size,
-                "op": cur_req["op"]
-            })
-            cur_req_start_byte = int(cur_req["key"]) * block_size_byte
-            cur_req_size = block_size_byte
-        
-        prev_req = cur_req 
-    
-    cur_req_size -= prev_req["rear_misalign"]
-    assert cur_req_start_byte % lba_size_byte == 0
-    assert cur_req_size % lba_size_byte == 0 and cur_req_size > 0
-    block_req_arr.append({
-        "iat": prev_req["iat"],
-        "lba": int(cur_req_start_byte/lba_size_byte),
-        "size": cur_req_size,
-        "op": prev_req["op"]
-    })
-
-    return block_req_arr
+                block_trace_handle.write("{},{},{},{}\n".format(cur_ts, int(cur_block_req["lba"]), cur_block_req["op"], int(cur_block_req["size"])))
 
 
 def get_workload_feature_dict_from_cache_trace(
@@ -151,11 +172,12 @@ def get_workload_feature_dict_from_cache_trace(
         if len(write_group_df) == 0:
             sum_front_misalign = read_group_df["front_misalign"].sum()
             sum_rear_misalign = read_group_df["rear_misalign"].sum()
-            block_req_arr = get_block_reqs_from_cache_reqs(read_group_df, block_size_byte, lba_size_byte)
+            block_req_arr = get_block_req_arr(read_group_df, lba_size_byte, block_size_byte)
             
             if read_block_req_count + write_block_req_count > 0:
                 read_iat_us += (group_df.iloc[0]["iat"] * len(block_req_arr))
             else:
+                # First block request will have IAT of 0
                 read_iat_us += (group_df.iloc[0]["iat"] * (len(block_req_arr)-1))
             
             read_block_req_count += len(block_req_arr) 
@@ -164,11 +186,12 @@ def get_workload_feature_dict_from_cache_trace(
         else:
             sum_front_misalign = write_group_df["front_misalign"].sum()
             sum_rear_misalign = write_group_df["rear_misalign"].sum()
-            block_req_arr = get_block_reqs_from_cache_reqs(write_group_df, block_size_byte, lba_size_byte)
+            block_req_arr = get_block_req_arr(write_group_df, lba_size_byte, block_size_byte)
             
             if read_block_req_count + write_block_req_count > 0:
                 write_iat_us += (group_df.iloc[0]["iat"] * len(block_req_arr))
             else:
+                # First block request will have IAT of 0
                 write_iat_us += (group_df.iloc[0]["iat"] * (len(block_req_arr)-1))
 
             write_block_req_count += len(block_req_arr) 
@@ -250,7 +273,7 @@ def get_workload_feature_dict_from_block_trace(
                     feature_dict["read_cache_req_count"] += 1
         prev_ts = cur_ts
         cur_block_req = reader.get_next_block_req(block_size=block_size_byte)
-    reader.trace_file_handle.close()
+    reader.close()
     feature_dict["write_block_req_split"] = feature_dict["write_block_req_count"]/(feature_dict["write_block_req_count"]+feature_dict["read_block_req_count"])
     feature_dict["write_cache_req_split"] = feature_dict["write_cache_req_count"]/(feature_dict["write_cache_req_count"]+feature_dict["read_cache_req_count"])
     feature_dict["iat_read_avg"] = feature_dict["iat_read_sum"]/feature_dict["read_block_req_count"] if feature_dict["read_block_req_count"] > 0 else 0 

@@ -18,9 +18,14 @@ from collections import Counter
 class RDHistogram:
     def __init__(
             self,
-            infinite_rd_val = 9223372036854775807
+            infinite_rd_val: int
     ) -> None:
-        """This class tracks the read and write reuse distances. 
+        """ This class tracks the count of read/write reuse distance values. 
+
+        Args:
+            infinite_rd_val: The value used to represent infinite reuse distance. The first
+                                time a block is accessed its reuse distance is infinite. It is
+                                represented by a large integer or a negative value. 
 
         Attributes:
             read_count: Read block request count. 
@@ -29,6 +34,7 @@ class RDHistogram:
             write_counter: Counter of write reuse distances. 
             max_read_rd: Maximum read reuse distance. 
             max_read_hit_count: Maximum possible read hits.
+            max_rd: Maximum value of reuse distance. 
             infinite_rd_val: Value used to represent infinite reuse distance. 
         """
         self.read_count = 0 
@@ -70,7 +76,6 @@ class RDHistogram:
         return hit_rate_arr
 
     
-
     def get_max_hit_rate(self) -> float:
         """Get the maximum possible hit rate for this RD histogram.
         
@@ -82,9 +87,9 @@ class RDHistogram:
     
 
     def update_rd(
-        self,
-        rd: int,
-        op: str  
+            self,
+            rd: int,
+            op: str  
     ) -> None:
         """Update reuse distance counter. 
 
@@ -95,10 +100,15 @@ class RDHistogram:
         Raises:
             ValueError: Raised if the 'op' parameter if not 'r' or 'w'. 
         """
-        assert rd <= self.infinite_rd_val, "RD value {} greater than value for infinite RD {}.".format(rd, self._infinite_rd_val)
-        if rd < self.infinite_rd_val:
-            if rd > self.max_rd:
-                self.max_rd = rd 
+  
+        if self._infinite_rd_val > 0:
+            assert rd <= self.infinite_rd_val, "RD value {} greater than value for infinite RD {}.".format(rd, self._infinite_rd_val)
+        else:
+            assert rd >= 0 or rd == self._infinite_rd_val, "RD value can be equal to {} or > 0 but found {}.".format(self._infinite_rd_val, rd)
+
+        if rd != self._infinite_rd_val and rd > self.max_rd:
+            self.max_rd = rd 
+        
         if op == 'r':
             self.read_counter[rd] += 1 
             if rd != self.infinite_rd_val:
@@ -113,8 +123,8 @@ class RDHistogram:
     
 
     def get_read_hit_rate(
-        self, 
-        size_blocks: int 
+            self, 
+            size_blocks: int 
     ) -> float:
         """Get the read hit rate for the given cache size. 
 
@@ -199,7 +209,6 @@ class RDHistogram:
         Raises:
             ValueError: Raised if the 'op' parameter if not 'r' or 'w'. 
         """
-        assert rd <= self._infinite_rd_val, "RD value {} greater than value for infinite RD {}.".format(rd, self._infinite_rd_val)
         for _ in range(count):
             self.update_rd(rd, op)
 

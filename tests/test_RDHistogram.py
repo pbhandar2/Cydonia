@@ -7,7 +7,7 @@ from cydonia.profiler.RDHistogram import RDHistogram
 
 class TestRDHistogram(TestCase):
     def test_basic(self):
-        rd_hist = RDHistogram()
+        rd_hist = RDHistogram(-1)
         rd_hist.multi_update(rd_hist.infinite_rd_val, 10, 'r')
         rd_hist.multi_update(rd_hist.infinite_rd_val, 10, 'w')
         rd_hist.multi_update(0, 80, 'r')
@@ -25,7 +25,7 @@ class TestRDHistogram(TestCase):
         test_rd_hist_file_path = Path("../data/test_rd_hist.csv")
         rd_hist.write_to_file(test_rd_hist_file_path)
 
-        other_rd_hist = RDHistogram()
+        other_rd_hist = RDHistogram(-1)
         other_rd_hist.load_rd_hist_file(test_rd_hist_file_path)
 
         assert rd_hist == other_rd_hist, "The RD histogram saved to file and the same file loaded were not the same."

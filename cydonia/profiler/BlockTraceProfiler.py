@@ -10,9 +10,26 @@ Usage:
 from typing import Union
 from pathlib import Path 
 from numpy import ndarray, array 
+from pandas import read_csv 
 
 from cydonia.profiler.CPReader import CPReader
 from cydonia.profiler.BlockStorageTraceStats import BlockStorageTraceStats
+
+
+class TraceProfiler:
+    def __init__(
+            self,
+            block_trace_path: Path 
+    ) -> None:
+        self._df = self.load_block_trace(block_trace_path)
+    
+
+    @staticmethod
+    def load_block_trace(block_trace_path):
+        block_trace_df = read_csv(block_trace_path, names=["ts", "lba", "op", "size"])
+        block_trace_df["prev_ts"] = block_trace_df["ts"].shift(1).fillna(block_trace_df["ts"][0])
+        block_trace_df["iat"] = block_trace_df["ts"] - block_trace_df["prev_ts"]
+        return block_trace_df
 
 
 def get_unique_block_arr(
