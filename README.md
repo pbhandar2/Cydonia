@@ -34,11 +34,11 @@ num_lower_addr_bits_ignored = 0
 # generate a file with hash value for each addresses in the sample 
 hash_file_path = "hash.csv"
 cache_trace_reader = CacheTraceReader(cache_trace_path)
-cache_trace_reader.create_sample_hash_file(seed, 0, hash_file_path)
+cache_trace_reader.create_sample_hash_file(seed, num_lower_addr_bits_ignored, hash_file_path)
 
 # the hash file can now be used to generate samples 
 sample_file_path = "sample.csv"
-cache_trace_reader.sample_using_hash_file(hash_file_path, rate, 0, sample_file_path)
+cache_trace_reader.sample_using_hash_file(hash_file_path, rate, num_lower_addr_bits_ignored, sample_file_path)
 ```
 
 
