@@ -10,7 +10,7 @@ Cydonia uses randomized spatial sampling used in the FAST 15 paper ["Efficient M
 
 ### Multi-block requests
 The above mentioned approach uses fixed sized blocks but block storage traces contain multi-block requests.
-A multi-block request could fragment into multiple samples block requests. We tackle this using an idea by Carl Waldspurger to ignore some bits in the addresses to sample group of blocks rather than individual blocks. Below is an example:
+A multi-block request could fragment into multiple samples block requests. We tackle this by ignoring some bits in the addresses to sample group of blocks rather than individual blocks. Below is an example:
 
 ```
 from cydonia.profiler.CPReader import CPReader 
