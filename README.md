@@ -13,47 +13,30 @@ The above mentioned approach uses fixed sized blocks but block storage traces co
 A multi-block request could fragment into multiple samples block requests. We tackle this using an idea by Carl Waldspurger to ignore some bits in the addresses to sample group of blocks rather than individual blocks. Below is an example:
 
 ```
-from cydonia.sample.Sampler import Sampler
+from cydonia.profiler.CPReader import CPReader 
+from cydonia.profiler.CacheTrace import CacheTraceReader, HashFile
 
-block_trace_path = "/home/cydonia/block_trace.csv"
+block_trace_path = "block_trace.csv"
+block_reader = CPReader(block_trace_path)
+# generate a cache trace with fixed sized block accesses 
+cache_trace_path = "cache_trace.csv"
+block_reader.generate_cache_trace(cache_trace_path)
+
 rate = 0.25
 seed = 42
-sampler = Sampler(block_trace_path)
 
-"""
-- "sample_df" is a pandas DataFrame of the sample trace. It has the same format as the 
-original trace. 
+""" We can sample larger regions by ignoring lower order bits. 0 means no bits ignored. So
+we sample individual cache blocks. Ignoring the first lower bits means sample in groups (0,1), (2,3) and (4,5). """
+num_lower_addr_bits_ignored = 0 
 
-- "sampling_split_percentage" is the percentage of block requests that were sampled 
-that broke into multiple block requests in the sample. It can be used as a measure 
-of sample quality. 
+# generate a file with hash value for each addresses in the sample 
+hash_file_path = "hash.csv"
+cache_trace_reader = CacheTraceReader(cache_trace_path)
+cache_trace_reader.create_sample_hash_file(seed, 0, hash_file_path)
 
-- For example, a multi-block request reads blocks 0-20, but only fraction of the blocks
-in the block request were sampled: (2,3,4), (8), (11,12). Now the 3 groups of block 
-requests that were sampled will be 3 different block requests in the sample although 
-it originated from a single block request in the original trace. 
-"""
-
-sample_df, sampling_split_percentage = sampler.sample(rate, seed)
-
-"""
-- Now we  remap addresses to ignore bits at index 0, 1 and 2. This way we 
-sample a group of addresses rather than individual addresses which should
-reduce fragmentation measued by "sampling_split_percentage ".
-
-- For example, we ignore the bits at index 0,1 and 2. Now address 8 (1000),
-9 (1001), 10 (1010) all map to 8. If 8 is sampled, this means 9 and 10 
-will be sampled as well.
-"""
-
-bits = [0, 1, 2]
-bits_sampler = Sampler(block_trace_path, bits=bits)
-bits_sample_df, bits_sampling_split_percentage = sampler.sample(rate, seed)
-
-# by ignoring few bits and sampling multiple adjacent blocks, we should be able to reduce
-# the bit_sampling_split_percentage and improve block sample quality 
-assert (bit_sampling_split_percentage <= sampling_split_percentage)
-
+# the hash file can now be used to generate samples 
+sample_file_path = "sample.csv"
+cache_trace_reader.sample_using_hash_file(hash_file_path, rate, 0, sample_file_path)
 ```
 
 
