@@ -11,9 +11,9 @@ from pandas import read_csv, DataFrame
 from numpy import ndarray, zeros 
 from time import perf_counter_ns
 from queue import PriorityQueue
-from mmh3 import hash128 
+import mmh3
 
-from cydonia.profiler.BlockTrace import ReaderConfig, BlockRequest 
+from cydonia.profiler.BlockTrace import ReaderConfig
 
 from cydonia.profiler.WorkloadStats import WorkloadStats, BlockRequest
 
@@ -24,28 +24,28 @@ class HASH_FILE_CONFIG(Enum):
     HASH_FILE_HEADER_NAME_ARR = ["hash", "addr"]
 
 
-def get_hash_priority_queue(
-        unique_addr_set: set, 
-        random_seed: int 
-) -> PriorityQueue:
-    queue = PriorityQueue()
-    for addr in unique_addr_set:
-        queue.put((hash128(str(addr), signed=False, seed=random_seed), addr))
-    return queue 
-
-
 class HashFile:
     def __init__(self, file_path: Path):
         self._path = file_path 
         self._df = None 
 
+    def get_hash_priority_queue(
+            self,
+            unique_addr_set: set, 
+            random_seed: int 
+    ) -> PriorityQueue:
+        queue = PriorityQueue()
+        for addr in unique_addr_set:
+            queue.put((mmh3.hash128(str(addr), signed=False, seed=random_seed), addr))
+        return queue 
+    
     def load(self):
         header_name_arr = HASH_FILE_CONFIG.HASH_FILE_HEADER_NAME_ARR.value
         df = read_csv(self._path, names=header_name_arr)
         self._df = df.sort_values(by=[HASH_FILE_CONFIG.HASH_HEADER_NAME.value])
     
     def create(self, unique_addr_set: set, random_seed: int):
-        hash_queue = get_hash_priority_queue(unique_addr_set, random_seed)
+        hash_queue = self.get_hash_priority_queue(unique_addr_set, random_seed)
         with self._path.open("w+") as output_file_handle:
             while not hash_queue.empty():
                 hash, addr = hash_queue.get()

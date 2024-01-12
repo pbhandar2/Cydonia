@@ -139,6 +139,7 @@ class WorkloadStats:
     def get_workload_feature_dict(self):
         """ Get basic workload features as dict. """
         block_stat, misalign_stat = self._block_stat, self._misalign_stat
+        total_req_count = block_stat.block_read_count + block_stat.block_write_count
         err_dict = {}
         err_dict["cur_mean_read_size"] = block_stat.block_read_byte_sum/block_stat.block_read_count if block_stat.block_read_count > 0 else 0 
         err_dict["cur_mean_write_size"] = block_stat.block_write_byte_sum/block_stat.block_write_count if block_stat.block_write_count > 0 else 0
@@ -146,6 +147,7 @@ class WorkloadStats:
         err_dict["cur_mean_write_iat"] = block_stat.block_write_iat_sum/block_stat.block_write_count if block_stat.block_write_count > 0 else 0
         err_dict["misalignment_per_read"] = misalign_stat.misaligned_read_count/block_stat.block_read_count if block_stat.block_read_count > 0 else 0 
         err_dict["misalignment_per_write"] = misalign_stat.misaligned_write_count/block_stat.block_write_count if block_stat.block_write_count > 0 else 0 
+        err_dict["write_ratio"] = block_stat.block_write_count/total_req_count if total_req_count > 0 else 0
         return err_dict 
     
 
