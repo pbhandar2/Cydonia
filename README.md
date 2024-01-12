@@ -27,7 +27,8 @@ seed = 42
 
 """ We can sample larger regions by ignoring lower order bits. 0 means no bits ignored. So
 we sample individual cache blocks. Ignoring 1 lower bits means sample in groups (0,1),
-(2,3) and (4,5). Ignoring 2 lower order bits means sample in groups (0,1,2,3), (4,5,6,7) and so on. """
+(2,3) and (4,5). Ignoring 2 lower order bits means sample 
+in groups (0,1,2,3), (4,5,6,7) and so on. """
 num_lower_addr_bits_ignored = 0 
 
 # generate a file with hash value for each addresses in the sample 
