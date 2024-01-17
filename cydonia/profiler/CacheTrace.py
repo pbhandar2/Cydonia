@@ -229,9 +229,22 @@ class CacheTraceReader:
                     sample_addr_dict[blk_addr] = True 
                     sample_count += 1
         return sample_addr_dict
+    
+
+    def get_mean_sample_split(self) -> dict:
+        self.reset()
+        total_cache_split = 0 
+        total_req_sampled = 0 
+        cache_req_df = self.get_next_cache_req_group_df()
+        while (len(cache_req_df)):
+            total_req_sampled += 1 
+            total_cache_split += len(self.get_block_req_arr(cache_req_df, 0, self._config))
+            cache_req_df = self.get_next_cache_req_group_df()
+        return total_cache_split/total_req_sampled
             
 
-    def sample(self, 
+    def sample(
+            self, 
             sample_addr_dict: dict, 
             sample_file_path: Path
     ) -> None:

@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from json import loads, dumps
 from pandas import DataFrame, read_csv, concat, set_option
 from numpy import zeros, ndarray, mean, array, multiply
+from time import perf_counter_ns
 
 from cydonia.profiler.CacheTrace import CacheTraceReader, ReaderConfig
 from cydonia.profiler.WorkloadStats import WorkloadStats, BlockStats, MisalignStats, BlockRequest, NpEncoder
@@ -298,6 +299,72 @@ class BAFM:
         df.index.name = 'addr'
         df.to_csv(output_file_path)
 
+
+    def target_sampling_rate(
+            self,
+            full_workload_stat: WorkloadStats,
+            sample_workload_stat: WorkloadStats,
+            metric_name: str,
+            full_workload_block_count: int,
+            sample_block_addr_set: set, 
+            target_sampling_rate: float, 
+            output_file_path: Path,
+            print_interval_sec: int = 60
+    ) -> WorkloadStats:
+        """ Remove blocks until we hit a target sampling rate.
+
+        Args:
+            full_workload_stat: Workload stats of the full workload.
+            sample_workload_stat: Workload stats of the sample workload.
+            metric_name: The metric to use when selecting blocks.
+            full_workload_block_count: The number of unique blocks in full trace.
+            target_sampling_rate: The target sampling rate.
+            output_file_path: Path of the output file.
+            print_interval_sec: The interval at which latest error dictionary is printed.
+        
+        Returns:
+            new_workload_stat: New workload stat after removing blocks.
+        """
+        print_interval_tracker = 0 
+        bafm_output = BAFMOutput(output_file_path)
+        new_workload_stat = deepcopy(sample_workload_stat)
+        cur_sampling_rate = len(sample_block_addr_set)/full_workload_block_count
+        print("Starting sampling rate is {} and target sampling rate is {}.".format(cur_sampling_rate, target_sampling_rate))
+        while cur_sampling_rate > target_sampling_rate:
+            start_time_ns = perf_counter_ns()
+            best_dict = self.find_best_block_to_remove(full_workload_stat, new_workload_stat, metric_name)
+            if not best_dict:
+                print("Ran out of blocks to remove.")
+                break 
+
+            feature_arr = self._map[best_dict["addr"]]
+            new_workload_stat = self.get_new_workload_stat(new_workload_stat, feature_arr)
+            err_dict = self.get_error_dict(full_workload_stat.get_workload_feature_dict(),
+                                            new_workload_stat.get_workload_feature_dict())
+            
+            err_dict["addr"] = best_dict["addr"]
+
+            # remove the sclaed address from this BAFM
+            self.delete(best_dict["addr"])
+
+            # remove unscaled block addresses from sample block address set 
+            unscaled_addr_list = CacheTraceReader.get_blk_addr_arr(best_dict["addr"], self._lower_addr_bits_ignored)
+            for cur_addr in unscaled_addr_list:
+                if cur_addr in sample_block_addr_set:
+                    sample_block_addr_set.remove(cur_addr)
+                
+            cur_sampling_rate = len(sample_block_addr_set)/full_workload_block_count
+            err_dict["block_count"] = len(sample_block_addr_set)
+            err_dict["rate"] = cur_sampling_rate
+            err_dict["runtime"] = perf_counter_ns() - start_time_ns
+            bafm_output.add(err_dict)
+
+            # print latest error dictionary at regular intervals 
+            print_interval_tracker += err_dict["runtime"]
+            if (print_interval_tracker/1e9) > print_interval_sec:
+                print(err_dict)
+                print_interval_tracker = 0 
+            
 
     def remove_n_blocks(
             self,

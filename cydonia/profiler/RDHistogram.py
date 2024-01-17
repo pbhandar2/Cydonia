@@ -102,6 +102,7 @@ class RDHistogram:
         """
   
         if self._infinite_rd_val > 0:
+            print("Infinite rd val is {} and it is greater than 0: {}.".format(self._infinite_rd_val, self._infinite_rd_val > 0))
             assert rd <= self.infinite_rd_val, "RD value {} greater than value for infinite RD {}.".format(rd, self._infinite_rd_val)
         else:
             assert rd >= 0 or rd == self._infinite_rd_val, "RD value can be equal to {} or > 0 but found {}.".format(self._infinite_rd_val, rd)
