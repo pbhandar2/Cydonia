@@ -72,7 +72,7 @@ class BAFMOutput:
 
     def num_blocks_removed(self) -> int:
         return len(self._df)
-    
+
 
 class BAFM:
     def __init__(
@@ -332,6 +332,7 @@ class BAFM:
         print("Starting sampling rate is {} and target sampling rate is {}.".format(cur_sampling_rate, target_sampling_rate))
         while cur_sampling_rate > target_sampling_rate:
             start_time_ns = perf_counter_ns()
+
             best_dict = self.find_best_block_to_remove(full_workload_stat, new_workload_stat, metric_name)
             if not best_dict:
                 print("Ran out of blocks to remove.")
@@ -348,10 +349,13 @@ class BAFM:
             self.delete(best_dict["addr"])
 
             # remove unscaled block addresses from sample block address set 
+            num_blocks_removed = 0 
             unscaled_addr_list = CacheTraceReader.get_blk_addr_arr(best_dict["addr"], self._lower_addr_bits_ignored)
             for cur_addr in unscaled_addr_list:
                 if cur_addr in sample_block_addr_set:
                     sample_block_addr_set.remove(cur_addr)
+                    num_blocks_removed += 1 
+            assert num_blocks_removed > 0, "There has to be at least 1 block removed."
                 
             cur_sampling_rate = len(sample_block_addr_set)/full_workload_block_count
             err_dict["block_count"] = len(sample_block_addr_set)
@@ -402,6 +406,48 @@ class BAFM:
             bafm_output.add(err_dict)
             self.delete(best_dict["addr"])
         return new_workload_stat
+    
+
+    def find_block_to_remove(
+            self,
+            full_workload_stat: WorkloadStats,
+            sample_workload_stat: WorkloadStats,
+            metric_name: str,
+            block_eval_priority_list: list,
+            num_improving_eval: int
+    ) -> dict:
+        block_remove_dict = {}
+
+        full_workload_feature_dict = full_workload_stat.get_workload_feature_dict()
+        sample_workload_feature_dict = sample_workload_stat.get_workload_feature_dict()
+        prev_err_dict = self.get_error_dict(full_workload_feature_dict, sample_workload_feature_dict)
+
+        num_improving_eval_found = 0 
+        for addr in block_eval_priority_list:
+            if addr not in self._map:
+                continue 
+
+            # get the new sample workload stats after removing an address 
+            new_sample_workload_stat = self.get_new_workload_stat(sample_workload_stat, self._map[addr])
+
+            # compute the error value if we remove this address 
+            new_sample_workload_feature_dict = new_sample_workload_stat.get_workload_feature_dict()
+            err_dict = self.get_error_dict(full_workload_feature_dict, new_sample_workload_feature_dict)
+            err_dict["addr"] = addr 
+
+            if err_dict[metric_name] < prev_err_dict[metric_name]:
+                num_improving_eval += 1 
+                
+                if not block_remove_dict:
+                    block_remove_dict = err_dict
+                else:
+                    if err_dict[metric_name] < block_remove_dict[metric_name]:
+                        block_remove_dict = err_dict 
+
+                if num_improving_eval_found == num_improving_eval:
+                    break 
+
+        return block_remove_dict
 
 
     
@@ -423,6 +469,7 @@ class BAFM:
 
         best_err_dict = {}
         full_workload_feature_dict = full_workload_stat.get_workload_feature_dict()
+
         for addr in self._map:
             # get the new sample workload stats after removing an address 
             new_sample_workload_stat = self.get_new_workload_stat(sample_workload_stat, self._map[addr])
